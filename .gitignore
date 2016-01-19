@@ -45,3 +45,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# mercurial
+.hg/*
+.hgignore
+
+#java stuff
+*.class
