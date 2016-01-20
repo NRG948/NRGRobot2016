@@ -34,7 +34,6 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	
-	public static final Drive drive = new Drive();
 	public static DS2016 oi;
 
     Command autonomousCommand;
