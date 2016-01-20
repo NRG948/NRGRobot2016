@@ -13,7 +13,7 @@ public class ManualDrive extends CommandBase {
 
     public ManualDrive() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.drive);
+        requires(CommandBase.drive);
     }
 
    
