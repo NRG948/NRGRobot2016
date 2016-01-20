@@ -41,6 +41,17 @@ public class RobotMap {
 		motorFrontRight = new Victor(3);
 		motorBackLeft = new Victor(4);
 		motorBackRight = new Victor(5);
+		
+		try
+		{
+			driveGyro = new AnalogGyro(6); //Port number(channel number) unknown, 6 now taken
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println("Could not instantiate AnalogGyro");
+		}
+		
 		driveGyro = new AnalogGyro(6); //Port number(channel number) unknown, 6 now taken
 		armAngleEncoder = new AnalogInput(7); //Port numbers (channel numbers) unknown, 7 now taken
 		accelerometer = new BuiltInAccelerometer();
