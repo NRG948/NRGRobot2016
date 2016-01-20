@@ -1,4 +1,4 @@
-package utilities;
+package org.usfirst.frc.team948.robot.utilities;
 
 import java.awt.Color;
 import java.awt.Graphics;

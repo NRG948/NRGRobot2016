@@ -41,9 +41,9 @@ public class Drive extends Subsystem {
 
 	public void rawTankDrive(double leftPower, double rightPower) {
 
-		motorFrontLeft.set(leftPower);
+		motorFrontLeft.set((-1)*leftPower);
 		motorFrontRight.set(rightPower);
-		motorBackLeft.set(leftPower);
+		motorBackLeft.set((-1)*leftPower);
 		motorBackRight.set(rightPower);
 
 	}

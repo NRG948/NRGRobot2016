@@ -1,4 +1,4 @@
-package utilities;
+package org.usfirst.frc.team948.robot.utilities;
 
 public class MathHelper {
 	/**
