@@ -25,8 +25,7 @@ logger, and so on.
 ##How to Use
 More on this later.
 ##Authors
-<<<<<<< HEAD
+Frank Zhang
 Tejas Rangole
-=======
 Chuwei Guo
->>>>>>> 3d5021a21011910900483d6ac5905740e26584a2
+
