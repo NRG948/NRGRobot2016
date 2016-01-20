@@ -72,5 +72,9 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
+	
+	public void rawRaise(double power) {
+		armController.set(power);
+	}
 
 }
