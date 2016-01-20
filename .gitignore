@@ -30,6 +30,7 @@ $RECYCLE.BIN/
 
 # Thumbnails
 ._*
+.CLASSPATH
 
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
@@ -53,3 +54,6 @@ Temporary Items
 #java stuff
 *.class
 /bin/
+.classpath
+
+*.prefs
