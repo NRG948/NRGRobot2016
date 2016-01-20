@@ -4,6 +4,7 @@ package org.usfirst.frc.team948.robot.subsystems;
 import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,12 +13,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 
-public class Drive extends Subsystem {
+public class Drive extends Subsystem implements PIDOutput{
 	public static Victor motorFrontLeft;
 	public static Victor motorFrontRight;
 	public static Victor motorBackLeft;
 	public static Victor motorBackRight;
-
+	
+	private double PIDOutput;
 	
 	private double desiredHeading;
 
@@ -61,5 +63,12 @@ public class Drive extends Subsystem {
 
 	public void setDesiredHeading(double angle) {
 		desiredHeading =  RobotMap.driveGyro.getAngle();
+	}
+
+	@Override
+	public void pidWrite(double arg0) {
+		PIDOutput = arg0;
+		// TODO Auto-generated method stub
+		
 	}
 }
