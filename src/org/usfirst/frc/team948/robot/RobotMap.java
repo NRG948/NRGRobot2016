@@ -52,7 +52,6 @@ public class RobotMap {
 			System.out.println("Could not instantiate AnalogGyro");
 		}
 		
-		driveGyro = new AnalogGyro(6); //Port number(channel number) unknown, 6 now taken
 		armAngleEncoder = new AnalogInput(7); //Port numbers (channel numbers) unknown, 7 now taken
 		accelerometer = new BuiltInAccelerometer();
 		acquireArmTalon = new Talon(9);
