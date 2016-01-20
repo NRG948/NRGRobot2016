@@ -55,5 +55,6 @@ Temporary Items
 *.class
 /bin/
 .classpath
-
+/build/*
+/dist/*
 *.prefs
