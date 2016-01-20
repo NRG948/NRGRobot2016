@@ -52,3 +52,4 @@ Temporary Items
 
 #java stuff
 *.class
+/bin/

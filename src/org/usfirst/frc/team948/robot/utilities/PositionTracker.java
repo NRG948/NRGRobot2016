@@ -11,7 +11,7 @@ import org.usfirst.frc.team948.robot.RobotMap;
 public class PositionTracker {
 
 	public static final double ONE_G = 32.2; // In feet per second squared
-	public static final double DT = 0.002; // In seconds
+	public static final double DT = 0.02; // In seconds
 
 	// Position coordinates in the fixed frame
 	public static double currentPN, currentPE;
@@ -24,21 +24,34 @@ public class PositionTracker {
 		double ax = RobotMap.accelerometer.getX() * ONE_G;
 		double ay = RobotMap.accelerometer.getY() * ONE_G;
 		double angle = RobotMap.driveGyro.getAngle() * Math.PI / 180;
-		double dVN = (currentAN + ax * Math.cos(angle) - ay * Math.sin(angle))
-				/ 2 * DT;
-		double dVE = (currentAE + ax * Math.sin(angle) + ay * Math.cos(angle))
-				/ 2 * DT;
-
-		currentPN += (currentVN + dVN / 2) * DT;
-		currentPE += (currentVE + dVE / 2) * DT;
-
-		currentVE += dVE;
-		currentVN += dVN;
-
-		currentAN = ax * Math.cos(angle) - ay * Math.sin(angle);
-		currentAE = ax * Math.sin(angle) + ay * Math.cos(angle);
+		
+		updatePosition(ax, ay, angle);
 	}
+	
+	private static void updatePosition(double ax, double ay, double angle)
+	{
+		// acceleration components
+		double an = ax * Math.cos(angle) - ay * Math.sin(angle);
+		double ae = ax * Math.sin(angle) + ay * Math.cos(angle);
 
+		// velocities
+		double vn = currentVN + (currentAN + an) / 2 * DT;
+		double ve = currentVE + (currentAE + ae) / 2 * DT;
+
+		// position
+		double pn = currentPN + (currentVN + vn) / 2 * DT;
+		double pe = currentPE + (currentVE + ve) / 2 * DT;
+
+		currentAN = an;
+		currentAE = ae;
+
+		currentVN = vn;
+		currentVE = ve;
+
+		currentPN = pn;
+		currentPE = pe;
+	}
+	
 	public static void test() {
 		double ax = -1;
 		double ay = 0;
@@ -50,21 +63,8 @@ public class PositionTracker {
 		currentVN = 0;
 		for (int i = 0; i < duration / DT; i++) {
 			double angle = omega * i * DT;
-			double dVN = (currentAN + ax * Math.cos(angle) - ay
-					* Math.sin(angle))
-					/ 2 * DT;
-			double dVE = (currentAE + ax * Math.sin(angle) + ay
-					* Math.cos(angle))
-					/ 2 * DT;
-
-			currentPN += (currentVN + dVN / 2) * DT;
-			currentPE += (currentVE + dVE / 2) * DT;
-
-			currentVE += dVE;
-			currentVN += dVN;
-
-			currentAN = ax * Math.cos(angle) - ay * Math.sin(angle);
-			currentAE = ax * Math.sin(angle) + ay * Math.cos(angle);
+			
+			updatePosition(ax, ay, angle);
 
 			x[i] = currentPE;
 			y[i] = currentPN;
