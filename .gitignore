@@ -52,3 +52,6 @@ Temporary Items
 
 #java stuff
 *.class
+.classpath
+
+*.prefs
