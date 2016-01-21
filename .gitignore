@@ -58,3 +58,7 @@ Temporary Items
 /build/*
 /dist/*
 *.prefs
+
+#vim stuff
+*.swp
+*~
