@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
+import org.usfirst.frc.team948.robot.utilities.PositionTracker;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -97,6 +99,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        periodicAll();
     }
 
     public void teleopInit() {
@@ -114,6 +117,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        periodicAll();
     }
     
     /**
@@ -121,5 +125,9 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+        periodicAll();
+    }
+    public void periodicAll(){
+    	PositionTracker.updatePosition();
     }
 }
