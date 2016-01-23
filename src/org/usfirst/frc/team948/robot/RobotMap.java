@@ -29,11 +29,16 @@ public class RobotMap {
 	public static Victor motorFrontRight;
 	public static Victor motorBackLeft;
 	public static Victor motorBackRight;
-	public static Gyro driveGyro;
+	public static AnalogGyro driveGyro;
 	public static AnalogInput armAngleEncoder;
 	public static Talon acquireArmTalon;
 	public static Talon acquireWheelTalon;
 	public static BuiltInAccelerometer accelerometer;
+	public static AnalogInput aLeftGear;
+	public static AnalogInput bLeftGear;
+	public static AnalogInput aRightGear;
+	public static AnalogInput bRightGear;
+	
 	
 	public static void init() {
 
@@ -53,6 +58,12 @@ public class RobotMap {
 		}
 		
 		armAngleEncoder = new AnalogInput(7); //Port numbers (channel numbers) unknown, 7 now taken
+		aLeftGear  = new AnalogInput(0);
+		bLeftGear  = new AnalogInput(1);
+		aRightGear = new AnalogInput(2);
+		bRightGear = new AnalogInput(3);
+		
+		
 		accelerometer = new BuiltInAccelerometer();
 		acquireArmTalon = new Talon(9);
 		acquireWheelTalon = new Talon(10);

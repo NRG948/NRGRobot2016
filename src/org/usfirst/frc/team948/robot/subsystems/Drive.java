@@ -3,9 +3,11 @@ package org.usfirst.frc.team948.robot.subsystems;
 import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
 
 /**
  *
@@ -18,8 +20,14 @@ public class Drive extends Subsystem implements PIDOutput {
 	public static Victor motorBackRight = RobotMap.motorFrontRight;
 
 	private double PIDOutput;
-
 	private double desiredHeading;
+	
+	private double driveStraightP;
+	private double driveStraightI;
+	private double driveStraightD;
+	
+	//private PIDController drivePID = new PIDController(driveStraightP,driveStraightI,driveStraightD, RobotMap.driveGyro, this);
+
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
