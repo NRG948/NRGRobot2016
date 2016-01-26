@@ -23,13 +23,15 @@ public class PositionTracker {
 	public static void updatePosition() {
 		double ax = RobotMap.accelerometer.getX() * ONE_G;
 		double ay = RobotMap.accelerometer.getY() * ONE_G;
-		double angle = RobotMap.driveGyro.getAngle() * Math.PI / 180;
-		
+		double angle = 0;
+		if (RobotMap.driveGyro != null) {
+			angle = RobotMap.driveGyro.getAngle() * Math.PI / 180;
+		}
+
 		updatePosition(ax, ay, angle);
 	}
-	
-	private static void updatePosition(double ax, double ay, double angle)
-	{
+
+	private static void updatePosition(double ax, double ay, double angle) {
 		// acceleration components
 		double an = ax * Math.cos(angle) - ay * Math.sin(angle);
 		double ae = ax * Math.sin(angle) + ay * Math.cos(angle);
@@ -51,50 +53,50 @@ public class PositionTracker {
 		currentPN = pn;
 		currentPE = pe;
 	}
-	
-	public static void test() {
-		double ax = -1;
-		double ay = 0;
-		double omega = 1;
-		double duration = 30;
-		final double[] x = new double[(int) (duration / DT)];
-		final double[] y = new double[(int) (duration / DT)];
-		currentVE = omega * 1;
-		currentVN = 0;
-		for (int i = 0; i < duration / DT; i++) {
-			double angle = omega * i * DT;
-			
-			updatePosition(ax, ay, angle);
 
-			x[i] = currentPE;
-			y[i] = currentPN;
-		}
-
-		JFrame frame = new JFrame();
-		frame.setSize(500, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-
-		frame.add(new JPanel() {
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				// coordinate changes
-				double radius = 100;
-				int cx = getWidth() / 2;
-				int cy = getHeight() / 2;
-				g.setColor(Color.RED);
-				for (int i = 0; i < x.length; i++) {
-					int xp = (int) (cx + x[i] * radius);
-					int yp = (int) (cy - y[i] * radius);
-					g.fillOval(xp - 1, yp - 1, 2, 2);
-				}
-			}
-		});
-
-	}
-
-	public static void main(String[] args) {
-		test();
-	}
+	// public static void test() {
+	// double ax = -1;
+	// double ay = 0;
+	// double omega = 1;
+	// double duration = 30;
+	// final double[] x = new double[(int) (duration / DT)];
+	// final double[] y = new double[(int) (duration / DT)];
+	// currentVE = omega * 1;
+	// currentVN = 0;
+	// for (int i = 0; i < duration / DT; i++) {
+	// double angle = omega * i * DT;
+	//
+	// updatePosition(ax, ay, angle);
+	//
+	// x[i] = currentPE;
+	// y[i] = currentPN;
+	// }
+	//
+	// JFrame frame = new JFrame();
+	// frame.setSize(500, 500);
+	// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	// frame.setVisible(true);
+	//
+	// frame.add(new JPanel() {
+	// @Override
+	// protected void paintComponent(Graphics g) {
+	// super.paintComponent(g);
+	// // coordinate changes
+	// double radius = 100;
+	// int cx = getWidth() / 2;
+	// int cy = getHeight() / 2;
+	// g.setColor(Color.RED);
+	// for (int i = 0; i < x.length; i++) {
+	// int xp = (int) (cx + x[i] * radius);
+	// int yp = (int) (cy - y[i] * radius);
+	// g.fillOval(xp - 1, yp - 1, 2, 2);
+	// }
+	// }
+	// });
+	//
+	// }
+	//
+	// public static void main(String[] args) {
+	// test();
+	// }
 }

@@ -12,7 +12,7 @@ public class DriveStraightFeet extends CommandBase {
 	public double angle;
 	public double distanceSoFar;
 	public static final double SLOWING_DOWN_DISTANCE = 1.0;
-
+       
 	public DriveStraightFeet(double power, double feet) {
 		requires(drive);
 		this.power = power;
