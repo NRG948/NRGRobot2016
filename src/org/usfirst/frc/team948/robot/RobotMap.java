@@ -42,10 +42,10 @@ public class RobotMap {
 	
 	public static void init() {
 
-		motorFrontLeft = new Victor(2);
-		motorFrontRight = new Victor(3);
-		motorBackLeft = new Victor(4);
-		motorBackRight = new Victor(5);
+		motorFrontLeft = new Victor(3);
+		motorFrontRight = new Victor(0);
+		motorBackLeft = new Victor(2);
+		motorBackRight = new Victor(1);
 		
 		try
 		{

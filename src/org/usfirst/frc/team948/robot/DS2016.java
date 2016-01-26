@@ -2,7 +2,10 @@ package org.usfirst.frc.team948.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
+import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -22,6 +25,7 @@ public class DS2016 {
     // commands the same as any other Button.
 	public static final Joystick leftJoystick = new Joystick(1);
 	public static final Joystick rightJoystick = new Joystick(2);
+	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
 	public double getLeftJSY() {		
 		return leftJoystick.getY();
 	}
@@ -45,7 +49,10 @@ public class DS2016 {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new RawTankDrive());
-	
+	public static void buttonInit() {
+		driveStraightButton.whileHeld(new ManualDriveStraight());
+		driveStraightButton.whenReleased(new ManualDrive());
+	}
 	
 }
 

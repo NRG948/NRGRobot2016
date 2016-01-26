@@ -8,26 +8,26 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-
 /**
  *
  */
 
 public class Drive extends Subsystem implements PIDOutput {
-	public static Victor motorFrontLeft = RobotMap.motorBackLeft;
-	public static Victor motorFrontRight = RobotMap.motorBackRight;
-	public static Victor motorBackLeft = RobotMap.motorFrontLeft;
-	public static Victor motorBackRight = RobotMap.motorFrontRight;
+	public static Victor motorFrontLeft = RobotMap.motorFrontLeft;
+	public static Victor motorFrontRight = RobotMap.motorFrontRight;
+	public static Victor motorBackLeft = RobotMap.motorBackLeft;
+	public static Victor motorBackRight = RobotMap.motorBackRight;
 
 	private double PIDOutput;
 	private double desiredHeading;
-	
+
 	private double driveStraightP;
 	private double driveStraightI;
 	private double driveStraightD;
-	
-	//private PIDController drivePID = new PIDController(driveStraightP,driveStraightI,driveStraightD, RobotMap.driveGyro, this);
 
+	// private PIDController drivePID = new
+	// PIDController(driveStraightP,driveStraightI,driveStraightD,
+	// RobotMap.driveGyro, this);
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -40,12 +40,10 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 
 	public void rawTankDrive(double leftPower, double rightPower) {
-
 		motorFrontLeft.set((-1) * leftPower);
 		motorFrontRight.set(rightPower);
 		motorBackLeft.set((-1) * leftPower);
 		motorBackRight.set(rightPower);
-
 	}
 
 	public void rawStop() {
