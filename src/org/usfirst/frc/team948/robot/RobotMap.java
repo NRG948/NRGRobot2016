@@ -44,9 +44,9 @@ public class RobotMap {
 	public static void init() {
 
 		motorFrontLeft = new Victor(2);
-		motorFrontRight = new Victor(3);
-		motorBackLeft = new Victor(4);
-		motorBackRight = new Victor(5);
+		motorFrontRight = new Victor(0);
+		motorBackLeft = new Victor(3);
+		motorBackRight = new Victor(1);
 
 		try {
 			driveGyro = new AnalogGyro(6); // Port number(channel number)
