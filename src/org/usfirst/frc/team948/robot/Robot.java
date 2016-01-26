@@ -46,11 +46,8 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		// init RobotMap first to avoid NullPointerExceptions
-    	RobotMap.init();
-		
 		oi = new DS2016();
-		DS2016.buttonInit();
+		RobotMap.init();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ManualDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
