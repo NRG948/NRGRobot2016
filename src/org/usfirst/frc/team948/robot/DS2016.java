@@ -38,6 +38,7 @@ public class DS2016 {
 
 	public static void buttonInit() {
 		driveStraightButton.whenPressed(new ManualDriveStraight());
+		driveStraightButton.whenReleased(new ManualDrive());
 	}
 
 	//// TRIGGERING COMMANDS WITH BUTTONS
