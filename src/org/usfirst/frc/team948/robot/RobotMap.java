@@ -31,7 +31,7 @@ public class RobotMap {
 	public static Victor motorFrontRight;
 	public static Victor motorBackLeft;
 	public static Victor motorBackRight;
-	public static AnalogGyro driveGyro;
+	public static Gyro driveGyro;
 	public static AnalogInput armAngleEncoder;
 	public static Talon acquireArmTalon;
 	public static Talon acquireWheelTalon;

@@ -3,7 +3,7 @@ package org.usfirst.frc.team948.robot.subsystems;
 import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.utilities.MathHelper;
-
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Victor;
@@ -30,7 +30,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double driveStraightI;
 	private double driveStraightD;
 	
-	private PIDController drivePID = new PIDController(driveStraightP,driveStraightI,driveStraightD, RobotMap.driveGyro, this);
+	private PIDController drivePID = new PIDController(driveStraightP,driveStraightI,driveStraightD, (AnalogGyro)RobotMap.driveGyro, this);
 
 
 	// Put methods for controlling this subsystem
