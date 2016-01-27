@@ -1,7 +1,11 @@
 package org.usfirst.frc.team948.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+import com.kauailabs.navx.frc.AHRS.SerialDataType;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Talon;
@@ -38,7 +42,7 @@ public class RobotMap {
 	public static AnalogInput bLeftGear;
 	public static AnalogInput aRightGear;
 	public static AnalogInput bRightGear;
-	
+	public static AHRS ahrs; 
 	
 	public static void init() {
 
@@ -46,6 +50,7 @@ public class RobotMap {
 		motorFrontRight = new Victor(3);
 		motorBackLeft = new Victor(4);
 		motorBackRight = new Victor(5);
+		ahrs = new AHRS(Port.kMXP);
 		
 		try
 		{
