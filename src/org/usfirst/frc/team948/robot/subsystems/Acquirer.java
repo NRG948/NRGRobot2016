@@ -57,7 +57,7 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		armAnglePID.enable();
 	}
 	
-	public void RaiseArmTo(Robot.ACQUIRER_ARM_LEVEL_HEIGHT ARM_ANGLE){
+	public void raiseArmTo(Robot.ACQUIRER_ARM_LEVEL_HEIGHT ARM_ANGLE){
 		setDesiredArmAngle(ARM_ANGLE.getValue());
 		moveArmToDesiredAngle();
 		stopArm();
