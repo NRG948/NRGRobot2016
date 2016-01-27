@@ -1,5 +1,6 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
+import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -19,6 +20,7 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
 
 	public Acquirer() {
+		
 	}
 
 	public void setArmControllerPower(double power) {
@@ -53,6 +55,12 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		armAnglePID.setAbsoluteTolerance(TOLERANCE);
 		pidOutput = 0;
 		armAnglePID.enable();
+	}
+	
+	public void RaiseArmTo(Robot.ACQUIRER_ARM_LEVEL_HEIGHT ARM_ANGLE){
+		setDesiredArmAngle(ARM_ANGLE.getValue());
+		moveArmToDesiredAngle();
+		stopArm();
 	}
 
 	public void moveArmToDesiredAngle() {
