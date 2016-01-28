@@ -31,7 +31,7 @@ public class RobotMap {
 	public static Victor motorFrontRight;
 	public static Victor motorBackLeft;
 	public static Victor motorBackRight;
-	public static Gyro driveGyro;
+	public static AnalogGyro driveGyro;
 	public static AnalogInput armAngleEncoder;
 	public static Talon acquireArmTalon;
 	public static Talon acquireWheelTalon;
@@ -55,7 +55,7 @@ public class RobotMap {
 
 		catch (Exception e) {
 			// No gyro available use DummyGyro to prevent NullPointerExceptions
-			driveGyro = new DummyGyro();
+			//driveGyro = new DummyGyro();
 		}
 
 		armAngleEncoder = new AnalogInput(7); // Port numbers (channel numbers)
