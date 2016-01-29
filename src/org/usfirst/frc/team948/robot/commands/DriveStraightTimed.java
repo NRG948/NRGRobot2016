@@ -37,6 +37,7 @@ public class DriveStraightTimed extends CommandBase {
 
 	@Override
 	protected void initialize() {
+		timer.reset();
 		timer.start();
 	}
 
@@ -49,9 +50,4 @@ public class DriveStraightTimed extends CommandBase {
 	protected boolean isFinished() {
 		return (timer.get() >= time);
 	}
-=======
-public class DriveStraightTimed {
->>>>>>> origin/master
->>>>>>> Stashed changes
-
 }
