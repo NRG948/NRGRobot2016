@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
+import edu.wpi.first.wpilibj.SerialPort;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -54,13 +55,13 @@ public class RobotMap {
 
 	public static void init() {
 //The parameters typed in for the encoder objects are random.
-		rightShooterWheel=new Talon(0);
-		leftShooterWheel=new Talon(1);
-		shooterLifterMotor=new Talon(2);
+		//rightShooterWheel=new Talon(0);
+		//leftShooterWheel=new Talon(1);
+		//shooterLifterMotor=new Talon(2);
 		rightShooterWheelEncoder=new Encoder(1,2);
-		leftShooterWheelEncoder=new Encoder(2,3);
+		//leftShooterWheelEncoder=new Encoder(2,3);
 		shooterLifterEncoder=new Encoder(3,4);
-		
+		ahrs = new AHRS(SerialPort.Port.kMXP);
 		motorFrontLeft = new Victor(2);
 		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Front Left Victor",(Victor) motorFrontLeft);
 		
@@ -77,14 +78,13 @@ public class RobotMap {
 
 		try {
 			driveGyro = new AnalogGyro(6); // Port number(channel number)
-											// unknown, 6 now taken
+			LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);							// unknown, 6 now taken
 		}
 
 		catch (Exception e) {
 			// No gyro available use DummyGyro to prevent NullPointerExceptions
 			driveGyro = new DummyGyro();
 		}
-		LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);
 		armAngleEncoder = new AnalogInput(7); // Port numbers (channel numbers)
 												// unknown, 7 now taken
 		LiveWindow.addSensor("Drive Subsystem", "Angle Arm Encoder", armAngleEncoder);

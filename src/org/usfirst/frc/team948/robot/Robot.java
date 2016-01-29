@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 		oi = new DS2016();
 		RobotMap.init();
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ManualDrive());
+     //   chooser.addDefault("Default Auto", new ManualDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
     }
