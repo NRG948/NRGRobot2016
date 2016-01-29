@@ -27,7 +27,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double desiredHeading;
 
 	public final PIDController drivePID = new PIDController(0.01, 
-			0.01 * 2 * 0.05, 0.005, (AnlogGyro)RobotMap.driveGyro, this);
+			0.01 * 2 * 0.05, 0.005, (AnalogGyro)RobotMap.driveGyro, this);
 
 
 	// Put methods for controlling this subsystem
