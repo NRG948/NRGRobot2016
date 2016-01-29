@@ -30,9 +30,14 @@ public class Robot extends IterativeRobot {
 		FULL_BACK_START(105);
 		
 		private double value;
+		
 
 		private ACQUIRER_ARM_LEVEL_HEIGHT(double value) {
 			this.value = value;
+		}
+		
+		public double getAngle(){
+			return value;
 		}
 	}
 	

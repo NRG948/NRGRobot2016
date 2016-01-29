@@ -17,10 +17,19 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	private double pidOutput;
 	private final double ANGLE_TO_VOLTS = 0.01389;
 	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
+	private double CurrentAngle = 0.0; // Change this value to the starting angle of the acquirer
 
 	public Acquirer() {
 	}
 
+	public void setCurrentAngle(double angle){
+		CurrentAngle = angle;
+	}
+	
+	public double getCurrentAngle(){
+		return CurrentAngle;
+	}
+	
 	public void setArmControllerPower(double power) {
 		armController.set(power);
 	}
