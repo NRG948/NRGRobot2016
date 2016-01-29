@@ -72,7 +72,7 @@ public class RobotMap {
 		motorBackRight = new Victor(1);
 		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Right Victor",(Victor) motorBackRight);
 
-		LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);
+		
 
 		try {
 			driveGyro = new AnalogGyro(6); // Port number(channel number)
@@ -83,9 +83,10 @@ public class RobotMap {
 			// No gyro available use DummyGyro to prevent NullPointerExceptions
 			driveGyro = new DummyGyro();
 		}
-		
+		LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);
 		armAngleEncoder = new AnalogInput(7); // Port numbers (channel numbers)
 												// unknown, 7 now taken
+		LiveWindow.addSensor("Drive Subsystem", "Angle Arm Encoder", armAngleEncoder);
 		aLeftGear = new AnalogInput(0);
 		LiveWindow.addSensor("Drive Subsystem", "A Left Gear", aLeftGear);
 		bLeftGear = new AnalogInput(1);
