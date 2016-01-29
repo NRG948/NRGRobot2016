@@ -68,6 +68,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		RobotMap.motorBackRight.disable();
 		RobotMap.motorFrontLeft.disable();
 		RobotMap.motorFrontRight.disable();
+		RobotMap.motorBackLeft.set(99);
 	}
 
 	public void setDesiredHeadingFromGyro() {
