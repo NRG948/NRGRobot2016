@@ -34,6 +34,12 @@ public class Robot extends IterativeRobot {
 		private ACQUIRER_ARM_LEVEL_HEIGHT(double value) {
 			this.value = value;
 		}
+		
+		public double getValue(){
+				return value;
+			}
+		}
+		
 	}
 	
 	public static DS2016 oi;
