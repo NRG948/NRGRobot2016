@@ -50,6 +50,7 @@ public class RobotMap {
 	public static AnalogInput aRightGear;
 	public static AnalogInput bRightGear;
 	public static AHRS ahrs;
+	
 
 	public static void init() {
 //The parameters typed in for the encoder objects are random.
