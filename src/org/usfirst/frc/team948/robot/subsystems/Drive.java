@@ -91,7 +91,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 	public double driveOnHeadingInit(double maxOutput){
 		return drivePIDInit(
-			CommandBase.preferences.getDouble(PreferenceKeys.Drive_Straight_On_Hea678ding_P, DRIVE_STRAIGHT_ON_HEADING_P),
+			CommandBase.preferences.getDouble(PreferenceKeys.Drive_Straight_On_Heading_P, DRIVE_STRAIGHT_ON_HEADING_P),
 			CommandBase.preferences.getDouble(PreferenceKeys.Drive_Straight_On_Heading_I, DRIVE_STRAIGHT_ON_HEADING_I), 
 			CommandBase.preferences.getDouble(PreferenceKeys.Drive_Straight_On_Heading_D, DRIVE_STRAIGHT_ON_HEADING_D),
 			maxOutput); 	
