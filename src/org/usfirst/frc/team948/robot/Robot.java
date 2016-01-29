@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
+import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -129,5 +131,6 @@ public class Robot extends IterativeRobot {
     }
     public void periodicAll(){
     	PositionTracker.updatePosition();
+    	NavXTester.parameterDisplay();
     }
 }
