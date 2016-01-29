@@ -7,6 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -27,6 +28,12 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
+	public static Talon rightShooterWheel;
+	public static Talon leftShooterWheel;
+	public static Talon shooterLifterMotor;
+	public static Encoder rightShooterWheelEncoder;
+	public static Encoder leftShooterWheelEncoder;
+	public static Encoder shooterLifterEncoder;
 	public static Victor motorFrontLeft;
 	public static Victor motorFrontRight;
 	public static Victor motorBackLeft;
@@ -43,7 +50,14 @@ public class RobotMap {
 	public static AHRS ahrs;
 
 	public static void init() {
-
+//The parameters typed in for the encoder objects are random.
+		rightShooterWheel=new Talon(0);
+		leftShooterWheel=new Talon(1);
+		shooterLifterMotor=new Talon(2);
+		rightShooterWheelEncoder=new Encoder(1,2);
+		leftShooterWheelEncoder=new Encoder(2,3);
+		shooterLifterEncoder=new Encoder(3,4);
+		
 		motorFrontLeft = new Victor(2);
 		motorFrontRight = new Victor(0);
 		motorBackLeft = new Victor(3);
