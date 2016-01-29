@@ -1,16 +1,14 @@
 package org.usfirst.frc.team948.robot;
 
+import org.usfirst.frc.team948.robot.utilities.DummyGyro;
+
 import com.kauailabs.navx.frc.AHRS;
-import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
@@ -33,7 +31,7 @@ public class RobotMap {
 	public static Victor motorFrontRight;
 	public static Victor motorBackLeft;
 	public static Victor motorBackRight;
-	public static AnalogGyro driveGyro;
+	public static Gyro driveGyro;
 	public static AnalogInput armAngleEncoder;
 	public static Talon acquireArmTalon;
 	public static Talon acquireWheelTalon;
@@ -42,33 +40,32 @@ public class RobotMap {
 	public static AnalogInput bLeftGear;
 	public static AnalogInput aRightGear;
 	public static AnalogInput bRightGear;
-	public static AHRS ahrs; 
-	
+	public static AHRS ahrs;
+
 	public static void init() {
 
 		motorFrontLeft = new Victor(2);
-		motorFrontRight = new Victor(3);
-		motorBackLeft = new Victor(4);
-		motorBackRight = new Victor(5);
-		ahrs = new AHRS(Port.kMXP);
-		
-		try
-		{
-			driveGyro = new AnalogGyro(6); //Port number(channel number) unknown, 6 now taken
+		motorFrontRight = new Victor(0);
+		motorBackLeft = new Victor(3);
+		motorBackRight = new Victor(1);
+
+		try {
+			driveGyro = new AnalogGyro(6); // Port number(channel number)
+											// unknown, 6 now taken
 		}
-		
-		catch (Exception e)
-		{
-			System.out.println("Could not instantiate AnalogGyro");
+
+		catch (Exception e) {
+			// No gyro available use DummyGyro to prevent NullPointerExceptions
+			driveGyro = new DummyGyro();
 		}
-		
-		armAngleEncoder = new AnalogInput(7); //Port numbers (channel numbers) unknown, 7 now taken
-		aLeftGear  = new AnalogInput(0);
-		bLeftGear  = new AnalogInput(1);
+
+		armAngleEncoder = new AnalogInput(7); // Port numbers (channel numbers)
+												// unknown, 7 now taken
+		aLeftGear = new AnalogInput(0);
+		bLeftGear = new AnalogInput(1);
 		aRightGear = new AnalogInput(2);
 		bRightGear = new AnalogInput(3);
-		
-		
+
 		accelerometer = new BuiltInAccelerometer();
 		acquireArmTalon = new Talon(9);
 		acquireWheelTalon = new Talon(10);

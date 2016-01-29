@@ -25,12 +25,9 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double PID_MIN_OUTPUT;
 	private double PID_MAX_OUTPUT;
 	private double desiredHeading;
-	
-	private double driveStraightP;
-	private double driveStraightI;
-	private double driveStraightD;
-	
-	private PIDController drivePID = new PIDController(driveStraightP,driveStraightI,driveStraightD, (AnalogGyro)RobotMap.driveGyro, this);
+
+	public final PIDController drivePID = new PIDController(0.01,
+			0.01 * 2 * 0.05, 0.005, RobotMap.driveGyro, this);
 
 
 	// Put methods for controlling this subsystem
@@ -41,6 +38,15 @@ public class Drive extends Subsystem implements PIDOutput {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
 		setDefaultCommand(new ManualDrive());
+	}
+
+	public double drivePIDInit(double p, double i, double d, double maxOutput) {
+		drivePID.reset();
+		drivePID.setPID(p,i,d);
+		drivePID.setOutputRange(-Math.abs(maxOutput), Math.abs(maxOutput));
+		drivePID.enable();
+		System.out.println("Drive P:" + p + " I:" + i + " D:" + d);
+		return RobotMap.driveGyro.getAngle();
 	}
 
 	public void rawTankDrive(double leftPower, double rightPower) {
