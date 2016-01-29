@@ -2,11 +2,13 @@ package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
-
+import org.usfirst.frc.team948.robot.utilities.MathHelper;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -20,13 +22,15 @@ public class Drive extends Subsystem implements PIDOutput {
 	public static Victor motorBackRight = RobotMap.motorFrontRight;
 
 	private double PIDOutput;
+	private double PID_MIN_OUTPUT;
+	private double PID_MAX_OUTPUT;
 	private double desiredHeading;
 	
 	private double driveStraightP;
 	private double driveStraightI;
 	private double driveStraightD;
 	
-	//private PIDController drivePID = new PIDController(driveStraightP,driveStraightI,driveStraightD, RobotMap.driveGyro, this);
+	private PIDController drivePID = new PIDController(driveStraightP,driveStraightI,driveStraightD, (AnalogGyro)RobotMap.driveGyro, this);
 
 
 	// Put methods for controlling this subsystem
@@ -68,5 +72,34 @@ public class Drive extends Subsystem implements PIDOutput {
 		PIDOutput = arg0;
 		// TODO Auto-generated method stub
 
+	}
+	public void driveOnHeadingEnd(){ 
+		rawStop();
+		drivePID.reset();
+		PIDOutput = 0;
+	}
+	
+	public void driveOnHeading(double power, double heading) {
+		drivePID.setSetpoint(heading);
+
+		double error = heading - RobotMap.driveGyro.getAngle();
+		double outputRange = MathHelper.clamp(PID_MIN_OUTPUT
+				+ (Math.abs(error) / 15.0) * (PID_MAX_OUTPUT - PID_MIN_OUTPUT),
+				0, PID_MAX_OUTPUT);
+		drivePID.setOutputRange(-outputRange, outputRange);
+
+		double currentPIDOutput = MathHelper.clamp(PIDOutput, -outputRange,
+				outputRange);
+		SmartDashboard.putNumber("Current PID OUTPUT", currentPIDOutput);	
+		double leftPower = power;
+		double rightPower = power;
+
+		if (currentPIDOutput > 0) {
+			rightPower -= currentPIDOutput;
+		} else {
+			leftPower += currentPIDOutput;
+		}
+
+		rawTankDrive(leftPower, rightPower);
 	}
 }
