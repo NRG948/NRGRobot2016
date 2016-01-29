@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -59,9 +61,18 @@ public class RobotMap {
 		shooterLifterEncoder=new Encoder(3,4);
 		
 		motorFrontLeft = new Victor(2);
+		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Front Left Victor",(Victor) motorFrontLeft);
+		
 		motorFrontRight = new Victor(0);
+		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Front Right Victor",(Victor) motorFrontRight);
+		
 		motorBackLeft = new Victor(3);
+		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Left Victor",(Victor) motorBackLeft);
+		
 		motorBackRight = new Victor(1);
+		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Right Victor",(Victor) motorBackRight);
+
+		LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);
 
 		try {
 			driveGyro = new AnalogGyro(6); // Port number(channel number)
@@ -72,16 +83,22 @@ public class RobotMap {
 			// No gyro available use DummyGyro to prevent NullPointerExceptions
 			driveGyro = new DummyGyro();
 		}
-
+		
 		armAngleEncoder = new AnalogInput(7); // Port numbers (channel numbers)
 												// unknown, 7 now taken
 		aLeftGear = new AnalogInput(0);
+		LiveWindow.addSensor("Drive Subsystem", "A Left Gear", aLeftGear);
 		bLeftGear = new AnalogInput(1);
+		LiveWindow.addSensor("Drive Subsystem", "B Left Gear", bLeftGear);
 		aRightGear = new AnalogInput(2);
-		bRightGear = new AnalogInput(3);
+		LiveWindow.addSensor("Drive Subsystem", "A Right Gear", aRightGear);
+		bRightGear = new AnalogInput(3); 
+		LiveWindow.addSensor("Drive Subsystem", "B Right Gear", bRightGear);
 
 		accelerometer = new BuiltInAccelerometer();
 		acquireArmTalon = new Talon(9);
+		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Talon", acquireArmTalon);
 		acquireWheelTalon = new Talon(10);
+		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Wheel Talon", acquireWheelTalon);
 	}
 }
