@@ -41,5 +41,8 @@ public class NavXTester {
 		SmartDashboard.putNumber("worldax", ahrs.getWorldLinearAccelX());
 		SmartDashboard.putNumber("worlday", ahrs.getWorldLinearAccelY());
 		SmartDashboard.putNumber("worldaz", ahrs.getWorldLinearAccelZ());
+		
+		
+		SmartDashboard.putString("Yaw axis", ahrs.getBoardYawAxis().toString());
 	}	
 }
