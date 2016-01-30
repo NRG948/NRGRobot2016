@@ -6,7 +6,8 @@ import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.utilities.MathHelper;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;	
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,12 +28,12 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double PID_MIN_OUTPUT;
 	private double PID_MAX_OUTPUT;
 	private double desiredHeading;
-	private double DRIVE_STRAIGHT_ON_HEADING_P;
-	private double DRIVE_STRAIGHT_ON_HEADING_I;
-	private double DRIVE_STRAIGHT_ON_HEADING_D;
+	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.02;
+	private final double DRIVE_STRAIGHT_ON_HEADING_I = 0.005;
+	private final double DRIVE_STRAIGHT_ON_HEADING_D = 0.02;
 
-	public final PIDController drivePID = new PIDController(0.01, 
-			0.01 * 2 * 0.05, 0.005, (AnalogGyro)RobotMap.driveGyro, this);
+	public final PIDController drivePID = new PIDController(0.01,
+			0.01 * 2 * 0.05, 0.005, (PIDSource)RobotMap.driveGyro, this);
 
 
 	// Put methods for controlling this subsystem
@@ -56,10 +57,10 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	public void rawTankDrive(double leftPower, double rightPower) {
 
-		motorFrontLeft.set((-1) * leftPower);
-		motorFrontRight.set(rightPower);
-		motorBackLeft.set((-1) * leftPower);
-		motorBackRight.set(rightPower);
+		RobotMap.motorFrontLeft.set((-1) * leftPower);
+		RobotMap.motorFrontRight.set(rightPower);
+		RobotMap.motorBackLeft.set((-1) * leftPower);
+		RobotMap.motorBackRight.set(rightPower);
 
 	}
 
@@ -68,7 +69,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		RobotMap.motorBackRight.disable();
 		RobotMap.motorFrontLeft.disable();
 		RobotMap.motorFrontRight.disable();
-		RobotMap.motorBackLeft.set(99);
+		//RobotMap.motorBackLeft.set(99);
 	}
 
 	public void setDesiredHeadingFromGyro() {

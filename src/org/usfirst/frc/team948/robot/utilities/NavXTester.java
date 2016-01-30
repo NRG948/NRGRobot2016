@@ -19,8 +19,8 @@ public class NavXTester {
 		
 		//Angular velocities
 		SmartDashboard.putNumber("GyroX (deg/s)", ahrs.getRawGyroX());
-		SmartDashboard.putNumber("GyroY (deg/s)", ahrs.getRawAccelY());
-		SmartDashboard.putNumber("GyroZ (deg/s)", ahrs.getRawAccelZ());
+		SmartDashboard.putNumber("GyroY (deg/s)", ahrs.getRawGyroY());
+		SmartDashboard.putNumber("GyroZ (deg/s)", ahrs.getRawGyroZ());
 		
 		//Angles
 		SmartDashboard.putNumber("Pitch", ahrs.getPitch());

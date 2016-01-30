@@ -37,11 +37,11 @@ public class RobotMap {
 	public static Encoder rightShooterWheelEncoder;
 	public static Encoder leftShooterWheelEncoder;
 	public static Encoder shooterLifterEncoder;
-	public static Victor motorFrontLeft;
-	public static Victor motorFrontRight;
-	public static Victor motorBackLeft;
-	public static Victor motorBackRight;
-	public static Gyro driveGyro;
+	public static Victor motorFrontLeft = new Victor(2);
+	public static Victor motorFrontRight = new Victor(0);
+	public static Victor motorBackLeft = new Victor(3);
+	public static Victor motorBackRight = new Victor(1);
+	public static Gyro driveGyro = new DummyGyro();
 	public static AnalogInput armAngleEncoder;
 	public static Talon acquireArmTalon;
 	public static Talon acquireWheelTalon;
@@ -51,41 +51,26 @@ public class RobotMap {
 	public static AnalogInput aRightGear;
 	public static AnalogInput bRightGear;
 	public static AHRS ahrs;
-	
 
 	public static void init() {
 //The parameters typed in for the encoder objects are random.
 		//rightShooterWheel=new Talon(0);
 		//leftShooterWheel=new Talon(1);
 		//shooterLifterMotor=new Talon(2);
-		rightShooterWheelEncoder=new Encoder(1,2);
+		//rightShooterWheelEncoder=new Encoder(1,2);
 		//leftShooterWheelEncoder=new Encoder(2,3);
-		shooterLifterEncoder=new Encoder(3,4);
-		ahrs = new AHRS(SerialPort.Port.kMXP);
-		motorFrontLeft = new Victor(2);
-		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Front Left Victor",(Victor) motorFrontLeft);
+		//shooterLifterEncoder=new Encoder(3,4);
+		//ahrs = new AHRS(SerialPort.Port.kMXP);
+		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Front Left Victor", motorFrontLeft);
 		
-		motorFrontRight = new Victor(0);
-		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Front Right Victor",(Victor) motorFrontRight);
+		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Front Right Victor", motorFrontRight);
 		
-		motorBackLeft = new Victor(3);
-		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Left Victor",(Victor) motorBackLeft);
+		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Left Victor", motorBackLeft);
 		
-		motorBackRight = new Victor(1);
-		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Right Victor",(Victor) motorBackRight);
+		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Right Victor", motorBackRight);
 
-		
-
-		try {
-			driveGyro = new AnalogGyro(6); // Port number(channel number)
-			LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);							// unknown, 6 now taken
-		}
-
-		catch (Exception e) {
-			// No gyro available use DummyGyro to prevent NullPointerExceptions
-			driveGyro = new DummyGyro();
-		}
-		armAngleEncoder = new AnalogInput(7); // Port numbers (channel numbers)
+	
+		/*armAngleEncoder = new AnalogInput(7); // Port numbers (channel numbers)
 												// unknown, 7 now taken
 		LiveWindow.addSensor("Drive Subsystem", "Angle Arm Encoder", armAngleEncoder);
 		aLeftGear = new AnalogInput(0);
@@ -101,6 +86,7 @@ public class RobotMap {
 		acquireArmTalon = new Talon(9);
 		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Talon", acquireArmTalon);
 		acquireWheelTalon = new Talon(10);
-		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Wheel Talon", acquireWheelTalon);
+		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Wheel Talon", acquireWheelTalon);*/
+	
 	}
 }

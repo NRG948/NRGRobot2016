@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
@@ -37,9 +38,8 @@ public class Robot extends IterativeRobot {
 			this.value = value;
 		}
 	}
-	
+	public static Drive drive = new Drive();
 	public static DS2016 oi;
-
     Command autonomousCommand;
     SendableChooser chooser;
 
@@ -50,10 +50,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new DS2016();
 		RobotMap.init();
-        chooser = new SendableChooser();
-     //   chooser.addDefault("Default Auto", new ManualDrive());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+	
     }
 	
 	/**
@@ -67,6 +64,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		periodicAll();
 	}
 
 	/**
@@ -109,6 +107,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+    //	CommandBase.drive.initDefaultCommand();
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
    
@@ -130,7 +129,10 @@ public class Robot extends IterativeRobot {
         periodicAll();
     }
     public void periodicAll(){
-    	PositionTracker.updatePosition();
-    	NavXTester.parameterDisplay();
+    	SmartDashboard.putNumber("Joy1 Y", DS2016.getLeftJSY());
+    	SmartDashboard.putNumber("Joy2 y", DS2016.getRightJSY());
+    	SmartDashboard.putString("DB/String 0", "Test");
+    	//PositionTracker.updatePosition();
+    	//NavXTester.parameterDisplay();
     }
 }
