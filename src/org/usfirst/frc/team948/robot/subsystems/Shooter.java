@@ -14,20 +14,16 @@ public class Shooter extends Subsystem {
 	private static Encoder leftShooterWheelEncoder = RobotMap.leftShooterWheelEncoder;
 	private static Encoder shooterLifterEncoder = RobotMap.shooterLifterEncoder;
 
-	public Shooter() { 
-	
-	
-	
-	
-	
+	public Shooter() { 	
 	}
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
-	
+	public void rawRaiseShooter(double power){
+		shooterLifterMotor.set(power);
+	}
 }
 
 
