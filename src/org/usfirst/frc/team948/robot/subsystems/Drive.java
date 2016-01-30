@@ -129,14 +129,14 @@ public class Drive extends Subsystem implements PIDOutput {
 		rawTankDrive(leftPower, rightPower);
 	}
 	
-	public double turnToHeadingInit(double finalHeading, double power) {
+	public double turnToHeadingInit(double tolerance, double maxOutput) {
 		cyclesOnTarget = getRequiredCyclesOnTarget();
-		drivePID.setAbsoluteTolerance(finalHeading);
+		drivePID.setAbsoluteTolerance(tolerance);
 		drivePIDInit(
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_P, TURN_TO_HEADING_P),
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_I, TURN_TO_HEADING_I), 
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_D, TURN_TO_HEADING_D),
-				power);
+				maxOutput);
 		return desiredHeading;     
 	}
 	
