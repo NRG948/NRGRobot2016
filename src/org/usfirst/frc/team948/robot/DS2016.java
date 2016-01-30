@@ -26,6 +26,7 @@ public class DS2016 {
 	public static final Joystick leftJoystick = new Joystick(1);
 	public static final Joystick rightJoystick = new Joystick(2);
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
+	public static final Button resetSensorsButton = new JoystickButton(leftJoystick, 6);
 	
 	public static double getLeftJSY() {		
 		return leftJoystick.getY();
@@ -38,6 +39,7 @@ public class DS2016 {
  	public static void buttonInit() {
   		driveStraightButton.whenPressed(new ManualDriveStraight());
  		driveStraightButton.whenReleased(new ManualDrive());
+ 		resetSensorsButton.whenPressed(new ResetSensors());
   	}
  	
     //// TRIGGERING COMMANDS WITH BUTTONS
