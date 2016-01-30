@@ -12,7 +12,7 @@ public abstract class CommandBase extends Command {
 	public static Drive drive = new Drive();
 	public static Shooter shooter = new Shooter();
 	public static Acquirer acquirer = new Acquirer();
-	public static DS2016 ds = new DS2016();
+	//public static DS2016 ds = new DS2016();
 
 	public static Preferences preferences = Preferences.getInstance();
 

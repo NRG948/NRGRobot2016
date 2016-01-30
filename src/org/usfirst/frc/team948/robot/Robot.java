@@ -38,7 +38,6 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	
-	public static DS2016 oi;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -48,7 +47,6 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new DS2016();
 		RobotMap.init();
 		DS2016.buttonInit();
         chooser = new SendableChooser();

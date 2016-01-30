@@ -27,10 +27,10 @@ public class DS2016 {
 	public static final Joystick rightJoystick = new Joystick(2);
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
 	
-	public double getLeftJSY() {		
+	public static double getLeftJSY() {		
 		return leftJoystick.getY();
 	}
-	public double getRightJSY() {
+	public static double getRightJSY() {
 		// TODO Auto-generated method stub
 		return rightJoystick.getY();
 	}
