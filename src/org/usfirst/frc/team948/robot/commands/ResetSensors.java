@@ -11,7 +11,7 @@ public class ResetSensors extends CommandBase {
 	
 	}
 	protected void execute(){
-		RobotMap.ahrs.reset();
+		RobotMap.ahrs.resetDisplacement();
 		RobotMap.driveGyro.reset();
 		RobotMap.leftMotorEncoder.reset();
 		RobotMap.leftShooterWheelEncoder.reset();
