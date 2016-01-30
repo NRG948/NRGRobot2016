@@ -56,6 +56,11 @@ public class PositionTracker {
 //		currentPU = pu; 
 	}
 	
+	public static void setPosition(double x, double y){
+		currentPN = x;
+		currentPE = y;
+	}
+	
 //	public static void test() {
 //		double ax = -1;
 //		double ay = 0;
