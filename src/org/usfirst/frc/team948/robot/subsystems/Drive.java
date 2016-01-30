@@ -4,6 +4,8 @@ import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.utilities.MathHelper;
+import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;	
@@ -18,6 +20,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class Drive extends Subsystem implements PIDOutput {
+	private static final int REQUIRED_CYCLES_ON_TARGET = 3;//NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_P = 0; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_I = 0; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_D = 0; //NEED TO CHECK/CHANGE LATER
 	public static Victor motorFrontLeft = RobotMap.motorBackLeft;
 	public static Victor motorFrontRight = RobotMap.motorBackRight;
 	public static Victor motorBackLeft = RobotMap.motorFrontLeft;
@@ -33,6 +39,7 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	public final PIDController drivePID = new PIDController(0.01, 
 			0.01 * 2 * 0.05, 0.005, (AnalogGyro)RobotMap.driveGyro, this);
+	private int cyclesOnTarget;
 
 
 	// Put methods for controlling this subsystem
@@ -120,5 +127,20 @@ public class Drive extends Subsystem implements PIDOutput {
 		}
 
 		rawTankDrive(leftPower, rightPower);
+	}
+	
+	public double turnToHeadingInit(double finalHeading, double power) {
+		cyclesOnTarget = getRequiredCyclesOnTarget();
+		drivePID.setAbsoluteTolerance(finalHeading);
+		drivePIDInit(
+				CommandBase.preferences.getDouble(PreferenceKeys.Turn_P, TURN_TO_HEADING_P),
+				CommandBase.preferences.getDouble(PreferenceKeys.Turn_I, TURN_TO_HEADING_I), 
+				CommandBase.preferences.getDouble(PreferenceKeys.Turn_D, TURN_TO_HEADING_D),
+				power);
+		return desiredHeading;     
+	}
+	
+	public int getRequiredCyclesOnTarget(){
+		return REQUIRED_CYCLES_ON_TARGET;
 	}
 }
