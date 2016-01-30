@@ -48,16 +48,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		setDefaultCommand(new ManualDrive());
 	}
 
-	public double drivePIDInit(double p, double i, double d, double maxOutput) {
-		drivePID = new PIDController(0.01,
-				0.01 * 2 * 0.05, 0.005, (PIDSource)RobotMap.driveGyro, this);
-		drivePID.reset();
-		drivePID.setPID(p,i,d);
-		drivePID.setOutputRange(-Math.abs(maxOutput), Math.abs(maxOutput));
-		drivePID.enable();
-		System.out.println("Drive P:" + p + " I:" + i + " D:" + d);
-		return RobotMap.driveGyro.getAngle();
-	}
+	
 
 	public void rawTankDrive(double leftPower, double rightPower) {
 
@@ -82,6 +73,16 @@ public class Drive extends Subsystem implements PIDOutput {
 	public void setDesiredHeading(double angle) {
 		desiredHeading = RobotMap.driveGyro.getAngle();
 	}
+	public double drivePIDInit(double p, double i, double d, double maxOutput) {
+		drivePID = new PIDController(0.01,
+				0.01 * 2 * 0.05, 0.005, (PIDSource)RobotMap.driveGyro, this);
+		drivePID.reset();
+		drivePID.setPID(p,i,d);
+		drivePID.setOutputRange(-Math.abs(maxOutput), Math.abs(maxOutput));
+		drivePID.enable();
+		System.out.println("Drive P:" + p + " I:" + i + " D:" + d);
+		return RobotMap.driveGyro.getAngle();
+	}
 
 	@Override
 	public void pidWrite(double arg0) {
@@ -89,11 +90,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		// TODO Auto-generated method stub
 
 	}
-	public void driveOnHeadingEnd(){ 
-		rawStop();
-		drivePID.reset();
-		PIDOutput = 0;
-	}
+	
 	public double driveOnHeadingInit(double maxOutput){
 		return drivePIDInit(
 			CommandBase.preferences.getDouble(PreferenceKeys.Drive_Straight_On_Heading_P, DRIVE_STRAIGHT_ON_HEADING_P),
@@ -127,6 +124,11 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		rawTankDrive(leftPower, rightPower);
 	}
+	public void driveOnHeadingEnd(){ 
+		rawStop();
+		drivePID.reset();
+		PIDOutput = 0;
+	}
 	
 	public double turnToHeadingInit(double tolerance, double maxOutput) {
 		cyclesOnTarget = getRequiredCyclesOnTarget();
@@ -138,16 +140,17 @@ public class Drive extends Subsystem implements PIDOutput {
 				maxOutput);
 		return desiredHeading;     
 	}
-	
-	public int getRequiredCyclesOnTarget(){
-		return REQUIRED_CYCLES_ON_TARGET;
-	}
-	
 	public void turnToHeading(double finalHeading, double power){
 		drivePID.setSetpoint(finalHeading);
 		double currentPower = MathHelper.clamp(PIDOutput, -power, power);
 		rawTankDrive (currentPower, -currentPower);
-		
-		
 	}
+	public int getRequiredCyclesOnTarget(){
+		return REQUIRED_CYCLES_ON_TARGET;
+	}
+	
+	
+		
+		
+	
 }
