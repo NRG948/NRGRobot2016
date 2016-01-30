@@ -1,16 +1,14 @@
 package org.usfirst.frc.team948.robot;
 
+import org.usfirst.frc.team948.robot.utilities.AHRSAccelerometer;
 import org.usfirst.frc.team948.robot.utilities.AHRSGyro;
-import org.usfirst.frc.team948.robot.utilities.DummyGyro;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
@@ -49,7 +47,7 @@ public class RobotMap {
 	public static Encoder leftMotorEncoder = new Encoder(7, 8);
 	public static Encoder rightMotorEncoder  = new Encoder(9, 10);
 	public static AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
-	public static BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
+	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	
 
 	public static void init() {
@@ -69,6 +67,8 @@ public class RobotMap {
 		LiveWindow.addSensor("Drive Subsystem", "Left Motor Encoder", leftMotorEncoder);
 		
 		LiveWindow.addSensor("Drive Subsystem", "Right Motor Encoder", rightMotorEncoder);
+		
+		LiveWindow.addSensor("Drive Subsystem", "Accelerometer", (LiveWindowSendable) accelerometer);
 		
 		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Victor", acquireArmVictor);
 		
