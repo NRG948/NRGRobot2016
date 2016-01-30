@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public abstract class CommandBase extends Command {
 //	public static DS2016 ds = new DS2016();
 	public static Drive drive = Robot.drive;
-	public static Shooter shooter = new Shooter();
-	public static Acquirer acquirer = new Acquirer();
+	public static Shooter shooter = Robot.shooter;
+	public static Acquirer acquirer = Robot.acquirer;
 
 	public static Preferences preferences = Preferences.getInstance();
 

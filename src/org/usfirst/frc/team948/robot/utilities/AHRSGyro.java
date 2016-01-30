@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class AHRSGyro implements Gyro {
 
-    private static AHRS ahrs = RobotMap.ahrs;
+    private AHRS ahrs = RobotMap.ahrs;
 	
 	
 	public AHRSGyro() {

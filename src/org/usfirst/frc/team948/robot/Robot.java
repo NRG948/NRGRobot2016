@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
+import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
+import org.usfirst.frc.team948.robot.subsystems.Shooter;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 
@@ -39,6 +41,8 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	public static Drive drive = new Drive();
+	public static Shooter shooter;
+	public static Acquirer acquirer;
     Command autonomousCommand;
 
     /**
@@ -127,9 +131,7 @@ public class Robot extends IterativeRobot {
     }
     public void periodicAll(){
     	SmartDashboard.putNumber("Joy1 Y", DS2016.getLeftJSY());
-    	SmartDashboard.putNumber("Joy2 y", DS2016.getRightJSY());
-    	SmartDashboard.putString("DB/String 0", "Test");
-    	PositionTracker.updatePosition();
+    	//PositionTracker.updatePosition();
     	NavXTester.parameterDisplay();
     }
 }
