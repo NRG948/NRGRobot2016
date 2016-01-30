@@ -39,18 +39,16 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	public static Drive drive = new Drive();
-	public static DS2016 oi;
     Command autonomousCommand;
-    SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new DS2016();
 		RobotMap.init();
-	
+		DS2016.buttonInit();
+
     }
 	
 	/**
@@ -77,7 +75,6 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
@@ -132,7 +129,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Joy1 Y", DS2016.getLeftJSY());
     	SmartDashboard.putNumber("Joy2 y", DS2016.getRightJSY());
     	SmartDashboard.putString("DB/String 0", "Test");
-    	//PositionTracker.updatePosition();
-    	//NavXTester.parameterDisplay();
+    	PositionTracker.updatePosition();
+    	NavXTester.parameterDisplay();
     }
 }

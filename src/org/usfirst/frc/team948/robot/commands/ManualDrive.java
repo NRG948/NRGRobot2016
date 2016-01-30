@@ -27,6 +27,7 @@ public class ManualDrive extends CommandBase {
     protected void execute() {
     	drive.rawTankDrive(DS2016.getLeftJSY(),
     		    DS2016.getRightJSY());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
