@@ -145,6 +145,17 @@ public class Drive extends Subsystem implements PIDOutput {
 		double currentPower = MathHelper.clamp(PIDOutput, -power, power);
 		rawTankDrive (currentPower, -currentPower);
 	}
+	
+	public boolean turnToHeadingComplete(){
+		boolean onTarget = drivePID.onTarget();
+		if (onTarget) {
+			cyclesOnTarget++;
+		}
+		else {
+			cyclesOnTarget = 0;
+		}
+		return cyclesOnTarget >= getRequiredCyclesOnTarget();
+	}
 	public int getRequiredCyclesOnTarget(){
 		return REQUIRED_CYCLES_ON_TARGET;
 	}
@@ -153,4 +164,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		
 		
 	
+
+		
+	
+
 }
