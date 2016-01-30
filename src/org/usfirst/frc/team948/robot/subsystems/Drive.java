@@ -27,8 +27,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	private static final double TURN_TO_HEADING_D = 0; //NEED TO CHECK/CHANGE LATER
 
 	private double PIDOutput;
-	private double PID_MIN_OUTPUT;
-	private double PID_MAX_OUTPUT;
+	private double PID_MIN_OUTPUT = 0;
+	private double PID_MAX_OUTPUT = 0.5;
 	private double desiredHeading;
 	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.02;
 	private final double DRIVE_STRAIGHT_ON_HEADING_I = 0.005;
@@ -73,7 +73,6 @@ public class Drive extends Subsystem implements PIDOutput {
 		RobotMap.motorBackRight.disable();
 		RobotMap.motorFrontLeft.disable();
 		RobotMap.motorFrontRight.disable();
-		//RobotMap.motorBackLeft.set(99);
 	}
 
 	public void setDesiredHeadingFromGyro() {
@@ -114,14 +113,16 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		double currentPIDOutput = MathHelper.clamp(PIDOutput, -outputRange,
 				outputRange);
-		SmartDashboard.putNumber("Current PID OUTPUT", currentPIDOutput);	
+		SmartDashboard.putNumber("Current PID OUTPUT", currentPIDOutput);
+		SmartDashboard.putNumber("Angle", RobotMap.driveGyro.getAngle());
+		SmartDashboard.putNumber("Error", error);
 		double leftPower = power;
 		double rightPower = power;
 
 		if (currentPIDOutput > 0) {
-			rightPower -= currentPIDOutput;
+			leftPower -= currentPIDOutput;
 		} else {
-			leftPower += currentPIDOutput;
+			rightPower += currentPIDOutput;
 		}
 
 		rawTankDrive(leftPower, rightPower);

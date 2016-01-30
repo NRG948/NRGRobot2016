@@ -40,13 +40,13 @@ public class RobotMap {
 	public static Victor motorFrontRight = new Victor(0);
 	public static Victor motorBackLeft = new Victor(3);
 	public static Victor motorBackRight = new Victor(1);
-	public static Gyro driveGyro = new AHRSGyro();
 	public static AnalogInput armAngleEncoder = new AnalogInput(5);
 	public static Victor acquireArmVictor = new Victor(7);
 	public static Victor acquireWheelVictor = new Victor(8);
 	public static Encoder leftMotorEncoder = new Encoder(7, 8);
 	public static Encoder rightMotorEncoder  = new Encoder(9, 10);
 	public static AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
+	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	
 
