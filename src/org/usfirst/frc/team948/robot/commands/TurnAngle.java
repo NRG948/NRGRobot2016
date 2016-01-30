@@ -1,8 +1,5 @@
 package org.usfirst.frc.team948.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team948.robot.subsystems.Drive;
-
 public class TurnAngle extends CommandBase{
 	private double finalHeading;
 	private double angle;
@@ -33,8 +30,8 @@ public class TurnAngle extends CommandBase{
 		drive.rawStop();
 		drive.turnToHeadingEnd(finalHeading);  
 	}
-	
-	protected void interuppted(){
+
+	protected void interrupted() {
 		end();
 	}
 

@@ -149,7 +149,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	public void turnToHeadingEnd(double newHeading){
 		setDesiredHeading(newHeading); 
 		drivePID.reset();
-		pidOutput = 0;
+		PIDOutput = 0;
 	}
 	
 	public boolean turnToHeadingComplete(){
