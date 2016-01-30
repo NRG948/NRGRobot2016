@@ -23,10 +23,7 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		// TODO Auto-generated method stub
 	}
 
-	public void stopAcquirer() {
-		RobotMap.acquireArmVictor.disable();
-		RobotMap.acquireWheelVictor.disable();;
-	}
+	
 
 	public void setDesiredArmAngle(double angle) {
 		armAnglePID.reset();
@@ -47,6 +44,10 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	public void stopArm() {
 		armAnglePID.reset();
 		RobotMap.acquireArmVictor.disable();
+	}
+	public void stopAcquirer() {
+		RobotMap.acquireArmVictor.disable();
+		RobotMap.acquireWheelVictor.disable();;
 	}
 
 	@Override

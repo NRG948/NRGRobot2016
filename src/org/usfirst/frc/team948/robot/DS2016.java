@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
+import org.usfirst.frc.team948.robot.commands.ResetSensors;
 
 /**
  * This class is the glue that binds the controls on the physical operator

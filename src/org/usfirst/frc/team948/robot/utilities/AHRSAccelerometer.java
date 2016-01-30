@@ -28,9 +28,10 @@ public class AHRSAccelerometer implements Accelerometer, LiveWindowSendable {
 
 	@Override
 	public double getZ() {
+		
 		return ahrs.getWorldLinearAccelZ();
 	}
-
+	
 	@Override
 	public void setRange(Range range) {
 		AccelerometerJNI.setAccelerometerActive(false);
