@@ -5,14 +5,14 @@ import org.usfirst.frc.team948.robot.RobotMap;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Acquirer extends Subsystem implements PIDOutput {
 
 	private AnalogInput armAngleEncoder = RobotMap.armAngleEncoder;
-	private Talon armController = RobotMap.acquireArmTalon;
-	private Talon rollerController = RobotMap.acquireWheelTalon;
+	private Victor armController = RobotMap.acquireArmVictor;
+	private Victor rollerController = RobotMap.acquireWheelVictor;
 	private PIDController armAnglePID = new PIDController(0.1, 0.01, 0.005, armAngleEncoder, this);
 	private double pidOutput;
 	private final double ANGLE_TO_VOLTS = 0.01389;

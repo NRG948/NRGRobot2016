@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -31,37 +31,38 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
-	public static Talon rightShooterWheel;
-	public static Talon leftShooterWheel;
-	public static Talon shooterLifterMotor;
+	public static Victor rightShooterWheel;
+	public static Victor leftShooterWheel;
+	public static Victor shooterLifterMotor;
 	public static Encoder rightShooterWheelEncoder;
 	public static Encoder leftShooterWheelEncoder;
-	public static Encoder shooterLifterEncoder;
+	public static AnalogInput shooterLifterEncoder;
 	public static Victor motorFrontLeft;
 	public static Victor motorFrontRight;
 	public static Victor motorBackLeft;
 	public static Victor motorBackRight;
 	public static Gyro driveGyro;
 	public static AnalogInput armAngleEncoder;
-	public static Talon acquireArmTalon;
-	public static Talon acquireWheelTalon;
-	public static BuiltInAccelerometer accelerometer;
-	public static AnalogInput aLeftGear;
-	public static AnalogInput bLeftGear;
-	public static AnalogInput aRightGear;
-	public static AnalogInput bRightGear;
+	public static Victor acquireArmVictor;
+	public static Victor acquireWheelVictor;
+	public static Encoder leftMotorEncoder;
+	public static Encoder rightMotorEncoder;
 	public static AHRS ahrs;
+	public static BuiltInAccelerometer accelerometer;
 	
 
 	public static void init() {
 //The parameters typed in for the encoder objects are random.
-		//rightShooterWheel=new Talon(0);
-		//leftShooterWheel=new Talon(1);
-		//shooterLifterMotor=new Talon(2);
-		rightShooterWheelEncoder=new Encoder(1,2);
-		//leftShooterWheelEncoder=new Encoder(2,3);
-		shooterLifterEncoder=new Encoder(3,4);
+		rightShooterWheel = new Victor(4);
+		leftShooterWheel = new Victor(5);
+		shooterLifterMotor = new Victor(6);
+		
+		rightShooterWheelEncoder = new Encoder(0, 1);
+		leftShooterWheelEncoder = new Encoder(2, 3);
+		shooterLifterEncoder = new AnalogInput(4);
+		
 		ahrs = new AHRS(SerialPort.Port.kMXP);
+		
 		motorFrontLeft = new Victor(2);
 		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Front Left Victor",(Victor) motorFrontLeft);
 		
@@ -74,8 +75,6 @@ public class RobotMap {
 		motorBackRight = new Victor(1);
 		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Right Victor",(Victor) motorBackRight);
 
-		
-
 		try {
 			driveGyro = new AnalogGyro(6); // Port number(channel number)
 			LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);							// unknown, 6 now taken
@@ -85,22 +84,23 @@ public class RobotMap {
 			// No gyro available use DummyGyro to prevent NullPointerExceptions
 			driveGyro = new DummyGyro();
 		}
-		armAngleEncoder = new AnalogInput(7); // Port numbers (channel numbers)
+		
+		armAngleEncoder = new AnalogInput(5); // Port numbers (channel numbers)
 												// unknown, 7 now taken
 		LiveWindow.addSensor("Drive Subsystem", "Angle Arm Encoder", armAngleEncoder);
-		aLeftGear = new AnalogInput(0);
-		LiveWindow.addSensor("Drive Subsystem", "A Left Gear", aLeftGear);
-		bLeftGear = new AnalogInput(1);
-		LiveWindow.addSensor("Drive Subsystem", "B Left Gear", bLeftGear);
-		aRightGear = new AnalogInput(2);
-		LiveWindow.addSensor("Drive Subsystem", "A Right Gear", aRightGear);
-		bRightGear = new AnalogInput(3); 
-		LiveWindow.addSensor("Drive Subsystem", "B Right Gear", bRightGear);
-
+		
+		leftMotorEncoder = new Encoder(7, 8);
+		LiveWindow.addSensor("Drive Subsystem", "Left Motor Encoder", leftMotorEncoder);
+		
+		rightMotorEncoder= new Encoder(9, 10);
+		LiveWindow.addSensor("Drive Subsystem", "Right Motor Encoder", rightMotorEncoder);
+		
+		acquireArmVictor = new Victor(7);
+		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Victor", acquireArmVictor);
+		
+		acquireWheelVictor = new Victor(8);
+		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Wheel Victor", acquireWheelVictor);
+		
 		accelerometer = new BuiltInAccelerometer();
-		acquireArmTalon = new Talon(9);
-		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Talon", acquireArmTalon);
-		acquireWheelTalon = new Talon(10);
-		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Wheel Talon", acquireWheelTalon);
 	}
 }
