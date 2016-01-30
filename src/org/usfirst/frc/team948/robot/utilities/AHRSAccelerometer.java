@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.tables.ITable;
 
 public class AHRSAccelerometer implements Accelerometer, LiveWindowSendable {
 
-	private static AHRS ahrs = RobotMap.ahrs;
+	private AHRS ahrs = RobotMap.ahrs;
 
 	public AHRSAccelerometer() {
 	}
