@@ -13,6 +13,7 @@ import org.usfirst.frc.team948.robot.subsystems.Drive;
 import org.usfirst.frc.team948.robot.subsystems.Shooter;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
+import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -133,5 +134,6 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Joy1 Y", DS2016.getLeftJSY());
     	PositionTracker.updatePosition();
     	NavXTester.parameterDisplay();
+    	VisionProcessing.updateVision();
     }
 }
