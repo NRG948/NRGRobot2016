@@ -11,16 +11,16 @@ public class NavXTester {
 	private static AHRS ahrs = RobotMap.ahrs;
 	
 	public static void parameterDisplay() {
-		
+
 		//Accelerations
 		SmartDashboard.putNumber("RawAccelX", ahrs.getRawAccelX());
 		SmartDashboard.putNumber("RawAccelY", ahrs.getRawAccelY());
 		SmartDashboard.putNumber("RawAccelZ", ahrs.getRawAccelZ());
 		
 		//Angular velocities
-		SmartDashboard.putNumber("GyroX (deg/s)", ahrs.getRawGyroX());
-		SmartDashboard.putNumber("GyroY (deg/s)", ahrs.getRawGyroY());
-		SmartDashboard.putNumber("GyroZ (deg/s)", ahrs.getRawGyroZ());
+		SmartDashboard.putNumber("GyroX (deg per s)", ahrs.getRawGyroX());
+		SmartDashboard.putNumber("GyroY (deg per s)", ahrs.getRawGyroY());
+		SmartDashboard.putNumber("GyroZ (deg per s)", ahrs.getRawGyroZ());
 		
 		//Angles
 		SmartDashboard.putNumber("Pitch", ahrs.getPitch());
@@ -28,9 +28,9 @@ public class NavXTester {
 		SmartDashboard.putNumber("Roll", ahrs.getRoll());		
 
 		//Velocities
-		SmartDashboard.putNumber("vx (m/s)", ahrs.getVelocityX());
-		SmartDashboard.putNumber("vy (m/s)", ahrs.getVelocityY());
-		SmartDashboard.putNumber("vz (m/s)", ahrs.getVelocityZ());
+		SmartDashboard.putNumber("vx (m per s)", ahrs.getVelocityX());
+		SmartDashboard.putNumber("vy (m per s)", ahrs.getVelocityY());
+		SmartDashboard.putNumber("vz (m per s)", ahrs.getVelocityZ());
 		
 		//Positions
 		SmartDashboard.putNumber("dx", ahrs.getDisplacementX());
@@ -43,6 +43,6 @@ public class NavXTester {
 		SmartDashboard.putNumber("worldaz", ahrs.getWorldLinearAccelZ());
 		
 		
-		SmartDashboard.putString("Yaw axis", ahrs.getBoardYawAxis().toString());
+		//SmartDashboard.putString("Yaw axis", ahrs.getBoardYawAxis().toString());
 	}	
 }

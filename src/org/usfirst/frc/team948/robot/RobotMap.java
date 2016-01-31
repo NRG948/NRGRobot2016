@@ -7,11 +7,13 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
+import javafx.scene.chart.LineChart.SortingPolicy;
 import edu.wpi.first.wpilibj.SerialPort;
 
 /**
@@ -46,7 +48,7 @@ public class RobotMap {
 	public static Victor acquireWheelVictor = new Victor(8);
 	public static Encoder leftMotorEncoder = new Encoder(7, 8);
 	public static Encoder rightMotorEncoder  = new Encoder(9, 10);
-	public static AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
+	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	
 
