@@ -16,7 +16,7 @@ public class ManualDriveStraight extends CommandBase {
 
 	// Drives on a fixed heading using the right joystick y-value for power
 	protected void execute() {
-		drive.driveOnHeading(heading, DS2016.getRightJSY());
+		drive.driveOnHeading(DS2016.getLeftJSY(), heading);
 	}
 
 	// Command runs forever, until it is interrupted or the battery goes dead
