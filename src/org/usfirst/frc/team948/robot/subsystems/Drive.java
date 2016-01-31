@@ -146,6 +146,12 @@ public class Drive extends Subsystem implements PIDOutput {
 		rawTankDrive (currentPower, -currentPower);
 	}
 	
+	public void turnToHeadingEnd(double newHeading){
+		setDesiredHeading(newHeading); 
+		drivePID.reset();
+		PIDOutput = 0;
+	}
+	
 	public boolean turnToHeadingComplete(){
 		boolean onTarget = drivePID.onTarget();
 		if (onTarget) {
@@ -156,6 +162,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		}
 		return cyclesOnTarget >= getRequiredCyclesOnTarget();
 	}
+	
+	
 	public int getRequiredCyclesOnTarget(){
 		return REQUIRED_CYCLES_ON_TARGET;
 	}
