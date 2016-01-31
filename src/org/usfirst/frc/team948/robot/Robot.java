@@ -133,5 +133,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Joy1 Y", DS2016.getLeftJSY());
     	//PositionTracker.updatePosition();
     	NavXTester.parameterDisplay();
+    	shooter.updateLeftRPM();
+    	shooter.updateRightRPM();
     }
 }

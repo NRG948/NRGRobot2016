@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shooter extends Subsystem {
 
+	private double currentLeftRPM;
+	private double currentRightRPM;
 	public Shooter() { 	
 	}
 
@@ -23,6 +25,15 @@ public class Shooter extends Subsystem {
 		RobotMap.leftShooterWheel.set(-power);
 		RobotMap.rightShooterWheel.set(power);
 	}
+	public void updateLeftRPM(){
+		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1); //place holder need a real DistancePerPusle
+		currentLeftRPM = 60*RobotMap.leftShooterWheelEncoder.getRate();
+	}
+	public void updateRightRPM(){
+		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1); //place holder need a real DistancePerPusle
+		currentRightRPM = 60*RobotMap.rightShooterWheelEncoder.getRate();
+	}
+	
 }
 
 
