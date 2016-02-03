@@ -5,9 +5,15 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
+import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
+import org.usfirst.frc.team948.robot.subsystems.Shooter;
+import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
+import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,23 +41,19 @@ public class Robot extends IterativeRobot {
 			this.value = value;
 		}
 	}
-	
-	public static DS2016 oi;
-
+	public static Drive drive = new Drive();
+	public static Shooter shooter;
+	public static Acquirer acquirer;
     Command autonomousCommand;
-    SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new DS2016();
 		RobotMap.init();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ManualDrive());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+		DS2016.buttonInit();
+
     }
 	
 	/**
@@ -65,6 +67,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		periodicAll();
 	}
 
 	/**
@@ -77,7 +80,6 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
@@ -107,6 +109,7 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+    //	CommandBase.drive.initDefaultCommand();
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
    
@@ -128,6 +131,11 @@ public class Robot extends IterativeRobot {
         periodicAll();
     }
     public void periodicAll(){
+    	SmartDashboard.putNumber("Joy1 Y", DS2016.getLeftJSY());
     	PositionTracker.updatePosition();
+    	NavXTester.parameterDisplay();
+    	shooter.updateLeftRPM();
+    	shooter.updateRightRPM();
+    	VisionProcessing.updateVision();
     }
 }

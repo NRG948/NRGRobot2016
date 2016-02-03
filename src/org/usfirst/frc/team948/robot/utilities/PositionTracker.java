@@ -2,6 +2,8 @@ package org.usfirst.frc.team948.robot.utilities;
 
 import org.usfirst.frc.team948.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class PositionTracker {
 
 	public static final double ONE_G = 32.2; // In feet per second squared
@@ -53,7 +55,15 @@ public class PositionTracker {
 
 		currentPN = pn;
 		currentPE = pe;
-//		currentPU = pu; 
+//		currentPU = pu;
+		
+		SmartDashboard.putNumber("North", currentPN);
+		SmartDashboard.putNumber("East", currentPE);
+	}
+	
+	public static void setPosition(double x, double y){
+		currentPN = x;
+		currentPE = y;
 	}
 	
 //	public static void test() {
