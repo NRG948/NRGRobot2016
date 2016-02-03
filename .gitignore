@@ -62,3 +62,8 @@ Temporary Items
 #vim stuff
 *.swp
 *~
+sysProps.xml
+
+build.properties
+
+build.properties

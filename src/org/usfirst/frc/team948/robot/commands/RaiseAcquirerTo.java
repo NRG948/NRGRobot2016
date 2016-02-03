@@ -2,10 +2,10 @@ package org.usfirst.frc.team948.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
 
-public class RaiseTo implements CommandBase{
+public class RaiseAcquirerTo extends CommandBase{
 	public double angle;
 	
-	public RaiseTo(double angle){
+	public RaiseAcquirerTo(double angle){
 		requires(CommandBase.acquirer);
 		this.angle = angle;
 	}
