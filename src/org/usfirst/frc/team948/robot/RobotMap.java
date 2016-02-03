@@ -72,6 +72,8 @@ public class RobotMap {
 		
 		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Victor", acquireArmVictor);
 		
-
+		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1); //TO DO: CALIBRATE ENCODER
+		
+		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(1); //TO DO: CALIBRATE ENCODER
 	}
 }

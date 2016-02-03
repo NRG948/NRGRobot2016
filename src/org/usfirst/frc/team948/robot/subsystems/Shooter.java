@@ -26,11 +26,11 @@ public class Shooter extends Subsystem {
 		RobotMap.rightShooterWheel.set(power);
 	}
 	public void updateLeftRPM(){
-		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1); //place holder need a real DistancePerPusle
+		//place holder need a real DistancePerPusle
 		currentLeftRPM = 60*RobotMap.leftShooterWheelEncoder.getRate();
 	}
 	public void updateRightRPM(){
-		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1); //place holder need a real DistancePerPusle
+		//place holder need a real DistancePerPusle
 		currentRightRPM = 60*RobotMap.rightShooterWheelEncoder.getRate();
 	}
 	

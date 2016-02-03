@@ -1,8 +1,10 @@
-package src.org.usfirst.frc.team948.robot.commands;
+package org.usfirst.frc.team948.robot.commands;
+
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
 
-public class RaiseAcquirerTo implements CommandBase{
+public class RaiseAcquirerTo extends CommandBase{
+
 	public double angle;
 	
 	public RaiseAcquirerTo(double angle){
@@ -29,5 +31,4 @@ public class RaiseAcquirerTo implements CommandBase{
 	protected void interrupted(){
 		end();
 	}
-
 }
