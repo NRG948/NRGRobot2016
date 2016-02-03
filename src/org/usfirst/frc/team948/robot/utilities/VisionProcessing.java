@@ -20,5 +20,13 @@ public class VisionProcessing {
 		height = table.getNumberArray("height", DEFAULT_ARRAY);
 		width = table.getNumberArray("width", DEFAULT_ARRAY);
 	}
+	
+	public static double getArea() {
+		return area[0];
+	}
+	
+	public static double getWidth() {
+		return width[0];
+	}
 
 }

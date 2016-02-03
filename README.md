@@ -36,7 +36,8 @@ logger, and so on.
 ##How to Use
 More on this later.
 ##Authors
+Jeremy Zhang
+Jedrek Laserna
 Frank Zhang
 Tejas Rangole
 Chuwei Guo
-
