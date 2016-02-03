@@ -44,7 +44,7 @@ public class DS2016 {
   		driveStraightButton.whenPressed(new ManualDriveStraight());
  		driveStraightButton.whenReleased(new ManualDrive());
  		resetSensorsButton.whenPressed(new ResetSensors());
- 		//ShootButton.whenPressed(new ShootCommand()); 
+ 		//shootButton.whenPressed(new ShootCommand()); 
  		acquireButton.whileHeld(new ManualAcquire(0.3));
  		
  	}
