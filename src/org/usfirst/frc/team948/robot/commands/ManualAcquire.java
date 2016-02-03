@@ -1,12 +1,9 @@
 package org.usfirst.frc.team948.robot.commands;
 
-
-
-/**
- *
- */
 public class ManualAcquire extends CommandBase {
-double power;
+	
+	double power;
+	
     public ManualAcquire(double power) {
     	this.power = power;
     	requires(acquirer);
