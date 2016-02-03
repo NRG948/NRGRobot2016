@@ -30,7 +30,7 @@ public class DS2016 {
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
 	public static final Button resetSensorsButton = new JoystickButton(leftJoystick, 6);
 	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
-	public static final Button ShootButton = new JoystickButton(rightJoystick, 1);
+	public static final Button shootButton = new JoystickButton(rightJoystick, 1);
 	
 	public static double getLeftJSY() {		
 		return leftJoystick.getY();
