@@ -30,6 +30,8 @@ public class DS2016 {
 	public static final Button resetSensorsButton = new JoystickButton(leftJoystick, 6);
 	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
 	public static final Button ShootButton = new JoystickButton(rightJoystick, 1);
+	public static final Button raiseAcquirerButton = new JoystickButton(leftJoystick, 4);
+	public static final Button lowerAcquirerButton = new JoystickButton(leftJoystick, 5);
 	
 	public static double getLeftJSY() {		
 		return leftJoystick.getY();
@@ -43,6 +45,8 @@ public class DS2016 {
   		driveStraightButton.whenPressed(new ManualDriveStraight());
  		driveStraightButton.whenReleased(new ManualDrive());
  		resetSensorsButton.whenPressed(new ResetSensors());
+ 		//raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer());
+ 		//lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer());
  		//ShootButton.whenPressed(new ShootCommand()); 
  		//acquireButton.whileHeld(new ManualAcquire());
  		
