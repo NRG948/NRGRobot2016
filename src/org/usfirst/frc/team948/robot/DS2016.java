@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
@@ -29,6 +30,9 @@ public class DS2016 {
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
 	public static final Button resetSensorsButton = new JoystickButton(leftJoystick, 6);
 	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
+	public static final Button raiseAcquirerButton = new JoystickButton(leftJoystick, 4);
+	public static final Button lowerAcquirerButton = new JoystickButton(leftJoystick, 5);
+	public static final Button shootButton = new JoystickButton(rightJoystick, 1);
 	
 	public static double getLeftJSY() {		
 		return leftJoystick.getY();
@@ -42,7 +46,12 @@ public class DS2016 {
   		driveStraightButton.whenPressed(new ManualDriveStraight());
  		driveStraightButton.whenReleased(new ManualDrive());
  		resetSensorsButton.whenPressed(new ResetSensors());
+ 		//raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer());
+ 		//lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer());
  		//acquireButton.whileHeld(new ManualAcquire());
+ 		//shootButton.whenPressed(new ShootCommand()); 
+ 		acquireButton.whileHeld(new ManualAcquire(0.3));
+ 		
  	}
  	
  	

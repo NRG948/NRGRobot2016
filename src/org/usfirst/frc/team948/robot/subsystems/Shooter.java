@@ -33,6 +33,9 @@ public class Shooter extends Subsystem {
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1); //place holder need a real DistancePerPusle
 		currentRightRPM = 60*RobotMap.rightShooterWheelEncoder.getRate();
 	}
+	public void rawBallPush(double power){
+		RobotMap.shooterBallPusher.set(power);
+	}
 	
 }
 
