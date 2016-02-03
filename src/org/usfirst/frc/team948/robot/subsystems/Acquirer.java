@@ -14,8 +14,10 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	private double pidOutput;
 	private final double ANGLE_TO_VOLTS = 0.01389;
 	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
+    private final double ACQUIRER_SPEED = 0.5;
 
-	public Acquirer() {
+
+public Acquirer() {
 	}
 
 	@Override
@@ -49,7 +51,11 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		RobotMap.acquireArmVictor.disable();
 		RobotMap.acquireWheelVictor.disable();;
 	}
-
+	
+	public void rawAcquire() {
+		RobotMap.acquireWheelVictor.set(ACQUIRER_SPEED);
+	}
+	
 	@Override
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
