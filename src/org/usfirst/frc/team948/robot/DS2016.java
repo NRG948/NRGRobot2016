@@ -28,6 +28,7 @@ public class DS2016 {
 	public static final Joystick rightJoystick = new Joystick(2);
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
 	public static final Button resetSensorsButton = new JoystickButton(leftJoystick, 6);
+	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
 	
 	public static double getLeftJSY() {		
 		return leftJoystick.getY();
@@ -41,7 +42,9 @@ public class DS2016 {
   		driveStraightButton.whenPressed(new ManualDriveStraight());
  		driveStraightButton.whenReleased(new ManualDrive());
  		resetSensorsButton.whenPressed(new ResetSensors());
-  	}
+ 		//acquireButton.whileHeld(new ManualAcquire());
+ 	}
+ 	
  	
     //// TRIGGERING COMMANDS WITH BUTTONS
     // Once you have a button, it's trivial to bind it to a button in one of
