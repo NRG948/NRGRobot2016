@@ -2,13 +2,13 @@ package org.usfirst.frc.team948.robot;
 
 import org.usfirst.frc.team948.robot.utilities.DummyGyro;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
@@ -40,6 +40,7 @@ public class RobotMap {
 	public static AnalogInput bLeftGear;
 	public static AnalogInput aRightGear;
 	public static AnalogInput bRightGear;
+	public static AHRS ahrs;
 
 	public static void init() {
 

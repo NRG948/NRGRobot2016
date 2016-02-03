@@ -30,9 +30,14 @@ public class Robot extends IterativeRobot {
 		FULL_BACK_START(105);
 		
 		private double value;
+		
 
 		private ACQUIRER_ARM_LEVEL_HEIGHT(double value) {
 			this.value = value;
+		}
+		
+		public double getAngle(){
+			return value;
 		}
 	}
 	
@@ -46,11 +51,8 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	// initialize the RobotMap before anything else to avoid any NullPointerExceptions
-		RobotMap.init();
-		
 		oi = new DS2016();
-		DS2016.buttonInit();
+		RobotMap.init();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ManualDrive());
 //        chooser.addObject("My Auto", new MyAutoCommand());
