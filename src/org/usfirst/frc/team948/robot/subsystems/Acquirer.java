@@ -52,8 +52,8 @@ public Acquirer() {
 		RobotMap.acquireWheelVictor.disable();;
 	}
 	
-	public void rawAcquire() {
-		RobotMap.acquireWheelVictor.set(ACQUIRER_SPEED);
+	public void rawAcquire(double power) {
+		RobotMap.acquireWheelVictor.set(power);
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
@@ -44,7 +45,7 @@ public class DS2016 {
  		driveStraightButton.whenReleased(new ManualDrive());
  		resetSensorsButton.whenPressed(new ResetSensors());
  		//ShootButton.whenPressed(new ShootCommand()); 
- 		//acquireButton.whileHeld(new ManualAcquire());
+ 		acquireButton.whileHeld(new ManualAcquire(0.3));
  		
  	}
  	
