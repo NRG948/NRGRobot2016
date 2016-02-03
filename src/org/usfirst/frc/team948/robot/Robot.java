@@ -47,8 +47,8 @@ public class Robot extends IterativeRobot {
 		
 	}
 	public static Drive drive = new Drive();
-	public static Shooter shooter;
-	public static Acquirer acquirer;
+	public static Shooter shooter = new Shooter;
+	public static Acquirer acquirer = new Acquirer;
     Command autonomousCommand;
 
     /**
