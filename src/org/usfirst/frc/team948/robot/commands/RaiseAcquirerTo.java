@@ -1,8 +1,12 @@
-package org.usfirst.frc.team948.robot.commands;
+package src.org.usfirst.frc.team948.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
 
+<<<<<<< HEAD:src/org/usfirst/frc/team948/robot/commands/RaiseAcquirerTo.java
 public class RaiseAcquirerTo extends CommandBase{
+=======
+public class RaiseAcquirerTo implements CommandBase{
+>>>>>>> origin/master:src/org/usfirst/frc/team948/robot/commands/RaiseAcquirerTo.java
 	public double angle;
 	
 	public RaiseAcquirerTo(double angle){
