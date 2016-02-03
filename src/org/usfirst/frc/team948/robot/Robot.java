@@ -40,6 +40,11 @@ public class Robot extends IterativeRobot {
 		private ACQUIRER_ARM_LEVEL_HEIGHT(double value) {
 			this.value = value;
 		}
+		
+		public double getValue(){
+			return value;
+		}
+		
 	}
 	public static Drive drive = new Drive();
 	public static Shooter shooter;
