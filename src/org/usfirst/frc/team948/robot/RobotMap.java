@@ -13,8 +13,6 @@ import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
-import javafx.scene.chart.LineChart.SortingPolicy;
-import edu.wpi.first.wpilibj.SerialPort;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -47,12 +45,8 @@ public class RobotMap {
 	public static Victor acquireWheelVictor = new Victor(8);
 	public static Encoder leftMotorEncoder = new Encoder(7, 8);
 	public static Encoder rightMotorEncoder  = new Encoder(9, 10);
-<<<<<<< HEAD
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
-=======
-	public static AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
->>>>>>> cd1e1f2008812417dc06ae91a8e30c9875d02cbe
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	
 
