@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot.commands;
 
 public class TurnAngle extends CommandBase{
+	private final double DEFAULT_TOLERANCE = 1.0; //This needs value needs to be changed
 	private double finalHeading;
 	private double angle;
 	private double power;
@@ -11,6 +12,13 @@ public class TurnAngle extends CommandBase{
 		this.angle = angle;
 		this.power = power;
 		this.tolerance = tolerance;
+	}
+	
+	public TurnAngle(double angle, double power){
+		requires(drive);
+		this.angle = angle;
+		this.power = power;
+		tolerance = DEFAULT_TOLERANCE;
 	}
 	
 	protected void initialize (){
