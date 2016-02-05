@@ -1,6 +1,8 @@
 package org.usfirst.frc.team948.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
 
 public class RaiseAcquirerTo extends CommandBase{
@@ -10,6 +12,11 @@ public class RaiseAcquirerTo extends CommandBase{
 	public RaiseAcquirerTo(double angle){
 		requires(CommandBase.acquirer);
 		this.angle = angle;
+	}
+	
+	public RaiseAcquirerTo(Robot.Level level){
+		requires(CommandBase.acquirer);
+		this.angle = level.getValue();
 	}
 	
 	protected void initialize (){

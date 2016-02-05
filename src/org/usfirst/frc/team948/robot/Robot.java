@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	
-	public enum ACQUIRER_ARM_LEVEL_HEIGHT {
+	public enum Level {
 		PORTCULLIS_LOW(0),
 		DEFAULT(30),
 		PORTCULLIS_HIGH(65),
@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 		
 		private double value;
 
-		private ACQUIRER_ARM_LEVEL_HEIGHT(double value) {
+		private Level(double value) {
 			this.value = value;
 		}
 		
