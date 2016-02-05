@@ -13,13 +13,17 @@ public class Shooter extends Subsystem {
 	private double currentRightRPM;
 	public Shooter() { 	
 	}
-
+	
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub		
 	}
 	public void rawRaiseShooter(double power){
 		RobotMap.shooterLifterMotor.set(power);
+	}
+	public void rawShoot(double power){
+		RobotMap.leftShooterWheel.set(-power);
+		RobotMap.rightShooterWheel.set(power);
 	}
 	public void updateLeftRPM(){
 		currentLeftRPM = 60*RobotMap.leftShooterWheelEncoder.getRate();
