@@ -49,6 +49,7 @@ public class RobotMap {
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
+	public static digitalInput ballBeamBreaker = new digitalInput(11);
 	
 
 	public static void init() {

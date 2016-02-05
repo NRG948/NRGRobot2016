@@ -35,6 +35,10 @@ public class Shooter extends Subsystem {
 		RobotMap.shooterBallPusher.set(power);
 	}
 	
+	public boolean isBallLoaded(){
+		return RobotMap.ballBeamBreaker.isSwitchSet();
+	}
+	
 }
 
 
