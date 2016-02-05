@@ -3,9 +3,6 @@ package org.usfirst.frc.team948.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Shoot extends CommandBase {
-	public double time;
-	
-	public double power;
 	
 	public Timer timer1 = new Timer();
 	
@@ -13,10 +10,8 @@ public class Shoot extends CommandBase {
 	
 	private static final double BALL_PUSH_TIME = 1.0;
 
-	public Shoot(double power, double time) {
+	public Shoot() {
 		requires(shooter);
-		this.power = power;
-		this.time = time;
 	}
 
 	@Override
@@ -28,14 +23,14 @@ public class Shoot extends CommandBase {
 
 	@Override
 	protected void execute() {
-		if (timer1.get() > time) {
+		{
 			shooter.rawBallPush(PUSH_POWER);
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		if (timer1.get() > time + BALL_PUSH_TIME) {
+		if (timer1.get() > BALL_PUSH_TIME) {
 			return true;
 		}
 		return false;
