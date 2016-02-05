@@ -2,6 +2,7 @@
 package org.usfirst.frc.team948.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -45,11 +46,11 @@ public class Robot extends IterativeRobot {
 		public double getValue(){
 			return value;
 		}
-		
 	}
 	public static Drive drive = new Drive();
 	public static Shooter shooter = new Shooter();
 	public static Acquirer acquirer = new Acquirer();
+	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
     Command autonomousCommand;
 
     /**
@@ -59,7 +60,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		RobotMap.init();
 		DS2016.buttonInit();
-
     }
 	
 	/**
@@ -68,7 +68,6 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
     }
 	
 	public void disabledPeriodic() {
@@ -144,5 +143,11 @@ public class Robot extends IterativeRobot {
     	shooter.updateLeftRPM();
     	shooter.updateRightRPM();
     	VisionProcessing.updateVision();
+		for (int i = 0; i <= 15; i++) {
+			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
+		}
+		SmartDashboard.putNumber("PDP Total Current", pdp.getTotalCurrent());
+		SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
+		
     }
 }
