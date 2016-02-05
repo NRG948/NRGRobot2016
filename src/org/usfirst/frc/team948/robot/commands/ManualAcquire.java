@@ -1,22 +1,32 @@
 package org.usfirst.frc.team948.robot.commands;
 
+import org.usfirst.frc.team948.robot.Robot;
+import org.usfirst.frc.team948.robot.RobotMap;
+
 public class ManualAcquire extends CommandBase {
 	
-	double power;
+	double power = -0.5;
 	
     public ManualAcquire(double power) {
     	this.power = power;
     	requires(acquirer);
     }
+    
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	acquirer.rawAcquire(power);
     }
+   
 
     // Called repeatedly when this Command is scheduled to run
+    
+     
     protected void execute() {
     	
+    	RobotMap.shooterBallPusher.set(power);
+    	RobotMap.rightShooterWheel.set(power);
+    	RobotMap.leftShooterWheel.set(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()
