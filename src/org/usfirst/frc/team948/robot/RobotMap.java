@@ -6,6 +6,7 @@ import org.usfirst.frc.team948.robot.utilities.AHRSGyro;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Victor;
@@ -49,7 +50,7 @@ public class RobotMap {
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
-	public static digitalInput ballBeamBreaker = new digitalInput(11);
+	public static DigitalInput ballBeamBreaker = new DigitalInput(11);
 	
 
 	public static void init() {
