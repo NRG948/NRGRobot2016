@@ -1,5 +1,13 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
-public class Drawbridge {
+import edu.wpi.first.wpilibj.command.Subsystem;
+
+public class Drawbridge extends Subsystem{
+
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
