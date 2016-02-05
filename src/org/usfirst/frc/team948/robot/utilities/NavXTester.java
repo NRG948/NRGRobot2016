@@ -42,7 +42,10 @@ public class NavXTester {
 		SmartDashboard.putNumber("worlday", ahrs.getWorldLinearAccelY());
 		SmartDashboard.putNumber("worldaz", ahrs.getWorldLinearAccelZ());
 		
-		
+		//Computed world acceleration
+		SmartDashboard.putNumber("computedawx", PositionTracker3D.aworld[0]);
+		SmartDashboard.putNumber("computedawy", PositionTracker3D.aworld[1]);
+		SmartDashboard.putNumber("computedawz", PositionTracker3D.aworld[2]);
 		//SmartDashboard.putString("Yaw axis", ahrs.getBoardYawAxis().toString());
 	}	
 }
