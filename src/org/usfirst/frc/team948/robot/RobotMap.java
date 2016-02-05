@@ -35,6 +35,9 @@ public class RobotMap {
 	public static Victor rightShooterWheel = new Victor(4);
 	public static Victor leftShooterWheel = new Victor(5);
 	public static Victor shooterLifterMotor = new Victor(6);
+	public static Victor drawbridgeArm = new Victor(12); //NEW
+	public static Victor climberTapeMeasure = new Victor(13); //NEW
+	public static Victor climberWinch = new Victor(14); //NEW
 	public static Encoder rightShooterWheelEncoder = new Encoder(0, 1);
 	public static Encoder leftShooterWheelEncoder = new Encoder(2, 3);
 	public static AnalogInput shooterLifterEncoder = new AnalogInput(4);
@@ -62,6 +65,12 @@ public class RobotMap {
 		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Left Victor",(Victor) motorBackLeft);
 		
 		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Right Victor",(Victor) motorBackRight);
+		
+		LiveWindow.addActuator("Drawbridge Subsystem", "Speed Controller Drawbridge Victor",(Victor) drawbridgeArm);
+		
+		LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Tapemeasure Victor",(Victor) climberTapeMeasure);
+		
+		LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Winch Victor",(Victor) climberWinch);
 
 		LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);							// unknown, 6 now taken
 
