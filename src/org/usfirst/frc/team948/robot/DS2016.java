@@ -8,6 +8,7 @@ import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
+import org.usfirst.frc.team948.robot.commands.Shoot;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -48,10 +49,8 @@ public class DS2016 {
  		resetSensorsButton.whenPressed(new ResetSensors());
  		//raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer());
  		//lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer());
- 		//acquireButton.whileHeld(new ManualAcquire());
- 		//shootButton.whenPressed(new ShootCommand()); 
- 		acquireButton.whileHeld(new ManualAcquire(0.3));
- 		
+ 		shootButton.whenPressed(new Shoot());
+ 		acquireButton.whileHeld(new ManualAcquire());
  	}
  	
  	

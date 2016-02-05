@@ -7,8 +7,7 @@ public class ManualAcquire extends CommandBase {
 	
 	double power = -0.5;
 	
-    public ManualAcquire(double power) {
-    	this.power = power;
+    public ManualAcquire() {
     	requires(acquirer);
     }
     
