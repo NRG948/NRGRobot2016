@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -15,8 +16,9 @@ public class Shooter extends Subsystem {
 	}
 	
 	@Override
+	
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub		
+		setDefaultCommand(new ShooterRampUp());
 	}
 	public void rawRaiseShooter(double power){
 		RobotMap.shooterLifterMotor.set(power);
