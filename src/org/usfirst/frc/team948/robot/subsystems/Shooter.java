@@ -32,7 +32,7 @@ public class Shooter extends Subsystem {
 	}
 	
 	public boolean isBallLoaded(){
-		return RobotMap.ballBeamBreaker.isSwitchSet();
+		return RobotMap.ballBeamBreaker.get();
 	}
 	
 }
