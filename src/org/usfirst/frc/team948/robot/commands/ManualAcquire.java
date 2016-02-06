@@ -6,7 +6,8 @@ public class ManualAcquire extends CommandBase {
 	
 	double power = -0.5;
 	
-    public ManualAcquire() {
+    public ManualAcquire(double power) {
+    	this.power = power;
     	requires(acquirer);
     }
     
@@ -31,7 +32,7 @@ public class ManualAcquire extends CommandBase {
     protected boolean isFinished() {
         return false;
     }
-
+    
     // Called once after isFinished returns true
     protected void end() {
     	acquirer.rawAcquire(0.0);

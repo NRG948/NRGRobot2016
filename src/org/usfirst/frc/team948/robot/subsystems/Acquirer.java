@@ -1,6 +1,8 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
+import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.subsystems.ScissorLift.Level;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -61,5 +63,28 @@ public Acquirer() {
 	public void rawRaise(double power) {
 		RobotMap.acquireArmVictor.set(power);
 	}
+	public Robot.Level nextHigherLevel(Robot.Level currentLevel){
+		Robot.Level[] levels = Robot.Level.values();
+		for (int i = 0; i < levels.length; i++) {
+			if (currentLevel.equals(levels[i])) {
+				return levels[Math.min(levels.length - 1, i + 1)];
+			}
+			return null;
+		}
+		
+		
+	}
+	public Robot.Level nextLowerLevel(Robot.Level currentLevel){
+		Robot.Level[] levels = Robot.Level.values();
+		for (int i = 0; i < levels.length; i++) {
+			if (currentLevel.equals(levels[i])) {
+				return levels[Math.max(0, i - 1)];
+			}
+		}
+		return null;
+	}
+		
+	}
 
-}
+
+
