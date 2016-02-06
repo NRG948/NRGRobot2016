@@ -14,7 +14,7 @@ public class ManualAcquire extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	acquirer.rawAcquire(power);
+    	
     }
    
 
@@ -22,7 +22,7 @@ public class ManualAcquire extends CommandBase {
     
      
     protected void execute() {
-    	
+    	acquirer.rawAcquire(power);
     	RobotMap.shooterBallPusher.set(power);
     	RobotMap.rightShooterWheel.set(power);
     	RobotMap.leftShooterWheel.set(power);
