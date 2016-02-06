@@ -2,7 +2,6 @@ package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
-import org.usfirst.frc.team948.robot.subsystems.ScissorLift.Level;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -15,16 +14,13 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	private final double ANGLE_TO_VOLTS = 0.01389;
 	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
 
-
-public Acquirer() {
+	public Acquirer() {
 	}
 
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 	}
-
-	
 
 	public void setDesiredArmAngle(double angle) {
 		armAnglePID.reset();
@@ -46,45 +42,46 @@ public Acquirer() {
 		armAnglePID.reset();
 		RobotMap.acquireArmVictor.set(0);
 	}
+
 	public void stopAcquirer() {
 		RobotMap.acquireArmVictor.set(0);
 		RobotMap.acquireWheelVictor.set(0);
 	}
-	
+
 	public void rawAcquire(double speed) {
 		RobotMap.acquireWheelVictor.set(speed);
 	}
-	
+
 	@Override
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
-	
+
 	public void rawRaise(double power) {
 		RobotMap.acquireArmVictor.set(power);
 	}
-	public Robot.Level nextHigherLevel(Robot.Level currentLevel){
+
+	public Robot.Level nextHigherLevel(Robot.Level currentLevel) {
 		Robot.Level[] levels = Robot.Level.values();
 		for (int i = 0; i < levels.length; i++) {
 			if (currentLevel.equals(levels[i])) {
 				return levels[Math.min(levels.length - 1, i + 1)];
+
 			}
-			return null;
+
 		}
-		
-		
+		return Robot.Level.FULL_BACK_START;
+
 	}
-	public Robot.Level nextLowerLevel(Robot.Level currentLevel){
+
+	public Robot.Level nextLowerLevel(Robot.Level currentLevel) {
 		Robot.Level[] levels = Robot.Level.values();
 		for (int i = 0; i < levels.length; i++) {
 			if (currentLevel.equals(levels[i])) {
 				return levels[Math.max(0, i - 1)];
 			}
 		}
-		return null;
-	}
-		
+		return Robot.Level.PORTCULLIS_LOW;
 	}
 
-
-
+}
