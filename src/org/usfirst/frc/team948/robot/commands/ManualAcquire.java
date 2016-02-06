@@ -36,6 +36,9 @@ public class ManualAcquire extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
     	acquirer.rawAcquire(0.0);
+    	RobotMap.rightShooterWheel.set(0.0);
+    	RobotMap.leftShooterWheel.set(0.0);
+    	RobotMap.shooterBallPusher.set(0.0);
     }
 
     // Called when another command which requires one or more of the same
