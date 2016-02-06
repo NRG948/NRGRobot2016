@@ -17,12 +17,18 @@ public class ShooterRampUp extends CommandBase {
 	}
 
 	protected void initialize() {
-
+		
 	}
 
 	protected void execute() {
-		RobotMap.leftShooterWheel.set(-power);
-		RobotMap.rightShooterWheel.set(power);
+		if (shooter.isBallLoaded()) {
+			RobotMap.leftShooterWheel.set(-power);
+			RobotMap.rightShooterWheel.set(power);
+		} else {
+			RobotMap.leftShooterWheel.set(0);
+			RobotMap.rightShooterWheel.set(0);
+		}
+		
 	}
 
 	protected boolean isFinished() {
