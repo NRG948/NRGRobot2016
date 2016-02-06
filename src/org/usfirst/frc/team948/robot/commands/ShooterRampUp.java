@@ -3,14 +3,18 @@ package org.usfirst.frc.team948.robot.commands;
 import org.usfirst.frc.team948.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Preferences;
+import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterRampUp extends CommandBase {
 	private double power;
+	public boolean autoPower = false;
 	private final double DEFAULT_POWER = 1;
 
 	public ShooterRampUp() {
 		requires(shooter);
+		autoPower = true;
 		this.power = DEFAULT_POWER;
 	}
 
@@ -29,8 +33,16 @@ public class ShooterRampUp extends CommandBase {
 	}
 
 	protected void execute() {
-		RobotMap.leftShooterWheel.set(-power);
-		RobotMap.rightShooterWheel.set(power);
+		if (autoPower) {
+			power = VisionProcessing.getShooterPower();
+		}
+		if (shooter.isBallLoaded()) {
+			RobotMap.leftShooterWheel.set(-power);
+			RobotMap.rightShooterWheel.set(power);
+		} else {
+			RobotMap.leftShooterWheel.set(0);
+			RobotMap.rightShooterWheel.set(0);
+		}
 	}
 
 	protected boolean isFinished() {
