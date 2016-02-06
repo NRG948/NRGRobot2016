@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class VisionProcessing {
 	
 	public static NetworkTable table = NetworkTable.getTable("GRIP/myContoursReport");
-	
+	public static NetworkTable tableTwo = NetworkTable.getTable("GRIP/totalAreaReport");
+	public static double[] totalWidth;
+	public static double[] totalHeight;
 	public static double[] centerX;
 	public static double[] centerY;
 	public static double[] area;
@@ -19,6 +21,8 @@ public class VisionProcessing {
 		area = table.getNumberArray("area", DEFAULT_ARRAY);
 		height = table.getNumberArray("height", DEFAULT_ARRAY);
 		width = table.getNumberArray("width", DEFAULT_ARRAY);
+		totalWidth = tableTwo.getNumberArray("width", DEFAULT_ARRAY);
+		totalHeight = tableTwo.getNumberArray("height", DEFAULT_ARRAY);
 	}
 	
 	public static double getArea() {
