@@ -3,7 +3,7 @@ package org.usfirst.frc.team948.robot.utilities;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class VisionProcessing {
-	
+
 	public static NetworkTable table = NetworkTable.getTable("GRIP/myContoursReport");
 	public static NetworkTable tableTwo = NetworkTable.getTable("GRIP/totalAreaReport");
 	public static double[] totalWidth;
@@ -14,7 +14,7 @@ public class VisionProcessing {
 	public static double[] height;
 	public static double[] width;
 	private static final double[] DEFAULT_ARRAY = new double[0];
-	
+
 	public static void updateVision() {
 		centerX = table.getNumberArray("centerX", DEFAULT_ARRAY);
 		centerY = table.getNumberArray("centerY", DEFAULT_ARRAY);
@@ -24,13 +24,17 @@ public class VisionProcessing {
 		totalWidth = tableTwo.getNumberArray("width", DEFAULT_ARRAY);
 		totalHeight = tableTwo.getNumberArray("height", DEFAULT_ARRAY);
 	}
-	
+
 	public static double getArea() {
 		return area[0];
 	}
-	
+
 	public static double getWidth() {
 		return width[0];
+	}
+
+	public static double getShooterPower() {
+		return 1; // Temporary
 	}
 
 }
