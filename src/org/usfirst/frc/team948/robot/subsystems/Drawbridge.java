@@ -15,5 +15,9 @@ public class Drawbridge extends Subsystem {
 	public void rawRaise(double power) {
 		RobotMap.drawbridgeArm.set(power);
 	}
+	
+	public void stopArm() {
+		RobotMap.drawbridgeArm.set(0);
+	}
 
 }
