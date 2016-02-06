@@ -6,14 +6,10 @@ import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.utilities.MathHelper;
 import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 
 /**

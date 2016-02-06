@@ -1,6 +1,5 @@
 package org.usfirst.frc.team948.robot.commands;
 
-import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
 
 public class ManualAcquire extends CommandBase {

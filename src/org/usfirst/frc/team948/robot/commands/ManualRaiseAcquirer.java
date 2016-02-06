@@ -1,7 +1,6 @@
 package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.RobotMap;
-import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 
 public class ManualRaiseAcquirer extends CommandBase{
 

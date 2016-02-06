@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team948.robot.commands.CommandBase;
-import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
@@ -19,7 +17,6 @@ import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker3D;
 import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
 
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**

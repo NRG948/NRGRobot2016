@@ -1,6 +1,5 @@
 package org.usfirst.frc.team948.robot.commands;
 
-import org.usfirst.frc.team948.robot.DS2016;
 import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Climber;

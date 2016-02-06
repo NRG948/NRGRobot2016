@@ -2,10 +2,8 @@ package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Acquirer extends Subsystem implements PIDOutput {
