@@ -13,6 +13,7 @@ import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
 import org.usfirst.frc.team948.robot.subsystems.Shooter;
+import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker3D;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 	}
 	public static Drive drive = new Drive();
 	public static Shooter shooter = new Shooter();
+	public static ShooterArm shooterarm = new ShooterArm();
 	public static Acquirer acquirer = new Acquirer();
 	public static Climber climber = new Climber();
 	public static Drawbridge drawbridge = new Drawbridge();
