@@ -1,6 +1,8 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.commands.ManualDrawbridge;
+import org.usfirst.frc.team948.robot.commands.ManualDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -9,7 +11,7 @@ public class Drawbridge extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-
+		setDefaultCommand(new ManualDrawbridge(true));
 	}
 
 	public void rawRaise(double power) {
