@@ -16,7 +16,6 @@ public class Shoot extends CommandBase {
 
 	@Override
 	protected void initialize() {
-		shooter.rawShoot(power);
 		timer1.reset();
 		timer1.start();
 	}
