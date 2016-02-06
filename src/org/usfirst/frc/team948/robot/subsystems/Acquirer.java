@@ -1,6 +1,6 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
-import org.usfirst.frc.team948.robot.Robot;
+import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -19,7 +19,6 @@ public class Acquirer extends Subsystem implements PIDOutput {
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
 	}
 
 	public void setDesiredArmAngle(double angle) {
@@ -61,27 +60,41 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		RobotMap.acquireArmVictor.set(power);
 	}
 
-	public Robot.Level nextHigherLevel(Robot.Level currentLevel) {
-		Robot.Level[] levels = Robot.Level.values();
+	public Level nextHigherLevel(Level currentLevel) {
+		Level[] levels = Level.values();
 		for (int i = 0; i < levels.length; i++) {
 			if (currentLevel.equals(levels[i])) {
 				return levels[Math.min(levels.length - 1, i + 1)];
-
 			}
-
 		}
-		return Robot.Level.FULL_BACK_START;
-
+		return null;
 	}
 
-	public Robot.Level nextLowerLevel(Robot.Level currentLevel) {
-		Robot.Level[] levels = Robot.Level.values();
+	public Level nextLowerLevel(Level currentLevel) {
+		Level[] levels = Level.values();
 		for (int i = 0; i < levels.length; i++) {
 			if (currentLevel.equals(levels[i])) {
 				return levels[Math.max(0, i - 1)];
 			}
 		}
-		return Robot.Level.PORTCULLIS_LOW;
+		return null;
+	}
+
+	/**
+	 * Returns the level nearest to the given angle.
+	 */
+	public Level findNearestLevel(double angle) {
+		Level[] levels = Level.values();
+		int nearest = 0;
+		double diff = Math.abs(angle - levels[nearest].getValue());
+		for (int i = 1; i < levels.length; i++) {
+			double d = Math.abs(angle - levels[i].getValue());
+			if (d < diff) {
+				diff = d;
+				nearest = i;
+			}
+		}
+		return levels[nearest];
 	}
 
 }
