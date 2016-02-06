@@ -2,6 +2,9 @@ package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class ShooterRampUp extends CommandBase {
 	private double power;
 	private final double DEFAULT_POWER = 1;
@@ -14,6 +17,11 @@ public class ShooterRampUp extends CommandBase {
 	public ShooterRampUp(double power) {
 		requires(shooter);
 		this.power = power;
+	}
+	
+	public ShooterRampUp(boolean x)
+	{
+		power = preferences.getDouble("SHOOTER_RAMP_UP_TEST_POWER", DEFAULT_POWER);
 	}
 
 	protected void initialize() {

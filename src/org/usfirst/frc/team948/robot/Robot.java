@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
@@ -149,6 +150,6 @@ public class Robot extends IterativeRobot {
 		}
 		SmartDashboard.putNumber("PDP Total Current", pdp.getTotalCurrent());
 		SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
-		
+		SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
     }
 }
