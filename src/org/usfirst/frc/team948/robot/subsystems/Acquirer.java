@@ -42,11 +42,11 @@ public Acquirer() {
 
 	public void stopArm() {
 		armAnglePID.reset();
-		RobotMap.acquireArmVictor.disable();
+		RobotMap.acquireArmVictor.set(0);
 	}
 	public void stopAcquirer() {
-		RobotMap.acquireArmVictor.disable();
-		RobotMap.acquireWheelVictor.disable();;
+		RobotMap.acquireArmVictor.set(0);
+		RobotMap.acquireWheelVictor.set(0);
 	}
 	
 	public void rawAcquire(double speed) {
