@@ -5,11 +5,14 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
+import org.usfirst.frc.team948.robot.commands.ManualClimb;
+import org.usfirst.frc.team948.robot.commands.ManualDrawbridge;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
+import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -57,7 +60,12 @@ public class DS2016 {
  		raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer(1));//MAY NEED TO CHANGE LATER
  		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-1));//MAY NEED TO CHANGE LATER
  		shootButton.whenPressed(new Shoot());
+ 		shootButton.whenReleased(new ShooterRampUp());
  		acquireButton.whileHeld(new ManualAcquire());
+ 		extendDrawbridgeButton.whileHeld(new ManualDrawbridge(true));
+ 		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
+ 		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
+ 		climbUpButton.whileHeld(new ManualClimb(false));
  	}
  	
  	

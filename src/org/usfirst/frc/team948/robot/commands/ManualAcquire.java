@@ -1,6 +1,5 @@
 package org.usfirst.frc.team948.robot.commands;
 
-import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
 
 public class ManualAcquire extends CommandBase {
@@ -8,6 +7,7 @@ public class ManualAcquire extends CommandBase {
 	double power = -0.5;
 	
     public ManualAcquire() {
+    	
     	requires(acquirer);
     }
     
@@ -32,7 +32,7 @@ public class ManualAcquire extends CommandBase {
     protected boolean isFinished() {
         return false;
     }
-
+    
     // Called once after isFinished returns true
     protected void end() {
     	acquirer.rawAcquire(0.0);

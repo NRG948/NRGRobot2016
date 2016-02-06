@@ -5,7 +5,25 @@ import org.usfirst.frc.team948.robot.RobotMap;
 import com.kauailabs.navx.frc.AHRS;
 
 public class PositionTracker3D {
+	
+	public static double valueToCheck;
 
+	// Acceleration of Gravity in meters per second squared
+	public static final double G = 9.8;
+
+	public static boolean finalizeCalibration = false;
+	// Calibration of a and omega in arrays
+	// these are drift values
+	public static double[] acal = new double[3];
+	public static double[] ocal = new double[3];
+
+	// Time required for calibration
+	public static final double CAL_TIME = 10;
+
+	public static double elapsedTime;
+
+	public static double[] rworld = new double[3];
+	public static double[] vworld = new double[3];
 	public static double[] aworld = new double[3];
 
 	private static AHRS ahrs = RobotMap.ahrs;
@@ -40,12 +58,26 @@ public class PositionTracker3D {
 	public static void computePosition() {
 		double ct0 = ct;
 		ct = System.currentTimeMillis();
-		double dt = ct - ct0;
+		dt = (ct - ct0) / 1000.0;// This is now in seconds
+		elapsedTime += dt;
+
+		if (elapsedTime <= CAL_TIME) {
+			calibrate();
+			return;
+		} else if(!finalizeCalibration){
+			for(int index = 0; index<3; index++){
+				acal[index] /= elapsedTime;
+				ocal[index] /= elapsedTime;
+			}
+			acal[2]--; // subtract 1 G since aRawZ is 1G
+			finalizeCalibration = true;
+		}
+		
 		// unit vector of the rotation
 		// angular velocity components in the robot frame (in radians)
-		double ox = -ahrs.getRawGyroX() * Math.PI / 180;
-		double oy = -ahrs.getRawGyroY() * Math.PI / 180;
-		double oz = -ahrs.getRawGyroZ() * Math.PI / 180;
+		double ox = -(ahrs.getRawGyroX() - ocal[0])* Math.PI / 180;
+		double oy = -(ahrs.getRawGyroY() - ocal[1])* Math.PI / 180;
+		double oz = -(ahrs.getRawGyroZ() - ocal[2]) * Math.PI / 180;
 
 		// Magnitude of the angular velocity
 		double omega = Math.sqrt(ox * ox + oy * oy + oz * oz);
@@ -83,12 +115,40 @@ public class PositionTracker3D {
 		j = jnew;
 		k = knew;
 		// world accelerations(acceleration components in the fixed frame)
-		double[] araw = { ahrs.getRawAccelX(), ahrs.getRawAccelY(), ahrs.getRawAccelZ() };
+		double[] araw = { ahrs.getRawAccelX()- acal[0], ahrs.getRawAccelY()- acal[1], ahrs.getRawAccelZ()- acal[2] };
+		double[] newAWorld = new double[3];
 		for (int index = 0; index < 3; index++) {
-			aworld[index] = araw[0] * i[index] + araw[1] * j[index] + araw[2] * k[index];
-
+			newAWorld[index] = araw[0] * i[index] + araw[1] * j[index] + araw[2] * k[index];
 		}
 		// Subtract g since the raw accel measures the true accel minus g
-		aworld[2]--;
+		newAWorld[2]--;
+		
+		for (int index = 0; index < 3; index++) {
+			newAWorld[index] *= G;
+		}
+		// Switch to navX World Acceleration
+//		newAWorld = new double[] { ahrs.getWorldLinearAccelX() * G, ahrs.getWorldLinearAccelY() * G,
+//				ahrs.getWorldLinearAccelZ() * G };
+
+		double[] newVWorld = new double[3];
+		for (int index = 0; index < 3; index++) {
+			newVWorld[index] = vworld[index] + (newAWorld[index] + aworld[index]) / 2 * dt;
+		}
+		for (int index = 0; index < 3; index++) {
+			rworld[index] += (newVWorld[index] + vworld[index]) / 2 * dt;
+		}
+		// Update velocities and accelerations
+		aworld = newAWorld;
+		vworld = newVWorld;
+	}
+
+	public static void calibrate() {
+		acal[0] += ahrs.getRawAccelX() * dt;
+		acal[1] += ahrs.getRawAccelY() * dt;
+		acal[2] += ahrs.getRawAccelZ() * dt;
+		
+		ocal[0] += ahrs.getRawGyroX() * dt;
+		ocal[1] += ahrs.getRawGyroY() * dt;
+		ocal[2] += ahrs.getRawGyroZ() * dt;
 	}
 }
