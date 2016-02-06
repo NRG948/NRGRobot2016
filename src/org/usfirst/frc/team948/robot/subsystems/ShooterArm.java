@@ -32,14 +32,14 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	}
 	
 	public void moveArmToDesiredAngle() {
-		RobotMap.acquireArmVictor.set(pidOutput);
+		RobotMap.shooterLifterMotor.set(pidOutput);
 	}
 	public boolean isArmAtDesiredAngle() {
 		return armAnglePID.onTarget();
 	}
 	public void stopArm() {
 		armAnglePID.reset();
-		RobotMap.acquireArmVictor.set(0);
+		RobotMap.shooterLifterMotor.set(0);
 	}
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
