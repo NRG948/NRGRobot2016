@@ -31,29 +31,29 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
-	public static Victor shooterBallPusher=new Victor(9);
-	public static Victor rightShooterWheel = new Victor(4);
-	public static Victor leftShooterWheel = new Victor(5);
-	public static Victor shooterLifterMotor = new Victor(6);
-	public static Victor drawbridgeArm = new Victor(12); //NEW
-	public static Victor climberTapeMeasure = new Victor(13); //NEW
-	public static Victor climberWinch = new Victor(14); //NEW
-	public static Encoder rightShooterWheelEncoder = new Encoder(0, 1);
-	public static Encoder leftShooterWheelEncoder = new Encoder(2, 3);
-	public static AnalogInput shooterLifterEncoder = new AnalogInput(4);
 	public static Victor motorFrontLeft = new Victor(2);
 	public static Victor motorFrontRight = new Victor(0);
 	public static Victor motorBackLeft = new Victor(3);
 	public static Victor motorBackRight = new Victor(1);
-	public static AnalogInput armAngleEncoder = new AnalogInput(5);
-	public static Victor acquireArmVictor = new Victor(7);
-	public static Victor acquireWheelVictor = new Victor(8);
-	public static Encoder leftMotorEncoder = new Encoder(7, 8);
-	public static Encoder rightMotorEncoder  = new Encoder(9, 10);
+	public static Victor acquireArmVictor = new Victor(5);
+	public static Victor acquireWheelVictor = new Victor(4);
+	public static Victor rightShooterWheel = new Victor(6);
+	public static Victor leftShooterWheel = new Victor(7);
+	public static Victor shooterLifterMotor = new Victor(8);
+	public static Victor shooterBallPusher=new Victor(9);
+	public static Victor drawbridgeArm = new Victor(11); //Might Become CANTalons
+	public static Victor climberTapeMeasure = new Victor(12); //Might Become CANTalons
+	public static Victor climberWinch = new Victor(14); //Might Become CANTalons
+	public static Encoder rightShooterWheelEncoder = new Encoder(4, 5);
+	public static Encoder leftShooterWheelEncoder = new Encoder(6, 7);
+	public static Encoder leftMotorEncoder = new Encoder(2, 3);
+	public static Encoder rightMotorEncoder  = new Encoder(0, 1);
+	public static DigitalInput ballBeamBreaker = new DigitalInput(8);
+	public static AnalogInput shooterLifterEncoder = new AnalogInput(0);
+	public static AnalogInput armAngleEncoder = new AnalogInput(1);
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
-	public static DigitalInput ballBeamBreaker = new DigitalInput(11);
 	
 
 	public static void init() {
