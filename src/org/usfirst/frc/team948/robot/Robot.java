@@ -147,11 +147,14 @@ public class Robot extends IterativeRobot {
     	shooter.updateLeftRPM();
     	shooter.updateRightRPM();
     	VisionProcessing.updateVision();
-		/*for (int i = 0; i <= 15; i++) {
-			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
-		}
-		SmartDashboard.putNumber("PDP Total Current", pdp.getTotalCurrent());
-		SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());*/
-		SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
+
+    	SmartDashboard.putData("PDP", pdp);
+//		for (int i = 0; i <= 15; i++) {
+//			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
+//		}
+//		SmartDashboard.putNumber("PDP Total Current", pdp.getTotalCurrent());
+//		SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
+//		SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
+
     }
 }
