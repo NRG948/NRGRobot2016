@@ -72,6 +72,8 @@ public class DS2016 {
  		climbUpButton.whileHeld(new ManualClimb(false));
  		raiseShooterArmButton.whileHeld(new RawRaise(0.25));
  		lowerShooterArmButton.whileHeld(new RawRaise(-0.25));
+ 		shooterRampUp.whileHeld(new ShooterRampUp(1));
+ 		shooterRampUp.whenReleased(new ShooterRampUp(0));
  	}
  	
  	
