@@ -4,7 +4,7 @@ import org.usfirst.frc.team948.robot.RobotMap;
 
 public class ManualAcquire extends CommandBase {
 	
-	double power = -0.5;
+	double power = -0.6;
 	
     public ManualAcquire() {
     	
@@ -22,9 +22,9 @@ public class ManualAcquire extends CommandBase {
     
      
     protected void execute() {
-    	acquirer.rawAcquire(power);
-    	RobotMap.shooterBallPusher.set(power);
-    	RobotMap.rightShooterWheel.set(power);
+    	acquirer.rawAcquire(-1);
+    	RobotMap.shooterBallPusher.set(-power);
+    	RobotMap.rightShooterWheel.set(-power);
     	RobotMap.leftShooterWheel.set(power);
     }
 

@@ -37,6 +37,7 @@ public class ShooterRampUp extends CommandBase {
 			power = VisionProcessing.getShooterPower();
 		}
 //		if (shooter.isBallLoaded()) {
+
 			RobotMap.leftShooterWheel.set(-power);
 			RobotMap.rightShooterWheel.set(power);
 //		} else {
