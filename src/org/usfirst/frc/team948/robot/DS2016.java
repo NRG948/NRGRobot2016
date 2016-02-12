@@ -42,6 +42,7 @@ public class DS2016 {
 	public static final Button retractDrawbridgeButton = new JoystickButton(rightJoystick, 4);
 	public static final Button extendTapeMeasureButton = new JoystickButton(rightJoystick, 5);
 	public static final Button climbUpButton = new JoystickButton(rightJoystick, 6);
+	public static final Button shooterRampUp = new JoystickButton(rightJoystick, 10);
 	
 	// We need to change the button numbers later
 	

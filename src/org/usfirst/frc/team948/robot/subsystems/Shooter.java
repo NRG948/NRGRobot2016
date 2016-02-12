@@ -15,7 +15,7 @@ public class Shooter extends Subsystem {
 	@Override
 	
 	protected void initDefaultCommand() {
-		setDefaultCommand(new ShooterRampUp());
+//		setDefaultCommand(new ShooterRampUp());
 	}
 	public void rawShoot(double power){
 		RobotMap.leftShooterWheel.set(-power);
