@@ -4,7 +4,7 @@ import org.usfirst.frc.team948.robot.RobotMap;
 
 public class ManualAcquire extends CommandBase {
 	
-	double power = -0.5;
+	double power = -0.15;
 	
     public ManualAcquire() {
     	

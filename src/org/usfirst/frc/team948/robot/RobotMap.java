@@ -66,23 +66,38 @@ public class RobotMap {
 		
 		LiveWindow.addActuator("Drive Subsystem", "Speed Controller Back Right Victor",(Victor) motorBackRight);
 		
-		LiveWindow.addActuator("Drawbridge Subsystem", "Speed Controller Drawbridge Victor",(Victor) drawbridgeArm);
+		LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);
 		
-		LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Tapemeasure Victor",(Victor) climberTapeMeasure);
+		LiveWindow.addSensor("Drive Subsystem", "Right Drive Encoder", rightMotorEncoder);
 		
-		LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Winch Victor",(Victor) climberWinch);
-
-		LiveWindow.addSensor("Drive Subsystem", "Drive Gyro", (LiveWindowSendable) driveGyro);							// unknown, 6 now taken
-
-		LiveWindow.addSensor("Drive Subsystem", "Angle Arm Encoder", armAngleEncoder);
+		LiveWindow.addSensor("Drive Subsystem", "Left Drive Encoder", leftMotorEncoder);
 		
-		LiveWindow.addSensor("Drive Subsystem", "Left Motor Encoder", leftMotorEncoder);
+		LiveWindow.addActuator("Acquirer Subsytem", "Acquire Wheel Victor", acquireWheelVictor);
 		
-		LiveWindow.addSensor("Drive Subsystem", "Right Motor Encoder", rightMotorEncoder);
-		
-		LiveWindow.addSensor("Drive Subsystem", "Accelerometer", (LiveWindowSendable) accelerometer);
+		LiveWindow.addSensor("Acquirer Subsystem", "Angle Arm Encoder", armAngleEncoder);
 		
 		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Victor", acquireArmVictor);
+		
+		LiveWindow.addActuator("Shooter Subsystem", "Right Shooter Wheel", rightShooterWheel);
+		
+		LiveWindow.addActuator("Shooter Subsystem", "Left Shooter Wheel", leftShooterWheel);
+		
+		LiveWindow.addActuator("Shooter Subsystem", "Shooter Ball Pusher", shooterBallPusher);
+		
+		LiveWindow.addSensor("Shooter Subsystem", "Right Shooter Wheel Encoder", rightShooterWheelEncoder);
+		
+		LiveWindow.addSensor("Shooter Subsystem", "Left Shooter Wheel Encoder", leftShooterWheelEncoder);
+		
+		LiveWindow.addActuator("Shooter Arm Subsystem", "Shooter Lifter Motor", shooterLifterMotor);
+		
+		LiveWindow.addSensor("Shooter Arm Subsytem","Shooter Lifter Encoder", shooterLifterEncoder);
+		//LiveWindow.addActuator("Drawbridge Subsystem", "Speed Controller Drawbridge Victor",(Victor) drawbridgeArm);
+		
+		//LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Tapemeasure Victor",(Victor) climberTapeMeasure);
+		
+		//LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Winch Victor",(Victor) climberWinch);
+
+									// unknown, 6 now taken
 		
 		
 		//place holder need a real DistancePerPusle
