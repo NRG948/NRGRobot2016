@@ -10,6 +10,7 @@ import org.usfirst.frc.team948.robot.commands.ManualDrawbridge;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
+import org.usfirst.frc.team948.robot.commands.RawRaise;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
@@ -33,6 +34,8 @@ public class DS2016 {
 	public static final Joystick leftJoystick = new Joystick(1);
 	public static final Joystick rightJoystick = new Joystick(2);
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
+	public static final Button raiseShooterArmButton = new JoystickButton(leftJoystick, 3);
+	public static final Button lowerShooterArmButton = new JoystickButton(leftJoystick, 2);
 	public static final Button resetSensorsButton = new JoystickButton(leftJoystick, 6);
 	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
 	public static final Button raiseAcquirerButton = new JoystickButton(leftJoystick, 4);
@@ -66,6 +69,8 @@ public class DS2016 {
  		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
+ 		raiseShooterArmButton.whileHeld(new RawRaise(0.25));
+ 		lowerShooterArmButton.whileHeld(new RawRaise(-0.25));
  	}
  	
  	
