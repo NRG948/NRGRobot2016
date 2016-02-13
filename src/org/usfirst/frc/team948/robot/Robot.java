@@ -122,7 +122,7 @@ public class Robot extends IterativeRobot {
     //	CommandBase.drive.initDefaultCommand();
         if (autonomousCommand != null) autonomousCommand.cancel();
 
-        SmartDashboard.putData("Raise Shooter Arm To 45 degrees", new RaiseShooterArmTo(45));
+        SmartDashboard.putData("Raise Shooter Arm To 45 degrees", new RaiseShooterArmTo(60));
     }
    
     

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterArm extends Subsystem implements PIDOutput{
-	private PIDController shooterElevatePID = new PIDController(0.1, 0.01, 0.005, RobotMap.shooterLifterEncoder, this);
+	private PIDController shooterElevatePID = new PIDController(1, 0.01, 0.005, RobotMap.shooterLifterEncoder, this);
 	private double pidOutput;
 	private final double ANGLE_TO_VOLTS = 0.01367;
 	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
@@ -21,6 +21,10 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	}
 	
 	public void rawRaiseShooter(double power){
+		if(RobotMap.shooterLifterEncoder.getVoltage()>4.6){
+			RobotMap.shooterLifterMotor.set(0);
+			return;
+		}
 		RobotMap.shooterLifterMotor.set(power);
 	}
 
@@ -28,7 +32,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		shooterElevatePID.reset();
 		shooterElevatePID.setSetpoint(angle * ANGLE_TO_VOLTS+3.488);
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
-		shooterElevatePID.setOutputRange(0, 1);
+		shooterElevatePID.setOutputRange(-0.1, 0.3);
 		pidOutput = 0;
 		shooterElevatePID.enable();
 	}
@@ -36,7 +40,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	public void moveArmToDesiredAngle() {
 		SmartDashboard.putNumber("Shooter Raise pidOutput", pidOutput);
 		SmartDashboard.putNumber("Shooter Raise Error", shooterElevatePID.getError());
-		RobotMap.shooterLifterMotor.set(pidOutput);
+		rawRaiseShooter(pidOutput);
 	}
 	
 	public boolean isArmAtDesiredAngle() {
@@ -51,4 +55,5 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
+}
 	
