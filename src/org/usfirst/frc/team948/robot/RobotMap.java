@@ -83,11 +83,11 @@ public class RobotMap {
 		
 		LiveWindow.addActuator("Shooter Subsystem", "Left Shooter Wheel", leftShooterWheel);
 		
-		LiveWindow.addActuator("Shooter Subsystem", "Shooter Ball Pusher", shooterBallPusher);
+		LiveWindow.addActuator("ShooterBar Subsystem", "Shooter Ball Pusher", shooterBallPusher);
 		
-		LiveWindow.addSensor("Shooter Subsystem", "Right Shooter Wheel Encoder", rightShooterWheelEncoder);
+		LiveWindow.addSensor("ShooterWheel Subsystem", "Right Shooter Wheel Encoder", rightShooterWheelEncoder);
 		
-		LiveWindow.addSensor("Shooter Subsystem", "Left Shooter Wheel Encoder", leftShooterWheelEncoder);
+		LiveWindow.addSensor("ShooterWheel Subsystem", "Left Shooter Wheel Encoder", leftShooterWheelEncoder);
 		
 		LiveWindow.addActuator("Shooter Arm Subsystem", "Shooter Lifter Motor", shooterLifterMotor);
 		

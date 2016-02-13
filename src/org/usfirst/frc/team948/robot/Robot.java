@@ -7,17 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
-import org.usfirst.frc.team948.robot.subsystems.Shooter;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
+import org.usfirst.frc.team948.robot.subsystems.ShooterBar;
+import org.usfirst.frc.team948.robot.subsystems.ShooterWheel;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker3D;
+import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,7 +53,8 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	public static Drive drive = new Drive();
-	public static Shooter shooter = new Shooter();
+	public static ShooterWheel shooterwheel = new ShooterWheel();
+	public static ShooterBar shooterbar = new ShooterBar();
 	public static ShooterArm shooterarm = new ShooterArm();
 	public static Acquirer acquirer = new Acquirer();
 	public static Climber climber = new Climber();
@@ -119,10 +123,11 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+    	
     //	CommandBase.drive.initDefaultCommand();
         if (autonomousCommand != null) autonomousCommand.cancel();
 
-        SmartDashboard.putData("Raise Shooter Arm To 45 degrees", new RaiseShooterArmTo(60));
+        SmartDashboard.putData("Raise Shooter Arm to 45 degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
     }
    
     
@@ -144,15 +149,15 @@ public class Robot extends IterativeRobot {
     }
     public void periodicAll(){
 
-    	SmartDashboard.putNumber("Left RPM", shooter.currentLeftRPM);
-    	SmartDashboard.putNumber("Right RPM", shooter.currentRightRPM);
+    	SmartDashboard.putNumber("Left RPM", shooterwheel.currentLeftRPM);
+    	SmartDashboard.putNumber("Right RPM", shooterwheel.currentRightRPM);
     	SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
     	SmartDashboard.putNumber("Shooter Angle", RobotMap.shooterLifterEncoder.getVoltage());
     	//PositionTracker.updatePosition();
     	//PositionTracker3D.computePosition();
     	NavXTester.parameterDisplay();
-    	shooter.updateLeftRPM();
-    	shooter.updateRightRPM();
+    	shooterwheel.updateLeftRPM();
+    	shooterwheel.updateRightRPM();
     	VisionProcessing.updateVision();
 
     	SmartDashboard.putData("PDP", pdp);

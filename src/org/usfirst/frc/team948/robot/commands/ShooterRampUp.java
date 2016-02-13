@@ -13,13 +13,13 @@ public class ShooterRampUp extends CommandBase {
 	private final double DEFAULT_POWER = 1;
 
 	public ShooterRampUp() {
-		requires(shooter);
+	    requires(shooterwheel);
 		autoPower = true;
 		this.power = DEFAULT_POWER;
 	}
 
 	public ShooterRampUp(double power) {
-		requires(shooter);
+		requires(shooterwheel);
 		this.power = power;
 	}
 	
@@ -36,7 +36,7 @@ public class ShooterRampUp extends CommandBase {
 		if (autoPower) {
 			power = VisionProcessing.getShooterPower();
 		}
-//		if (shooter.isBallLoaded()) {
+//		if (shooterWheel.isBallLoaded()) {
 
 			RobotMap.leftShooterWheel.set(power);
 			RobotMap.rightShooterWheel.set(-power);
