@@ -1,4 +1,4 @@
-package org.usfirst.frc.team948.robot.subsystems;
+		package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
 
@@ -51,4 +51,4 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
-	
+}
