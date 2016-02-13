@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShooterArm extends Subsystem implements PIDOutput{
 	private PIDController shooterElevatePID = new PIDController(0.1, 0.01, 0.005, RobotMap.shooterLifterEncoder, this);
 	private double pidOutput;
-	private final double ANGLE_TO_VOLTS = 0.01389;
+	private final double ANGLE_TO_VOLTS = 0.01367;
 	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
 	
 	public ShooterArm() {
@@ -25,7 +25,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 
 	public void setDesiredArmAngle(double angle) {
 		shooterElevatePID.reset();
-		shooterElevatePID.setSetpoint(angle * ANGLE_TO_VOLTS);
+		shooterElevatePID.setSetpoint(angle * ANGLE_TO_VOLTS+3.488);
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
 		shooterElevatePID.setOutputRange(0, 1);
 		pidOutput = 0;
@@ -48,4 +48,4 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
-}
+	
