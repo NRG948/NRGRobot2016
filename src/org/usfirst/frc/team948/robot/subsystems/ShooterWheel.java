@@ -1,21 +1,20 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
-import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Shooter extends Subsystem {
-
+public class ShooterWheel extends Subsystem {
 	public double currentLeftRPM;
 	public double currentRightRPM;
-	public Shooter() { 	
+	public ShooterWheel(){
+		
 	}
-	
+
 	@Override
-	
 	protected void initDefaultCommand() {
 //		setDefaultCommand(new ShooterRampUp());
+		
 	}
 	public void rawShoot(double power){
 		RobotMap.leftShooterWheel.set(-power);
@@ -27,14 +26,8 @@ public class Shooter extends Subsystem {
 	public void updateRightRPM(){
 		currentRightRPM = 60*RobotMap.rightShooterWheelEncoder.getRate();
 	}
-	public void rawBallPush(double power){
-		RobotMap.shooterBallPusher.set(-power);
-	}
-	
 	public boolean isBallLoaded(){
 		return RobotMap.ballBeamBreaker.get();
 	}
-	
+
 }
-
-
