@@ -5,10 +5,12 @@ import org.usfirst.frc.team948.robot.RobotMap;
 public class ManualAcquire extends CommandBase {
 	
 	double power = -0.6;
+	boolean manual;
 	
-    public ManualAcquire() {
+    public ManualAcquire(boolean manual) {
     	
     	requires(acquirer);
+    
     }
     
 
@@ -30,7 +32,7 @@ public class ManualAcquire extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return (manual)? false : shooter.isBallLoaded();
     }
     
     // Called once after isFinished returns true
