@@ -140,9 +140,10 @@ public class Robot extends IterativeRobot {
         periodicAll();
     }
     public void periodicAll(){
-    	SmartDashboard.putNumber("Joy1 Y", DS2016.getLeftJSY());
-    	PositionTracker.updatePosition();
-    	PositionTracker3D.computePosition();
+    	SmartDashboard.putNumber("Left RPM", shooter.currentLeftRPM);
+    	SmartDashboard.putNumber("Right RPM", shooter.currentRightRPM);
+    	//PositionTracker.updatePosition();
+    	//PositionTracker3D.computePosition();
     	NavXTester.parameterDisplay();
     	shooter.updateLeftRPM();
     	shooter.updateRightRPM();
