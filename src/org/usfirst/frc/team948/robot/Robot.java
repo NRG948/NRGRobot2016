@@ -121,6 +121,8 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
     //	CommandBase.drive.initDefaultCommand();
         if (autonomousCommand != null) autonomousCommand.cancel();
+
+        SmartDashboard.putData("Raise Shooter Arm To 45 degrees", new RaiseShooterArmTo(45));
     }
    
     
@@ -161,6 +163,5 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
 //		SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
 
-    	SmartDashboard.putData("Raise Shooter Arm To 45 degrees", new RaiseShooterArmTo(45));
     }
 }
