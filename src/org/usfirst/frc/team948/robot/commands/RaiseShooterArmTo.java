@@ -20,7 +20,8 @@ public class RaiseShooterArmTo extends CommandBase {
 
 	@Override
 	protected boolean isFinished() {
-		return shooterarm.isArmAtDesiredAngle();
+//		return shooterarm.isArmAtDesiredAngle();
+		return false;
 	}
 
 	@Override
