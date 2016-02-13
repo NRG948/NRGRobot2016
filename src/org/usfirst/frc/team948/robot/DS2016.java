@@ -64,7 +64,8 @@ public class DS2016 {
 // 		raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer(0.33));//MAY NEED TO CHANGE LATER
 // 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
  		shootButton.whenPressed(new Shoot());
- 		shootButton.whenReleased(new ShooterRampUp());
+// 		shootButton.whenReleased(new ShooterRampUp());
+ 		//shootButton.whenReleased(new ShooterRampUp());
  		acquireButton.whileHeld(new ManualAcquire());
  		extendDrawbridgeButton.whileHeld(new ManualDrawbridge(true));
  		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
@@ -73,7 +74,7 @@ public class DS2016 {
  		raiseShooterArmButton.whileHeld(new RawRaise(0.25));
  		lowerShooterArmButton.whileHeld(new RawRaise(-0.25));
  		shooterRampUp.whileHeld(new ShooterRampUp(1));
- 		shooterRampUp.whenReleased(new ShooterRampUp(0));
+ 		//shooterRampUp.whenReleased(new ShooterRampUp(0));
  	}
  	
  	
