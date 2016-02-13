@@ -53,9 +53,9 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	public static Drive drive = new Drive();
-	public static ShooterWheel shooterwheel = new ShooterWheel();
-	public static ShooterBar shooterbar = new ShooterBar();
-	public static ShooterArm shooterarm = new ShooterArm();
+	public static ShooterWheel shooterWheel = new ShooterWheel();
+	public static ShooterBar shooterBar = new ShooterBar();
+	public static ShooterArm shooterArm = new ShooterArm();
 	public static Acquirer acquirer = new Acquirer();
 	public static Climber climber = new Climber();
 	public static Drawbridge drawbridge = new Drawbridge();
@@ -149,15 +149,15 @@ public class Robot extends IterativeRobot {
     }
     public void periodicAll(){
 
-    	SmartDashboard.putNumber("Left RPM", shooterwheel.currentLeftRPM);
-    	SmartDashboard.putNumber("Right RPM", shooterwheel.currentRightRPM);
+    	SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
+    	SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
     	SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
     	SmartDashboard.putNumber("Shooter Angle", RobotMap.shooterLifterEncoder.getVoltage());
     	//PositionTracker.updatePosition();
     	//PositionTracker3D.computePosition();
     	NavXTester.parameterDisplay();
-    	shooterwheel.updateLeftRPM();
-    	shooterwheel.updateRightRPM();
+    	shooterWheel.updateLeftRPM();
+    	shooterWheel.updateRightRPM();
     	VisionProcessing.updateVision();
 
     	SmartDashboard.putData("PDP", pdp);

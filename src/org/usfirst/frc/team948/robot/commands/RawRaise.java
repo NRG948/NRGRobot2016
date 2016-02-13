@@ -16,7 +16,7 @@ public class RawRaise extends CommandBase{
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		shooterarm.rawRaiseShooter(raisePower);
+		shooterArm.rawRaiseShooter(raisePower);
 	}
 
 	@Override
@@ -28,13 +28,13 @@ public class RawRaise extends CommandBase{
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-		shooterarm.stopArm();
+		shooterArm.stopArm();
 	}
 
 	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub
-		shooterarm.stopArm();
+		shooterArm.stopArm();
 	}
 
 }

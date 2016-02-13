@@ -13,13 +13,13 @@ public class ShooterRampUp extends CommandBase {
 	private final double DEFAULT_POWER = 1;
 
 	public ShooterRampUp() {
-	    requires(shooterwheel);
+	    requires(shooterWheel);
 		autoPower = true;
 		this.power = DEFAULT_POWER;
 	}
 
 	public ShooterRampUp(double power) {
-		requires(shooterwheel);
+		requires(shooterWheel);
 		this.power = power;
 	}
 	

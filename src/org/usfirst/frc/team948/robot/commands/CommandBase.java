@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public abstract class CommandBase extends Command {
 //	public static DS2016 ds = new DS2016();
 	public static Drive drive = Robot.drive;
-	public static ShooterWheel shooterwheel = Robot.shooterwheel;
-	public static ShooterBar shooterbar = Robot.shooterbar;
+	public static ShooterWheel shooterWheel = Robot.shooterWheel;
+	public static ShooterBar shooterBar = Robot.shooterBar;
 	public static Acquirer acquirer = Robot.acquirer;
 	public static Climber climber = Robot.climber;
 	public static Drawbridge drawbridge = Robot.drawbridge;
-	public static ShooterArm shooterarm = Robot.shooterarm;
+	public static ShooterArm shooterArm = Robot.shooterArm;
 	
 	public static Preferences preferences = Preferences.getInstance();
 

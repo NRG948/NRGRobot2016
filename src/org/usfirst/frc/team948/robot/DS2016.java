@@ -69,7 +69,7 @@ public class DS2016 {
  		shootButton.whenPressed(new Shoot());
 // 		shootButton.whenReleased(new ShooterRampUp());
  		//shootButton.whenReleased(new ShooterRampUp());
- 		xboxAButton.whileHeld(new ManualAcquire());
+ 		xboxAButton.whileHeld(new ManualAcquire(true));
  		extendDrawbridgeButton.whileHeld(new ManualDrawbridge(true));
  		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));

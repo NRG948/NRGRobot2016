@@ -4,18 +4,18 @@ public class RaiseShooterArmTo extends CommandBase {
 	private double angle;
 	
 	public RaiseShooterArmTo(double angle) {
-		requires(shooterarm);
+		requires(shooterArm);
 		this.angle = angle;
 	}
 	
 	@Override
 	protected void initialize() {
-		shooterarm.setDesiredArmAngle(angle);
+		shooterArm.setDesiredArmAngle(angle);
 	}
 
 	@Override
 	protected void execute() {
-		shooterarm.moveArmToDesiredAngle();
+		shooterArm.moveArmToDesiredAngle();
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class RaiseShooterArmTo extends CommandBase {
 
 	@Override
 	protected void end() {
-		shooterarm.stopArm();
+		shooterArm.stopArm();
 	}
 
 	@Override

@@ -11,8 +11,8 @@ public class Shoot extends CommandBase {
 	private static final double BALL_PUSH_TIME = 1.0;
 
 	public Shoot() {
-		requires(shooterwheel);
-		requires(shooterbar);
+		requires(shooterWheel);
+		requires(shooterBar);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class Shoot extends CommandBase {
  	@Override
 	protected void execute() {
 		{
-			shooterbar.rawBallPush(PUSH_POWER);
+			shooterBar.rawBallPush(PUSH_POWER);
 		}
 	}
 
@@ -39,8 +39,8 @@ public class Shoot extends CommandBase {
 	@Override
 	protected void end() {
 		timer1.stop();
-		shooterwheel.rawShoot(0);
-		shooterbar.rawBallPush(0);
+		shooterWheel.rawShoot(0);
+		shooterBar.rawBallPush(0);
 	}
 
 	@Override
