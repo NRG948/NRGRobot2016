@@ -47,6 +47,9 @@ public class DS2016 {
 	public static final Button climbUpButton = new JoystickButton(rightJoystick, 6);
 	public static final Button shooterRampUp = new JoystickButton(rightJoystick, 10);
 	public static final Joystick xBoxController = new Joystick(3);
+	public static final Button xboxAButton = new JoystickButton(xBoxController, 1);
+	public static final Button xboxLBumper = new JoystickButton(xBoxController, 5);
+	public static final Button xboxRBumper = new JoystickButton(xBoxController, 6);
 	
 	// We need to change the button numbers later
 	public static double getLeftJSY() {		
@@ -66,13 +69,13 @@ public class DS2016 {
  		shootButton.whenPressed(new Shoot());
 // 		shootButton.whenReleased(new ShooterRampUp());
  		//shootButton.whenReleased(new ShooterRampUp());
- 		acquireButton.whileHeld(new ManualAcquire());
+ 		xboxAButton.whileHeld(new ManualAcquire());
  		extendDrawbridgeButton.whileHeld(new ManualDrawbridge(true));
  		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
- 		raiseShooterArmButton.whileHeld(new RawRaise(0.25));
- 		lowerShooterArmButton.whileHeld(new RawRaise(-0.25));
+ 		xboxRBumper.whileHeld(new RawRaise(0.25));
+ 		xboxLBumper.whileHeld(new RawRaise(-0.25));
  		shooterRampUp.whileHeld(new ShooterRampUp(1));
  		//shooterRampUp.whenReleased(new ShooterRampUp(0));
  	}
