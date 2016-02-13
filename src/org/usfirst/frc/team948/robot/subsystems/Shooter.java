@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shooter extends Subsystem {
 
-	private double currentLeftRPM;
-	private double currentRightRPM;
+	public double currentLeftRPM;
+	public double currentRightRPM;
 	public Shooter() { 	
 	}
 	
