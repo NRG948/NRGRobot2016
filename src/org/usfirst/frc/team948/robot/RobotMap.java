@@ -100,7 +100,7 @@ public class RobotMap {
 
 									// unknown, 6 now taken
 
-		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge", drawbridgeEncoder);
+		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge Encoder", drawbridgeEncoder);
 		
 		//place holder need a real DistancePerPusle
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1/1038.75);
