@@ -49,7 +49,6 @@ public class DS2016 {
 	public static final Joystick xBoxController = new Joystick(3);
 	
 	// We need to change the button numbers later
-	
 	public static double getLeftJSY() {		
 		return leftJoystick.getY();
 	}
@@ -62,8 +61,8 @@ public class DS2016 {
   		driveStraightButton.whenPressed(new ManualDriveStraight());
  		driveStraightButton.whenReleased(new ManualDrive());
  		resetSensorsButton.whenPressed(new ResetSensors());
- 		raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer(0.33));//MAY NEED TO CHANGE LATER
- 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
+// 		raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer(0.33));//MAY NEED TO CHANGE LATER
+// 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
  		shootButton.whenPressed(new Shoot());
  		shootButton.whenReleased(new ShooterRampUp());
  		acquireButton.whileHeld(new ManualAcquire());

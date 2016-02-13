@@ -2,6 +2,8 @@ package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.commands.ManualAcquire;
+import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -19,6 +21,7 @@ public class Acquirer extends Subsystem implements PIDOutput {
 
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new ManualRaiseAcquirer());
 	}
 
 	public void setDesiredArmAngle(double angle) {
