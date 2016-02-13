@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Acquirer extends Subsystem implements PIDOutput {
 
-	public PIDController armAnglePID = new PIDController(0.1, 0.01, 0.005, RobotMap.armAngleEncoder, this);
+	private PIDController acquirerAnglePID = new PIDController(0.1, 0.01, 0.005, RobotMap.armAngleEncoder, this);
 	private double pidOutput;
 	private final double ANGLE_TO_VOLTS = 0.01389;
 	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
@@ -25,11 +25,11 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	}
 
 	public void setDesiredArmAngle(double angle) {
-		armAnglePID.reset();
-		armAnglePID.setSetpoint(angle * ANGLE_TO_VOLTS);
-		armAnglePID.setAbsoluteTolerance(TOLERANCE);
+		acquirerAnglePID.reset();
+		acquirerAnglePID.setSetpoint(angle * ANGLE_TO_VOLTS);
+		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
 		pidOutput = 0;
-		armAnglePID.enable();
+		acquirerAnglePID.enable();
 	}
 
 	public void moveArmToDesiredAngle() {
@@ -37,11 +37,11 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	}
 
 	public boolean isArmAtDesiredAngle() {
-		return armAnglePID.onTarget();
+		return acquirerAnglePID.onTarget();
 	}
 
 	public void stopArm() {
-		armAnglePID.reset();
+		acquirerAnglePID.reset();
 		RobotMap.acquireArmVictor.set(0);
 	}
 
