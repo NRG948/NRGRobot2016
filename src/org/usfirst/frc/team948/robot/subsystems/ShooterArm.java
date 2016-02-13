@@ -5,6 +5,7 @@ import org.usfirst.frc.team948.robot.RobotMap;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterArm extends Subsystem implements PIDOutput{
 	private PIDController shooterElevatePID = new PIDController(0.1, 0.01, 0.005, RobotMap.shooterLifterEncoder, this);
@@ -33,6 +34,8 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	}
 	
 	public void moveArmToDesiredAngle() {
+		SmartDashboard.putNumber("Shooter Raise pidOutput", pidOutput);
+		SmartDashboard.putNumber("Shooter Raise Error", shooterElevatePID.getError());
 		RobotMap.shooterLifterMotor.set(pidOutput);
 	}
 	
