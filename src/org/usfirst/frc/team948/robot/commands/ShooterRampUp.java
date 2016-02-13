@@ -38,8 +38,8 @@ public class ShooterRampUp extends CommandBase {
 		}
 //		if (shooter.isBallLoaded()) {
 
-			RobotMap.leftShooterWheel.set(-power);
-			RobotMap.rightShooterWheel.set(power);
+			RobotMap.leftShooterWheel.set(power);
+			RobotMap.rightShooterWheel.set(-power);
 //		} else {
 //			RobotMap.leftShooterWheel.set(0);
 //			RobotMap.rightShooterWheel.set(0);
@@ -51,8 +51,8 @@ public class ShooterRampUp extends CommandBase {
 	}
 
 	protected void end() {
-		RobotMap.leftShooterWheel.set(0);
-		RobotMap.rightShooterWheel.set(0);
+	//	RobotMap.leftShooterWheel.set(0);
+	//	RobotMap.rightShooterWheel.set(0);
 	}
 
 	@Override
