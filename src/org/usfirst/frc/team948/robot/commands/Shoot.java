@@ -6,7 +6,7 @@ public class Shoot extends CommandBase {
 	
 	public Timer timer1 = new Timer();
 	
-	private static final double PUSH_POWER = 0.3;
+	private static final double PUSH_POWER = 0.8;
 	
 	private static final double BALL_PUSH_TIME = 1.0;
 

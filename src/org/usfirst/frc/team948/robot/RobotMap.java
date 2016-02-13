@@ -49,7 +49,7 @@ public class RobotMap {
 	public static Encoder leftMotorEncoder = new Encoder(2, 3);
 	public static Encoder rightMotorEncoder  = new Encoder(0, 1);
 	public static DigitalInput ballBeamBreaker = new DigitalInput(8);
-	public static AnalogInput shooterLifterEncoder = new AnalogInput(0);
+	public static AnalogInput shooterLifterEncoder = new AnalogInput(2);
 	public static AnalogInput armAngleEncoder = new AnalogInput(1);
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
@@ -90,7 +90,7 @@ public class RobotMap {
 		
 		LiveWindow.addActuator("Shooter Arm Subsystem", "Shooter Lifter Motor", shooterLifterMotor);
 		
-		LiveWindow.addSensor("Shooter Arm Subsytem","Shooter Lifter Encoder", shooterLifterEncoder);
+		LiveWindow.addSensor("Shooter Arm Subsystem","Shooter Lifter Encoder", shooterLifterEncoder);
 		//LiveWindow.addActuator("Drawbridge Subsystem", "Speed Controller Drawbridge Victor",(Victor) drawbridgeArm);
 		
 		//LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Tapemeasure Victor",(Victor) climberTapeMeasure);

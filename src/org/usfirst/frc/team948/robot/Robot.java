@@ -141,6 +141,7 @@ public class Robot extends IterativeRobot {
     }
     public void periodicAll(){
     	SmartDashboard.putNumber("Joy1 Y", DS2016.getLeftJSY());
+    	
     	PositionTracker.updatePosition();
     	PositionTracker3D.computePosition();
     	NavXTester.parameterDisplay();

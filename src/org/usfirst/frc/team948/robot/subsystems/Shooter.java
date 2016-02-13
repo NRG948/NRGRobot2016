@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 		currentRightRPM = 60*RobotMap.rightShooterWheelEncoder.getRate();
 	}
 	public void rawBallPush(double power){
-		RobotMap.shooterBallPusher.set(power);
+		RobotMap.shooterBallPusher.set(-power);
 	}
 	
 	public boolean isBallLoaded(){
