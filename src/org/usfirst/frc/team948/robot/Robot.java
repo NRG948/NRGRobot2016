@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
@@ -19,6 +20,7 @@ import org.usfirst.frc.team948.robot.subsystems.ShooterWheel;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker3D;
+import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -121,10 +123,11 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+    	
     //	CommandBase.drive.initDefaultCommand();
         if (autonomousCommand != null) autonomousCommand.cancel();
 
-        SmartDashboard.putData("Raise Shooter Arm To 45 degrees", new RaiseShooterArmTo(45));
+        SmartDashboard.putData("Raise Shooter Arm to 45 degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
     }
    
     
