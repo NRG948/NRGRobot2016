@@ -54,6 +54,7 @@ public class RobotMap {
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
+	public static AnalogInput drawbridgeEncoder = new AnalogInput(3);//CHECK VALUE
 	
 
 	public static void init() {
@@ -98,7 +99,8 @@ public class RobotMap {
 		//LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Winch Victor",(Victor) climberWinch);
 
 									// unknown, 6 now taken
-		
+
+		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge", drawbridgeEncoder);
 		
 		//place holder need a real DistancePerPusle
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1);
