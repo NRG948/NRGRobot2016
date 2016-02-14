@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
  * floating around.
  */
 public class RobotMap {
+	
+	public static final boolean competitionBot = false;
+	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
@@ -31,6 +34,7 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
+	
 	public static Victor motorFrontLeft = new Victor(2);
 	public static Victor motorFrontRight = new Victor(0);
 	public static Victor motorBackLeft = new Victor(3);
@@ -55,7 +59,6 @@ public class RobotMap {
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	public static AnalogInput drawbridgeEncoder = new AnalogInput(3);//CHECK VALUE
-	
 
 	public static void init() {
 //The parameters typed in for the encoder objects are random.

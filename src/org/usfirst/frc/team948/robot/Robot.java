@@ -35,12 +35,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	
 	public enum Level {
-		PORTCULLIS_LOW(0),
-		DEFAULT(30),
-		PORTCULLIS_HIGH(65),
-		SALLY_ENGAGED(70),
-		SALLY_PORT_HIGH(75),
-		FULL_BACK_START(105);
+		PORTCULLIS_LOW(0.0),
+		DEFAULT(1.0),
+		PORTCULLIS_HIGH(2.0),
+		SALLY_ENGAGED(3.0),
+		SALLY_PORT_HIGH(4.0),
+		FULL_BACK_START(5.0);
 		
 		private double value;
 
