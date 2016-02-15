@@ -30,10 +30,11 @@ public class Shoot extends CommandBase {
 
 	@Override
 	protected boolean isFinished() {
-		if (timer1.get() > BALL_PUSH_TIME) {
-			return true;
-		}
-		return false;
+//		if (timer1.get() > BALL_PUSH_TIME) {
+//			return true;
+//		}
+//		return false;
+		return (timer1.get() > BALL_PUSH_TIME) ? true : false;
 	}
 
 	@Override

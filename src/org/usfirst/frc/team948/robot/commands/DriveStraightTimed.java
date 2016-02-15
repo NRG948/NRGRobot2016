@@ -29,9 +29,10 @@ public class DriveStraightTimed extends CommandBase {
 	protected void execute() {
 		double timeRemaining = time - timer.get();
 		double p = power;
-		if (timeRemaining <= 1) {
-			p = p * timeRemaining;
-		}
+//		if (timeRemaining <= 1) {
+//			p = p * timeRemaining;
+//		}
+		p = (timeRemaining <= 1) ? p * timeRemaining : p;
 		drive.rawTankDrive(p, p);
 	}
 

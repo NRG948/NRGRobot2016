@@ -73,10 +73,13 @@ public class MathHelper {
 	 * @return
 	 */
 	public static double max(double x, double y) {
-		if (x > y) {
-			return x;
-		}
-		return y;
+//Isn't this method redundant because you can say Math.max(x,y) from the calling locations itself
+
+//		if (x > y) {
+//			return x;
+//		}
+//		return y;
+		return Math.max(x, y);		
 	}
 
 	/**
