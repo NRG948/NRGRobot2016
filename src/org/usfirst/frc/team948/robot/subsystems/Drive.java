@@ -150,12 +150,13 @@ public class Drive extends Subsystem implements PIDOutput {
 	
 	public boolean turnToHeadingComplete(){
 		boolean onTarget = drivePID.onTarget();
-		if (onTarget) {
-			cyclesOnTarget++;
-		}
-		else {
-			cyclesOnTarget = 0;
-		}
+//		if (onTarget) {
+//			cyclesOnTarget++;
+//		}
+//		else {
+//			cyclesOnTarget = 0;
+//		}
+		cyclesOnTarget = (onTarget) ? cyclesOnTarget ++ : 0;
 		return cyclesOnTarget >= getRequiredCyclesOnTarget();
 	}
 	

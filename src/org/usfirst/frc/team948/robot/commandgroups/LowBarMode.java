@@ -1,6 +1,8 @@
-package org.usfirst.frc.team948.robot.commands;
+package org.usfirst.frc.team948.robot.commandgroups;
 
 import org.usfirst.frc.team948.robot.Robot;
+import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
+import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
