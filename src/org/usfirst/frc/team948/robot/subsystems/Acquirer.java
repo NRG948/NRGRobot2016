@@ -74,8 +74,12 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		pidOutput = arg0;
 	}
 
-	public void rawRaiseArm(double power) {
-		RobotMap.acquireArmVictor.set(power);
+	public void rawRaiseArm(double power) {		
+		if((hasReachedUpperLimit() && power > 0) || (hasReachedLowerLimit() && power < 0) ) {
+			RobotMap.acquireArmVictor.set(0);
+		} else {
+			RobotMap.acquireArmVictor.set(power);
+		}
 	}
 
 	public Level nextHigherLevel(Level currentLevel) {
@@ -114,5 +118,13 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		}
 		return levels[nearest];
 	}
+	
+	public boolean hasReachedUpperLimit() {
+		return (!RobotMap.acquireUpperLimit.get());
+	}
+	
 
+	public boolean hasReachedLowerLimit() {
+		return (!RobotMap.acquireLowerLimit.get());
+	}
 }
