@@ -21,15 +21,16 @@ public class ManualDrawbridge extends CommandBase {
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		if (extend)
-		{
-			drawbridge.rawRaise(EXTEND_POWER);
-		}
-		else
-		{
-			drawbridge.rawRaise(RETRACT_POWER);
-		}
-
+//		if (extend)
+//		{
+//			drawbridge.rawRaise(EXTEND_POWER);
+//		}
+//		else
+//		{
+//			drawbridge.rawRaise(RETRACT_POWER);
+//		}
+		double d = (extend) ? EXTEND_POWER : RETRACT_POWER;
+		drawbridge.rawRaise(d);
 	}
 
 	@Override
