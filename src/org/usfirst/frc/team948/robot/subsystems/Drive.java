@@ -27,7 +27,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double PID_MAX_OUTPUT = 0.5;
 	private double desiredHeading;
 	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.02;
-	private final double DRIVE_STRAIGHT_ON_HEADING_I = 0.005;
+	private final double DRIVE_STRAIGHT_ON_HEADING_I = 0.01;
 	private final double DRIVE_STRAIGHT_ON_HEADING_D = 0.02;
 
 	public PIDController drivePID;

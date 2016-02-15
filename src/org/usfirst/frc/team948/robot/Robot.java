@@ -159,6 +159,7 @@ public class Robot extends IterativeRobot {
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
     	VisionProcessing.updateVision();
+    	SmartDashboard.putNumber("distance", VisionProcessing.calcDistance());
 
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
