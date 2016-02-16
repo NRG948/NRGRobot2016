@@ -55,5 +55,24 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
+	
+
+	public enum ShooterAngle{
+		TOWER(0.0),
+		LINE(1.0),
+		OUTERWORKS(2.0),
+		OUTERWORKS_CORNER(3.0);
+		
+		//Values need to be set
+		private double value;
+
+		private ShooterAngle(double value) {
+			this.value = value;
+		}
+		
+		public double getValue(){
+			return value;
+		}
+	}
 }
 
