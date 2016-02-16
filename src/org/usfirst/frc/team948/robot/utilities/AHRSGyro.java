@@ -32,6 +32,10 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 	@Override
 	public double getAngle() {
 		return ahrs.getYaw();
+
+//			if(ahrs.getAngle() == -180){
+//				ahrs.getAngle() += 360;
+//			}
 	}
 
 	@Override

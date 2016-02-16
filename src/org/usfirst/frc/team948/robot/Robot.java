@@ -12,6 +12,7 @@ import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
+import org.usfirst.frc.team948.robot.commands.TurnAngle;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
@@ -138,10 +139,10 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
 
         SmartDashboard.putData("Raise Shooter Arm to X degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
-<<<<<<< HEAD
+
         SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
-=======
->>>>>>> origin/master
+
+        SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 0.7));
     }
    
     
@@ -151,6 +152,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("left encoder", RobotMap.leftMotorEncoder.get());
+        SmartDashboard.putNumber("right encoder", RobotMap.rightMotorEncoder.get());
         periodicAll();
     }
     
@@ -173,17 +176,16 @@ public class Robot extends IterativeRobot {
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
     	VisionProcessing.updateVision();
-<<<<<<< HEAD
-//    	SmartDashboard.putNumber("distance", VisionProcessing.calcDistance());
 
-=======
+
+
     	try {
 			SmartDashboard.putNumber("Distance", VisionProcessing.calcDistance());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
->>>>>>> origin/master
+
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
 //			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));

@@ -10,4 +10,7 @@ public class PreferenceKeys {
 	public static final String SHOOTER_RAMP_UP_TEST_POWER = "SHOOTER_RAMP_UP_TEST_POWER";
 	public static final String SHOOTER_ANGLE = "ShooterAngle";
 	public static final String ACQUIRER_ANGLE = "AcquirerAngle";
+	public static final String ACQUIRER_P = "AcquirerP";
+	public static final String ACQUIRER_I = "AcquirerI";
+	public static final String ACQUIRER_D = "AcquirerD";
 }

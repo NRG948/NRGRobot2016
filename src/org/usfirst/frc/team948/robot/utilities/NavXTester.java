@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class NavXTester {
 
 	private static AHRS ahrs = RobotMap.ahrs;
-
+	private static AHRSGyro ahrsgyro = new AHRSGyro();
+	
 	public static void parameterDisplay() {
 
 		// Accelerations
@@ -24,7 +25,7 @@ public class NavXTester {
 
 		// Angles
 		SmartDashboard.putNumber("Pitch", ahrs.getPitch());
-		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+		SmartDashboard.putNumber("Yaw", ahrsgyro.getAngle());
 		SmartDashboard.putNumber("Roll", ahrs.getRoll());
 
 		// Velocities
