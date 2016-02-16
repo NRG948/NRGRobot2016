@@ -14,7 +14,7 @@ public class VisionProcessing {
 	public static double[] height;
 	public static double[] width;
 	private static final double[] DEFAULT_ARRAY = new double[0];
-	private static final double TARGET_FEET = 2.5;
+	private static final double TARGET_FEET = 19.5/12;
 	private static final double FOV_ANGLE = 49.64;
 	private static double targetPixel;
 	private static double fovPixel;
@@ -34,16 +34,21 @@ public class VisionProcessing {
 	public static double getArea() {
 		return area[0];
 	}
-	public static double getWidth() {
-		return width[0];
+	public static double getWidth(){
+		try{
+			return width[0];
+		}catch(Exception e){
+			//e.printStackTrace();
+			return 1.0;
+		}
 	}
 	public static double getTotalWidth(){
 		return totalWidth[0];
 	}
-	public static double calcDistance(){
+	public static double calcDistance() throws Exception{
 		fovPixel = getTotalWidth();
 		targetPixel = getWidth();
-		double distance = TARGET_FEET*fovPixel/(2*targetPixel*Math.tan((FOV_ANGLE/2.0)*Math.PI)/180);
+		double distance = TARGET_FEET*fovPixel/(2*targetPixel*Math.tan((FOV_ANGLE/2.0)*Math.PI/180));
 		return distance;
 	}
 	public static double getShooterPower() {

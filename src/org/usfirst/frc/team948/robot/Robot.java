@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team948.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,6 +25,7 @@ import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -67,6 +69,13 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    /*	USBCamera cam = new USBCamera("cam0");
+    	cam.setExposureManual(-11);
+    	cam.setWhiteBalanceHoldCurrent();
+    	cam.updateSettings();
+    	cam.openCamera();
+    	CameraServer.getInstance().startAutomaticCapture(cam);*/
+    //	am.set
 		RobotMap.init();
 		DS2016.buttonInit();
     }
@@ -127,7 +136,7 @@ public class Robot extends IterativeRobot {
     //	CommandBase.drive.initDefaultCommand();
         if (autonomousCommand != null) autonomousCommand.cancel();
 
-        SmartDashboard.putData("Raise Shooter Arm to 45 degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
+        SmartDashboard.putData("Raise Shooter Arm to X degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
     }
    
     
@@ -159,7 +168,12 @@ public class Robot extends IterativeRobot {
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
     	VisionProcessing.updateVision();
-
+    	try {
+			SmartDashboard.putNumber("Distance", VisionProcessing.calcDistance());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
 //			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
