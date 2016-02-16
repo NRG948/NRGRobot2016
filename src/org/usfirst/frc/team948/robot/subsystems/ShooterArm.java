@@ -15,6 +15,23 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	private static final double VOLTS_45 = 4.083;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_45 - VOLTS_0) / 45;
 	
+	public enum ShooterAngle{
+		TOWER(0.0),
+		LINE(1.0),
+		OUTERWORKS(2.0),
+		OUTERWORKS_CORNER(3.0);
+		
+		//Values need to be set
+		private double value;
+
+		private ShooterAngle(double value) {
+			this.value = value;
+		}
+		
+		public double getValue(){
+			return value;
+		}
+	}
 	public ShooterArm() {
 	}
 	
@@ -67,6 +84,8 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	private double degreesFromVolts(double volts)
 	{
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
+	
 	}
+	
 }
 

@@ -13,7 +13,10 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 
 
     private AHRS ahrs = RobotMap.ahrs;
-	
+	private double cycleCount;
+	private double previousAngle;
+    private double currentAngle;
+    
 	public AHRSGyro() {
 		
 	}
@@ -31,7 +34,19 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 	//X is now the axis directed up because the location the roboRIO was mounted(vertically)
 	@Override
 	public double getAngle() {
-		return ahrs.getYaw();
+		currentAngle = ahrs.getYaw();
+		
+		//postive -> negative is +cycle, negative -> positive is -cycle
+		if (previousAngle - currentAngle > 200) {
+			cycleCount++;
+		}
+		else if (previousAngle - currentAngle < -200) {
+			cycleCount--;
+		}
+		
+		previousAngle = ahrs.getYaw();
+		//Add 360 times number of cycles to make continuous
+		return currentAngle + cycleCount * 360;
 	}
 
 	@Override
@@ -42,5 +57,7 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 	@Override
 	public void reset() {
 		ahrs.reset();
+		cycleCount = 0;
+		previousAngle = currentAngle;
 	}
 }

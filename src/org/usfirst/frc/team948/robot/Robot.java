@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team948.robot.commands.CommandBase;
+import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
+import org.usfirst.frc.team948.robot.commands.TurnAngle;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
@@ -62,6 +64,7 @@ public class Robot extends IterativeRobot {
 	public static Climber climber = new Climber();
 	public static Drawbridge drawbridge = new Drawbridge();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+	public static VisionProcessing visionProcessing = new VisionProcessing();
     Command autonomousCommand;
 
     /**
@@ -137,6 +140,10 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
 
         SmartDashboard.putData("Raise Shooter Arm to X degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
+
+        SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
+
+        SmartDashboard.putData("Turn 135 degrees", new TurnAngle(135, 0.7));
     }
    
     
@@ -146,6 +153,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("left encoder", RobotMap.leftMotorEncoder.get());
+        SmartDashboard.putNumber("right encoder", RobotMap.rightMotorEncoder.get());
         periodicAll();
     }
     
@@ -167,13 +176,15 @@ public class Robot extends IterativeRobot {
     	NavXTester.parameterDisplay();
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
-    	VisionProcessing.updateVision();
+    	visionProcessing.updateVision();
+
     	try {
-			SmartDashboard.putNumber("Distance", VisionProcessing.calcDistance());
+			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
 //			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));

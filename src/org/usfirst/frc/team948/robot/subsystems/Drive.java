@@ -19,15 +19,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem implements PIDOutput {
 	private static final int REQUIRED_CYCLES_ON_TARGET = 3;//NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_P = 0; //NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_I = 0; //NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_D = 0; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_P = 0.005; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_I = 0.005; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_D = 0.05; //NEED TO CHECK/CHANGE LATER
 
 	private double PIDOutput;
 	private double PID_MIN_OUTPUT = 0;
 	private double PID_MAX_OUTPUT = 0.5;
 	private double desiredHeading;
-	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.02;
+	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.025;
 	private final double DRIVE_STRAIGHT_ON_HEADING_I = 0.01;
 	private final double DRIVE_STRAIGHT_ON_HEADING_D = 0.02;
 
@@ -129,18 +129,21 @@ public class Drive extends Subsystem implements PIDOutput {
 	
 	public double turnToHeadingInit(double tolerance, double maxOutput) {
 		cyclesOnTarget = getRequiredCyclesOnTarget();
-		drivePID.setAbsoluteTolerance(tolerance);
 		drivePIDInit(
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_P, TURN_TO_HEADING_P),
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_I, TURN_TO_HEADING_I), 
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_D, TURN_TO_HEADING_D),
 				maxOutput);
+		drivePID.setAbsoluteTolerance(tolerance);
+		SmartDashboard.putNumber("Desired Heading", desiredHeading);
 		return desiredHeading;     
 	}
 	public void turnToHeading(double finalHeading, double power){
 		drivePID.setSetpoint(finalHeading);
+		SmartDashboard.putNumber("Turn Error", drivePID.getError());
+		SmartDashboard.putNumber("Turn PIDOutput", PIDOutput);
 		double currentPower = MathHelper.clamp(PIDOutput, -power, power);
-		rawTankDrive (currentPower, -currentPower);
+		rawTankDrive(-currentPower, currentPower);
 	}
 	
 	public void turnToHeadingEnd(double newHeading){
