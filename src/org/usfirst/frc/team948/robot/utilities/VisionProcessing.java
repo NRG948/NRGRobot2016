@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 
@@ -39,7 +38,8 @@ public class VisionProcessing implements PIDSource {
 	USBCamera cam;
 
 	public void cameraInit() {
-		cam = new USBCamera("cam0");
+		cam = new USBCamera("cam0"); //create camera object
+		//setting Cam settings
 		cam.setExposureManual(-11);
 		cam.setWhiteBalanceHoldCurrent();
 		cam.updateSettings();
@@ -53,12 +53,12 @@ public class VisionProcessing implements PIDSource {
 
 	public void updateVision() {
 		cam.getImage(frame);
-		NIVision.imaqSetImageSize(frame, 320, 240);
+		NIVision.imaqSetImageSize(frame, 320, 240); //shrink frame to 320px by 240px
 		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TOTE_HUE_RANGE, TOTE_SAT_RANGE,
-				TOTE_VAL_RANGE);
-		CameraServer.getInstance().setImage(binaryFrame);
-		NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null);
-		int numberOfParticles = NIVision.imaqCountParticles(binaryFrame, 1);
+				TOTE_VAL_RANGE); //filter particles by HSV
+		CameraServer.getInstance().setImage(binaryFrame); //dump image to SmartDashboard
+		NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null); //Filter small particles
+		int numberOfParticles = NIVision.imaqCountParticles(binaryFrame, 1); //Get number of particles
 		if (numberOfParticles > 0) {
 			centerX = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_X);
 			centerY = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_Y);
