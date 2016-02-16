@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team948.robot.commands.CommandBase;
+import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
@@ -127,7 +128,8 @@ public class Robot extends IterativeRobot {
     //	CommandBase.drive.initDefaultCommand();
         if (autonomousCommand != null) autonomousCommand.cancel();
 
-        SmartDashboard.putData("Raise Shooter Arm to 45 degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
+        SmartDashboard.putData("Raise Shooter Arm to X degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
+        SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
     }
    
     
@@ -159,7 +161,7 @@ public class Robot extends IterativeRobot {
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
     	VisionProcessing.updateVision();
-    	SmartDashboard.putNumber("distance", VisionProcessing.calcDistance());
+//    	SmartDashboard.putNumber("distance", VisionProcessing.calcDistance());
 
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {

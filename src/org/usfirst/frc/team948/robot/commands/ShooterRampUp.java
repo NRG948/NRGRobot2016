@@ -1,5 +1,6 @@
 package org.usfirst.frc.team948.robot.commands;
 
+import org.usfirst.frc.team948.robot.DS2016;
 import org.usfirst.frc.team948.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Preferences;
@@ -37,7 +38,8 @@ public class ShooterRampUp extends CommandBase {
 			power = VisionProcessing.getShooterPower();
 		}
 //		if (shooterWheel.isBallLoaded()) {
-
+			power = (1 - DS2016.rightJoystick.getZ()) / 2.0;
+		
 			RobotMap.leftShooterWheel.set(power);
 			RobotMap.rightShooterWheel.set(-power);
 //		} else {

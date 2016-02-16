@@ -83,6 +83,10 @@ public class RobotMap {
 		
 		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Victor", acquireArmVictor);
 		
+		LiveWindow.addSensor("Acquirer Subsystem", "Upper Limit Switch", acquireUpperLimit);
+		
+		LiveWindow.addSensor("Acquirer Subsystem", "Lower Limit Switch", acquireLowerLimit);
+		
 		LiveWindow.addActuator("Shooter Subsystem", "Right Shooter Wheel", rightShooterWheel);
 		
 		LiveWindow.addActuator("Shooter Subsystem", "Left Shooter Wheel", leftShooterWheel);

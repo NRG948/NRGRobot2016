@@ -27,7 +27,8 @@ public class ShooterWheel extends Subsystem {
 		currentRightRPM = 60*RobotMap.rightShooterWheelEncoder.getRate();
 	}
 	public boolean isBallLoaded(){
-		return RobotMap.ballBeamBreaker.get();
+//		return RobotMap.ballBeamBreaker.get();
+		return false;
 	}
 
 }
