@@ -77,12 +77,12 @@ public class VisionProcessing implements PIDSource {
 	@Override
 	public PIDSourceType getPIDSourceType() {
 		// TODO Auto-generated method stub
-		return null;
+		return PIDSourceType.kDisplacement;
 	}
 
 	@Override
 	public double pidGet() {
-		pidGet = Math.abs(centerX[0] - (totalWidth/2));
+		pidGet = centerX[0] - (totalWidth/2);
 		return pidGet;
 	}
 	public double getPidGet()
