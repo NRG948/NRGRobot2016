@@ -1,7 +1,7 @@
 package org.usfirst.frc.team948.robot.commandgroups;
 
 import org.usfirst.frc.team948.robot.Robot;
-import org.usfirst.frc.team948.robot.commands.DriveStraightFeet;
+import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -13,6 +13,6 @@ public class LiftPortcullis extends CommandGroup{
 		
 		addSequential(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_HIGH));
 		
-		addSequential(new DriveStraightFeet(1,10)); //CHECK VALUE
+		addSequential(new DriveStraightDistance(1,10)); //CHECK VALUE
 	}
 }

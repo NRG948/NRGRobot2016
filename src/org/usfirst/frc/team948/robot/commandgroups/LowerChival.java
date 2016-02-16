@@ -1,7 +1,7 @@
 package org.usfirst.frc.team948.robot.commandgroups;
 
 import org.usfirst.frc.team948.robot.Robot;
-import org.usfirst.frc.team948.robot.commands.DriveStraightFeet;
+import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 
@@ -15,6 +15,6 @@ public class LowerChival extends CommandGroup{
 		//Move acquirer to PORTCULLIS_LOW
 		addSequential(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_LOW));
 		//Drive forward for 1 foot 
-		addSequential(new DriveStraightFeet(1, 1));//Value needs to be checked
+		addSequential(new DriveStraightDistance(1, 1));//Value needs to be checked
 	}	
 }
