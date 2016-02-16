@@ -143,7 +143,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Turn Error", drivePID.getError());
 		SmartDashboard.putNumber("Turn PIDOutput", PIDOutput);
 		double currentPower = MathHelper.clamp(PIDOutput, -power, power);
-		rawTankDrive(currentPower, -currentPower);
+		rawTankDrive(-currentPower, currentPower);
 	}
 	
 	public void turnToHeadingEnd(double newHeading){
