@@ -6,8 +6,6 @@ public class VisionProcessing {
 
 	public static NetworkTable table = NetworkTable.getTable("GRIP/myContoursReport");
 	public static NetworkTable tableTotalArea = NetworkTable.getTable("GRIP/totalAreaReport");
-	public static double[] totalWidth;
-	public static double[] totalHeight;
 	public static double[] centerX;
 	public static double[] centerY;
 	public static double[] area;
@@ -18,6 +16,8 @@ public class VisionProcessing {
 	private static final double FOV_ANGLE = 49.64;
 	private static double targetPixel;
 	private static double fovPixel;
+	private static final double totalHeight = 240.0;
+	private static final double totalWidth = 320.0;
 	
 
 
@@ -28,8 +28,7 @@ public class VisionProcessing {
 		area = table.getNumberArray("area", DEFAULT_ARRAY);
 		height = table.getNumberArray("height", DEFAULT_ARRAY);
 		width = table.getNumberArray("width", DEFAULT_ARRAY);
-		totalWidth = tableTotalArea.getNumberArray("width", DEFAULT_ARRAY);
-		totalHeight = tableTotalArea.getNumberArray("height", DEFAULT_ARRAY);
+		
 	}
 	public static double getArea() {
 		return area[0];
@@ -38,7 +37,7 @@ public class VisionProcessing {
 		return width[0];
 	}
 	public static double getTotalWidth(){
-		return totalWidth[0];
+		return totalWidth;
 	}
 	public static double calcDistance(){
 		fovPixel = getTotalWidth();
