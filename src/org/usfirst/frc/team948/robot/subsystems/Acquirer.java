@@ -118,9 +118,9 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	public Level findNearestLevel(Level currentLevel) {
 		Level[] levels = Level.values();
 		int nearest = 0;
-		double diff = Math.abs(currentLevel - levels[nearest].getValue());
+		double diff = Math.abs(currentLevel.getValue()- levels[nearest].getValue());
 		for (int i = 1; i < levels.length; i++) {
-			double d = Math.abs(currentLevel - levels[i].getValue());
+			double d = Math.abs(currentLevel.getValue() - levels[i].getValue());
 			if (d < diff) {
 				diff = d;
 				nearest = i;
