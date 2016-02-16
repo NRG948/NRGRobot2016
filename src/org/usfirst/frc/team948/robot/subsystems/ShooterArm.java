@@ -1,6 +1,8 @@
 		package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.Robot.ShooterAngle;
+import org.usfirst.frc.team948.robot.subsystems.ShooterArm.ShooterAngle;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -86,6 +88,46 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
 	
 	}
+	
+	public ShooterAngle nextHigherAngle(ShooterAngle currentAngle) {
+		ShooterAngle[] angles = ShooterAngle.values();
+		for (int i = 0; i < angles.length; i++) {
+			if (currentAngle.equals(angles[i])) {
+				return angles[Math.min(angles.length - 1, i + 1)];
+				
+			}
+		}
+		return null;
+	}
+
+	public ShooterAngle nextLowerAngle(ShooterAngle currentAngle) {
+		ShooterAngle[] angles = ShooterAngle.values();
+		for (int i = 0; i < angles.length; i++) {
+			if (currentAngle.equals(angles[i])) {
+				return angles[Math.max(0, i - 1)];
+			}
+		}
+		return null;
+	}
+	public ShooterAngle findNearestAngle(double angle) {
+		ShooterAngle[] angles = ShooterAngle.values();
+		int nearest = 0;
+		double diff = Math.abs(angle - angles[nearest].getValue());
+		for (int i = 1; i < angles.length; i++) {
+			double d = Math.abs(angle - angles[i].getValue());
+			if (d < diff) {
+				diff = d;
+				nearest = i;
+			}
+		}
+		return angles[nearest];
+	}
+
+	/**
+	 * Returns the level nearest to the given angle.
+	 */
+	
+	
 	
 }
 
