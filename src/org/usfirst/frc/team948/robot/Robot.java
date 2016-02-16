@@ -64,6 +64,7 @@ public class Robot extends IterativeRobot {
 	public static Climber climber = new Climber();
 	public static Drawbridge drawbridge = new Drawbridge();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+	public static VisionProcessing visionProcessing = new VisionProcessing();
     Command autonomousCommand;
 
     /**
@@ -142,7 +143,10 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
 
+<<<<<<< HEAD
         SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 0.7));
+=======
+>>>>>>> origin/master
     }
    
     
@@ -175,12 +179,20 @@ public class Robot extends IterativeRobot {
     	NavXTester.parameterDisplay();
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
+<<<<<<< HEAD
     	VisionProcessing.updateVision();
 
 
 
+=======
+    	visionProcessing.updateVision();
+
+//    	SmartDashboard.putNumber("distance", VisionProcessing.calcDistance());
+
+
+>>>>>>> origin/master
     	try {
-			SmartDashboard.putNumber("Distance", VisionProcessing.calcDistance());
+			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -83,10 +83,6 @@ public class RobotMap {
 		
 		LiveWindow.addActuator("Acquirer Subsystem", "Acquire Arm Victor", acquireArmVictor);
 		
-		LiveWindow.addSensor("Acquirer Subsystem", "Upper Limit Switch", acquireUpperLimit);
-		
-		LiveWindow.addSensor("Acquirer Subsystem", "Lower Limit Switch", acquireLowerLimit);
-		
 		LiveWindow.addActuator("Shooter Subsystem", "Right Shooter Wheel", rightShooterWheel);
 		
 		LiveWindow.addActuator("Shooter Subsystem", "Left Shooter Wheel", leftShooterWheel);
@@ -115,5 +111,7 @@ public class RobotMap {
 		//place holder need a real DistancePerPusle
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(1/1038.75);
 		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(1/1035.15);
+		RobotMap.leftMotorEncoder.setDistancePerPulse(5.682/2494.67);
+		RobotMap.rightMotorEncoder.setDistancePerPulse(5.682/2431.33);
 	}
 }
