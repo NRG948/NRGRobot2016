@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterArm extends Subsystem implements PIDOutput{
 	private PIDController shooterElevatePID = new PIDController(1, 0.01, 0.005, RobotMap.shooterLifterEncoder, this);
 	private double pidOutput;
-	private final double ANGLE_TO_VOLTS = 0.01367;
-	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
+	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
+	private static final double VOLTS_0 = 3.511;
+	private static final double VOLTS_45 = 4.083;
+	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_45 - VOLTS_0) / 45;
 	
 	public ShooterArm() {
 	}
@@ -30,7 +32,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 
 	public void setDesiredArmAngle(double angle) {
 		shooterElevatePID.reset();
-		shooterElevatePID.setSetpoint(angle * ANGLE_TO_VOLTS+3.488);
+		shooterElevatePID.setSetpoint(angle * SLOPE_VOLTS_FROM_DEGREES);
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
 		shooterElevatePID.setOutputRange(-0.1, 0.3);
 		pidOutput = 0;
@@ -54,6 +56,17 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
+	}
+
+	private double voltsFromDegrees(double degrees)
+	{
+		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;
+		return volts;
+	}
+	
+	private double degreesFromVolts(double volts)
+	{
+		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
 	}
 }
 
