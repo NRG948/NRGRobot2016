@@ -21,7 +21,7 @@ public class ManualRaiseAcquirer extends CommandBase{
 		double pLeft = DS2016.xBoxController.getRawAxis(2);
 		double pRight = DS2016.xBoxController.getRawAxis(3);
 		double power = (pLeft != 0) ? -pLeft : pRight;
-		RobotMap.acquireArmVictor.set(power * 0.7);
+		acquirer.rawRaiseArm(power * 0.7);
 	}
 
 	@Override
