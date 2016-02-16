@@ -63,6 +63,7 @@ public class Robot extends IterativeRobot {
 	public static Climber climber = new Climber();
 	public static Drawbridge drawbridge = new Drawbridge();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+	public static VisionProcessing visionProcessing = new VisionProcessing();
     Command autonomousCommand;
 
     /**
@@ -138,10 +139,9 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
 
         SmartDashboard.putData("Raise Shooter Arm to X degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
-<<<<<<< HEAD
+
         SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
-=======
->>>>>>> origin/master
+
     }
    
     
@@ -172,18 +172,18 @@ public class Robot extends IterativeRobot {
     	NavXTester.parameterDisplay();
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
-    	VisionProcessing.updateVision();
-<<<<<<< HEAD
+    	visionProcessing.updateVision();
+
 //    	SmartDashboard.putNumber("distance", VisionProcessing.calcDistance());
 
-=======
+
     	try {
-			SmartDashboard.putNumber("Distance", VisionProcessing.calcDistance());
+			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
->>>>>>> origin/master
+
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
 //			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
