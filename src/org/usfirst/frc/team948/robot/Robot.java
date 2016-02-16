@@ -143,7 +143,7 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
 
-        SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 0.7));
+        SmartDashboard.putData("Turn 135 degrees", new TurnAngle(135, 0.7));
     }
    
     
@@ -177,8 +177,6 @@ public class Robot extends IterativeRobot {
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
     	visionProcessing.updateVision();
-
-//    	SmartDashboard.putNumber("distance", VisionProcessing.calcDistance());
 
     	try {
 			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class NavXTester {
 
 	private static AHRS ahrs = RobotMap.ahrs;
-	private static AHRSGyro ahrsgyro = new AHRSGyro();
+	private static AHRSGyro ahrsgyro = (AHRSGyro) RobotMap.driveGyro;
 	
 	public static void parameterDisplay() {
 
@@ -25,7 +25,8 @@ public class NavXTester {
 
 		// Angles
 		SmartDashboard.putNumber("Pitch", ahrs.getPitch());
-		SmartDashboard.putNumber("Yaw", ahrsgyro.getAngle());
+		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+		SmartDashboard.putNumber("Calculated Angle", ahrsgyro.getAngle());
 		SmartDashboard.putNumber("Roll", ahrs.getRoll());
 
 		// Velocities
