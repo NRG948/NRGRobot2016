@@ -17,6 +17,7 @@ public class VisionProcessing implements PIDSource {
 	public  double[] width;
 	private final double[] DEFAULT_ARRAY = new double[0];
 	private final double TARGET_FEET = 19.5/12;
+	private final double TARGET_FEET_OFF_GROUND = 97.0/12;
 	private final double FOV_ANGLE = 49.64;
 	private double targetPixel;
 	private double fovPixel;

@@ -66,7 +66,11 @@ public class Drive extends Subsystem implements PIDOutput {
 	public void setDesiredHeadingFromGyro() {
 		setDesiredHeading(RobotMap.driveGyro.getAngle());
 	}
-
+	
+	public double getDesiredHeading() {
+		return desiredHeading;
+	}
+	
 	public void setDesiredHeading(double angle) {
 		desiredHeading = RobotMap.driveGyro.getAngle();
 	}
@@ -92,7 +96,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		return drivePIDInit(
 			CommandBase.preferences.getDouble(PreferenceKeys.Drive_Straight_On_Heading_P, DRIVE_STRAIGHT_ON_HEADING_P),
 			CommandBase.preferences.getDouble(PreferenceKeys.Drive_Straight_On_Heading_I, DRIVE_STRAIGHT_ON_HEADING_I), 
-			CommandBase.preferences.getDouble(PreferenceKeys.Drive_Straight_On_Heading_D, DRIVE_STRAIGHT_ON_HEADING_D),
+			CommandBase.preferences.getDouble(PreferenceKeys.DRIVE_STRAIGHT_ON_HEADING_D, DRIVE_STRAIGHT_ON_HEADING_D),
 			maxOutput); 	
 
 	}
