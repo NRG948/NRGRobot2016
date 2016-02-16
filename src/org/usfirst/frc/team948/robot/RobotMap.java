@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
  * floating around.
  */
 public class RobotMap {
+	
+	public static final boolean competitionBot = false;
+	
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
@@ -31,6 +34,7 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
+	
 	public static Victor motorFrontLeft = new Victor(2);
 	public static Victor motorFrontRight = new Victor(0);
 	public static Victor motorBackLeft = new Victor(3);
@@ -48,14 +52,14 @@ public class RobotMap {
 	public static Encoder leftShooterWheelEncoder = new Encoder(6, 7);
 	public static Encoder leftMotorEncoder = new Encoder(2, 3);
 	public static Encoder rightMotorEncoder  = new Encoder(0, 1);
-	public static DigitalInput ballBeamBreaker = new DigitalInput(8);
+	public static DigitalInput acquireUpperLimit = new DigitalInput(9);
+	public static DigitalInput acquireLowerLimit = new DigitalInput(8);
 	public static AnalogInput shooterLifterEncoder = new AnalogInput(2);
 	public static AnalogInput armAngleEncoder = new AnalogInput(1);
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	public static AnalogInput drawbridgeEncoder = new AnalogInput(3);//CHECK VALUE
-	
 
 	public static void init() {
 //The parameters typed in for the encoder objects are random.
@@ -92,6 +96,8 @@ public class RobotMap {
 		LiveWindow.addActuator("Shooter Arm Subsystem", "Shooter Lifter Motor", shooterLifterMotor);
 		
 		LiveWindow.addSensor("Shooter Arm Subsystem","Shooter Lifter Encoder", shooterLifterEncoder);
+		LiveWindow.addSensor("Acquirer Subsystem", "Acquire Upper Limit", acquireUpperLimit);
+		LiveWindow.addSensor("Acquirer Subsystem", "Acquire Lower Limit", acquireLowerLimit);
 		//LiveWindow.addActuator("Drawbridge Subsystem", "Speed Controller Drawbridge Victor",(Victor) drawbridgeArm);
 		
 		//LiveWindow.addActuator("Climber Subsystem", "Speed Controller Climber Tapemeasure Victor",(Victor) climberTapeMeasure);

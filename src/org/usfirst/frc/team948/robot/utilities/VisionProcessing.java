@@ -1,5 +1,7 @@
 package org.usfirst.frc.team948.robot.utilities;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class VisionProcessing {
@@ -18,9 +20,6 @@ public class VisionProcessing {
 	private static final double FOV_ANGLE = 49.64;
 	private static double targetPixel;
 	private static double fovPixel;
-	
-
-
 
 	public static void updateVision() {
 		centerX = table.getNumberArray("centerX", DEFAULT_ARRAY);
@@ -31,8 +30,13 @@ public class VisionProcessing {
 		totalWidth = tableTotalArea.getNumberArray("width", DEFAULT_ARRAY);
 		totalHeight = tableTotalArea.getNumberArray("height", DEFAULT_ARRAY);
 	}
+
 	public static double getArea() {
-		return area[0];
+		try {
+			return area[0];
+		} catch (IndexOutOfBoundsException e) {
+			return 0.0;
+		}
 	}
 	public static double getWidth(){
 		try{
@@ -42,8 +46,13 @@ public class VisionProcessing {
 			return 1.0;
 		}
 	}
-	public static double getTotalWidth(){
-		return totalWidth[0];
+
+	public static double getTotalWidth() {
+		try {
+			return totalWidth[0];
+		} catch (IndexOutOfBoundsException e) {
+			return 0.0;
+		}
 	}
 	public static double calcDistance() throws Exception{
 		fovPixel = getTotalWidth();
@@ -51,6 +60,7 @@ public class VisionProcessing {
 		double distance = TARGET_FEET*fovPixel/(2*targetPixel*Math.tan((FOV_ANGLE/2.0)*Math.PI/180));
 		return distance;
 	}
+
 	public static double getShooterPower() {
 		return 1; // Temporary
 	}

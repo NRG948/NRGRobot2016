@@ -13,9 +13,11 @@ public class Acquirer extends Subsystem implements PIDOutput {
 
 	private PIDController acquirerAnglePID = new PIDController(0.1, 0.01, 0.005, RobotMap.armAngleEncoder, this);
 	private double pidOutput;
-	private final double ANGLE_TO_VOLTS = 0.01389;
-	private final double TOLERANCE = 1.0 * ANGLE_TO_VOLTS;
-
+	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
+	private static final double VOLTS_0 = 3.0;
+	private static final double VOLTS_180 = 0.65;
+	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_180 - VOLTS_0) / 180;
+	
 	public Acquirer() {
 	}
 
@@ -23,17 +25,29 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ManualRaiseAcquirer());
 	}
+	
+	private double voltsFromDegrees(double degrees)
+	{
+		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;
+		return volts;
+	}
+	
+	private double degreesFromVolts(double volts)
+	{
+		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
+	}
 
-	public void setDesiredArmAngle(double angle) {
+	public void setDesiredArmAngle(double degrees) {
 		acquirerAnglePID.reset();
-		acquirerAnglePID.setSetpoint(angle * ANGLE_TO_VOLTS);
+		acquirerAnglePID.setSetpoint(voltsFromDegrees(degrees));
 		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
+		acquirerAnglePID.setOutputRange(-.5, .7);
 		pidOutput = 0;
 		acquirerAnglePID.enable();
 	}
 
 	public void moveArmToDesiredAngle() {
-		RobotMap.acquireArmVictor.set(pidOutput);
+		rawRaiseArm(pidOutput);
 	}
 
 	public boolean isArmAtDesiredAngle() {
@@ -42,15 +56,16 @@ public class Acquirer extends Subsystem implements PIDOutput {
 
 	public void stopArm() {
 		acquirerAnglePID.reset();
-		RobotMap.acquireArmVictor.set(0);
+		rawRaiseArm(0);
+		pidOutput = 0;
 	}
 
 	public void stopAcquirer() {
-		RobotMap.acquireArmVictor.set(0);
-		RobotMap.acquireWheelVictor.set(0);
+		rawRaiseArm(0);
+		rawAcquireWheels(0);
 	}
 
-	public void rawAcquire(double speed) {
+	public void rawAcquireWheels(double speed) {
 		RobotMap.acquireWheelVictor.set(speed);
 	}
 
@@ -59,8 +74,12 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		pidOutput = arg0;
 	}
 
-	public void rawRaise(double power) {
-		RobotMap.acquireArmVictor.set(power);
+	public void rawRaiseArm(double power) {		
+		if((hasReachedUpperLimit() && power > 0) || (hasReachedLowerLimit() && power < 0) ) {
+			RobotMap.acquireArmVictor.set(0);
+		} else {
+			RobotMap.acquireArmVictor.set(power);
+		}
 	}
 
 	public Level nextHigherLevel(Level currentLevel) {
@@ -99,5 +118,13 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		}
 		return levels[nearest];
 	}
+	
+	public boolean hasReachedUpperLimit() {
+		return (!RobotMap.acquireUpperLimit.get());
+	}
+	
 
+	public boolean hasReachedLowerLimit() {
+		return (!RobotMap.acquireLowerLimit.get());
+	}
 }

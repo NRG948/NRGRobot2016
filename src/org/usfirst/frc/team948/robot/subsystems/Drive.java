@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -27,7 +28,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double PID_MAX_OUTPUT = 0.5;
 	private double desiredHeading;
 	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.02;
-	private final double DRIVE_STRAIGHT_ON_HEADING_I = 0.005;
+	private final double DRIVE_STRAIGHT_ON_HEADING_I = 0.01;
 	private final double DRIVE_STRAIGHT_ON_HEADING_D = 0.02;
 
 	public PIDController drivePID;
@@ -106,9 +107,9 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		double currentPIDOutput = MathHelper.clamp(PIDOutput, -outputRange,
 				outputRange);
-		//SmartDashboard.putNumber("Current PID OUTPUT", currentPIDOutput);
-		//SmartDashboard.putNumber("Angle", RobotMap.driveGyro.getAngle());
-		//SmartDashboard.putNumber("Error", error);
+		SmartDashboard.putNumber("Current PID OUTPUT", currentPIDOutput);
+		SmartDashboard.putNumber("Angle", RobotMap.driveGyro.getAngle());
+		SmartDashboard.putNumber("Error", error);
 		double leftPower = power;
 		double rightPower = power;
 
@@ -150,12 +151,13 @@ public class Drive extends Subsystem implements PIDOutput {
 	
 	public boolean turnToHeadingComplete(){
 		boolean onTarget = drivePID.onTarget();
-		if (onTarget) {
-			cyclesOnTarget++;
-		}
-		else {
-			cyclesOnTarget = 0;
-		}
+//		if (onTarget) {
+//			cyclesOnTarget++;
+//		}
+//		else {
+//			cyclesOnTarget = 0;
+//		}
+		cyclesOnTarget = (onTarget) ? cyclesOnTarget ++ : 0;
 		return cyclesOnTarget >= getRequiredCyclesOnTarget();
 	}
 	

@@ -31,7 +31,7 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 	//X is now the axis directed up because the location the roboRIO was mounted(vertically)
 	@Override
 	public double getAngle() {
-		return ahrs.getRoll();
+		return ahrs.getYaw();
 	}
 
 	@Override

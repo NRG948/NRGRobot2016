@@ -33,6 +33,9 @@ public class DriveStraightTimed extends CommandBase {
 			p = p * timeRemaining;
 		}
 		drive.rawTankDrive(p, p);
+//		if the time remaining is less than or equal to 1, the power will be set to its original value 
+//		multiplied by the time remaining
+//		the robot then drives with that power
 	}
 
 	@Override
