@@ -16,10 +16,10 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 	
 	public enum ShooterAngle{
-		TOWER(0.0),
-		LINE(1.0),
-		OUTERWORKS(2.0),
-		OUTERWORKS_CORNER(3.0);
+		TOWER(30),
+		LINE(45),
+		OUTERWORKS(60),
+		OUTERWORKS_CORNER(75);
 		
 		//Values need to be set
 		private double value;
@@ -72,13 +72,13 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		pidOutput = arg0;
 	}
 
-	private static double voltsFromDegrees(double degrees)
+	public static double voltsFromDegrees(double degrees)
 	{
 		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;
 		return volts;
 	}
 	
-	private static double degreesFromVolts(double volts)
+	public static double degreesFromVolts(double volts)
 	{
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
 	
@@ -104,12 +104,12 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		}
 		return null;
 	}
-	public ShooterAngle findNearestAngle(double angle) {
+	public ShooterAngle findNearestAngle(double voltage) {
 		ShooterAngle[] angles = ShooterAngle.values();
 		int nearest = 0;
-		double diff = Math.abs(angle - angles[nearest].getValue());
+		double diff = Math.abs(degreesFromVolts(voltage) - angles[nearest].getValue());
 		for (int i = 1; i < angles.length; i++) {
-			double d = Math.abs(angle - angles[i].getValue());
+			double d = Math.abs(degreesFromVolts(voltage) - angles[i].getValue());
 			if (d < diff) {
 				diff = d;
 				nearest = i;
