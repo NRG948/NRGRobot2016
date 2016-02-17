@@ -110,7 +110,7 @@ public class RobotMap {
 		
 		//place holder need a real DistancePerPusle
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(10/10240);
-		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(1/9986);
+		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(10/9986);
 		RobotMap.leftMotorEncoder.setDistancePerPulse(5.682/2494.67);
 		RobotMap.rightMotorEncoder.setDistancePerPulse(5.682/2431.33);
 	}
