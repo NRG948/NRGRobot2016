@@ -23,7 +23,7 @@ public class RampToRPM extends CommandBase{
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000001);
+		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000003);
 		leftWheelOutput = 0;
 		rightWheelOutput = 0;
 	}
@@ -31,7 +31,7 @@ public class RampToRPM extends CommandBase{
 	@Override
 	protected void execute() {
 		//difference in RPM to target
-		leftRPM = shooterWheel.currentLeftRPM;
+		leftRPM = Math.abs(shooterWheel.currentLeftRPM);
 		rightRPM = shooterWheel.currentRightRPM;
 		double diffLeft = targetRPM - leftRPM;
 		double diffRight = targetRPM - rightRPM;
@@ -50,7 +50,7 @@ public class RampToRPM extends CommandBase{
 			rightH0 = rightWheelOutput;
 		}
 		RobotMap.leftShooterWheel.set(leftWheelOutput);
-		RobotMap.rightShooterWheel.set(rightWheelOutput);
+		RobotMap.rightShooterWheel.set(-rightWheelOutput);
 		// TODO Auto-generated method stub
 		prevLeftDiff = diffLeft;
 		prevRightDiff = diffRight;
