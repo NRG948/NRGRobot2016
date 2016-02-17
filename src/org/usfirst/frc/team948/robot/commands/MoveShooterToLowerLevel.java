@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class RaiseShooterToNextLowerAngle extends CommandBase {
+public class MoveShooterToLowerLevel extends CommandBase {
 	private double angle;
 	private ShooterAngle currentAngle;
 	
 
-    public RaiseShooterToNextLowerAngle(double angle) {
+    public MoveShooterToLowerLevel(double angle) {
     	requires(shooterArm);
     	this.angle = angle;
     	
