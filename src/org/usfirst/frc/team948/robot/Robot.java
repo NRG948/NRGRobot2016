@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team948.robot.commands.CommandBase;
+import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
@@ -73,7 +74,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         RobotMap.init();
 		DS2016.buttonInit();
-    	visionProcessing.cameraInit();
+    //	visionProcessing.cameraInit();
     }
 	
 	/**
@@ -137,7 +138,10 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
 
         SmartDashboard.putData("Turn 135 degrees", new TurnAngle(135, 0.7));
+    
+        SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
     }
+    
    
     
 
@@ -164,12 +168,14 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
     	SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
     	SmartDashboard.putNumber("Shooter Angle", RobotMap.shooterLifterEncoder.getVoltage());
+    	SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
+    	SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
     	//PositionTracker.updatePosition();
     	//PositionTracker3D.computePosition();
     	NavXTester.parameterDisplay();
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
-    	visionProcessing.updateVision();
+    	//visionProcessing.updateVision();
 
 		SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 		SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());

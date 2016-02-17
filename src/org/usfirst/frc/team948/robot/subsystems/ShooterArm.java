@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterArm extends Subsystem implements PIDOutput{
-	private PIDController shooterElevatePID = new PIDController(1, 0.01, 0.005, RobotMap.shooterLifterEncoder, this);
+	private PIDController shooterElevatePID = new PIDController(0.8, 0.02, 0.5, RobotMap.shooterLifterEncoder, this);
 	private double pidOutput;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 	private static final double VOLTS_0 = 1.049;
@@ -47,7 +47,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		shooterElevatePID.reset();
 		shooterElevatePID.setSetpoint(voltsFromDegrees(angle));
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
-		shooterElevatePID.setOutputRange(-.2, 0.7);
+		shooterElevatePID.setOutputRange(-.2, 0.6);
 		pidOutput = 0;
 		shooterElevatePID.enable();
 	}
