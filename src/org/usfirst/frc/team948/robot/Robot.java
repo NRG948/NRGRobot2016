@@ -171,12 +171,8 @@ public class Robot extends IterativeRobot {
     	shooterWheel.updateRightRPM();
     	visionProcessing.updateVision();
 
-    	try {
-			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
+		SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
 
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
