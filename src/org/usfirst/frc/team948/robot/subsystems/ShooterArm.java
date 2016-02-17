@@ -1,20 +1,20 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
-import org.usfirst.frc.team948.robot.Robot.ShooterAngle;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm.ShooterAngle;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterArm extends Subsystem implements PIDOutput{
-	private PIDController shooterElevatePID = new PIDController(0.1, 0.01, 0.005, RobotMap.shooterLifterEncoder, this);
+	private PIDController shooterElevatePID = new PIDController(1, 0.01, 0.005, RobotMap.shooterLifterEncoder, this);
 	private double pidOutput;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	private static final double VOLTS_0 = 3.511;
-	private static final double VOLTS_45 = 4.083;
-	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_45 - VOLTS_0) / 45;
+	private static final double VOLTS_0 = 1.049;
+	private static final double VOLTS_90 = 2.279;
+	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 	
 	public enum ShooterAngle{
 		TOWER(0.0),
@@ -46,14 +46,17 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 
 	public void setDesiredArmAngle(double angle) {
 		shooterElevatePID.reset();
-		shooterElevatePID.setSetpoint(angle * SLOPE_VOLTS_FROM_DEGREES);
+		shooterElevatePID.setSetpoint(voltsFromDegrees(angle));
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
-		shooterElevatePID.setOutputRange(0, 1);
+		shooterElevatePID.setOutputRange(-.2, 0.7);
 		pidOutput = 0;
 		shooterElevatePID.enable();
 	}
 	
 	public void moveArmToDesiredAngle() {
+		SmartDashboard.putNumber("Shooter raise output", pidOutput);
+		SmartDashboard.putNumber("shooter voltage", RobotMap.shooterLifterEncoder.getVoltage());
+		SmartDashboard.putNumber("Shooter error", shooterElevatePID.getError());
 		RobotMap.shooterLifterMotor.set(pidOutput);
 	}
 	
@@ -70,13 +73,13 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		pidOutput = arg0;
 	}
 
-	private double voltsFromDegrees(double degrees)
+	private static double voltsFromDegrees(double degrees)
 	{
 		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;
 		return volts;
 	}
 	
-	private double degreesFromVolts(double volts)
+	private static double degreesFromVolts(double volts)
 	{
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
 	
