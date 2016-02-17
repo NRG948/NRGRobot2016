@@ -12,6 +12,7 @@ import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherLevel;
+import org.usfirst.frc.team948.robot.commands.RampToRPM;
 import org.usfirst.frc.team948.robot.commands.RawRaise;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
@@ -50,8 +51,11 @@ public class DS2016 {
 	public static final Button shooterRampUp = new JoystickButton(rightJoystick, 10);
 	public static final Joystick xBoxController = new Joystick(3);
 	public static final Button xboxAButton = new JoystickButton(xBoxController, 1);
+	public static final Button xboxBButton = new JoystickButton(xBoxController, 2);
+	public static final Button xboxYButton = new JoystickButton(xBoxController, 4);
 	public static final Button xboxLBumper = new JoystickButton(xBoxController, 5);
 	public static final Button xboxRBumper = new JoystickButton(xBoxController, 6);
+	public static final Button RPMButton = new JoystickButton(rightJoystick, 8);
 	
 	// We need to change the button numbers later
 	public static double getLeftJSY() {		
@@ -80,6 +84,9 @@ public class DS2016 {
  		xboxLBumper.whenPressed(new LowerShooterToNextLowerLevel());
  		shooterRampUp.whileHeld(new ShooterRampUp(1));
  		//shooterRampUp.whenReleased(new ShooterRampUp(0));
+ 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
+ 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
+ 		RPMButton.whileHeld(new RampToRPM(2000));
  	}
  	
  	

@@ -19,11 +19,12 @@ public class VisionProcessing implements PIDSource {
 	public double height;
 	public double width;
 	private final double TARGET_FEET = 19.5 / 12;
-	private final double CAMERA_OFF_GROUND = 2.5;
-	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 97.0/12 - CAMERA_OFF_GROUND; //97.0 is height from found in inches, camera is 1 foot off ground
+	private final double CAMERA_OFF_GROUND = 1;
+	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND; //97.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
 	private final double SPEED_OF_BALL = 6.55/6 * GRAVITY; //Three trials of shooting straight up, total time was 6.55 seconds
 	private final double FOV_ANGLE = 49.64;
+	private final double CAMERA_TO_SHOOTER = 14 / 12.0;
 	private double targetPixel;
 	private double fovPixel;
 	private double pidGet;
@@ -120,7 +121,7 @@ public class VisionProcessing implements PIDSource {
 	
 	public double getShootingAngle(){
 		double d = calcDistance();
-		d = Math.sqrt(Math.pow(d, 2)- Math.pow(TARGET_FEET_OFF_CAMERA_HEIGHT,2));
+		d = Math.sqrt(Math.pow(d, 2)- Math.pow(TARGET_FEET_OFF_CAMERA_HEIGHT,2)) + CAMERA_TO_SHOOTER;
 		double sqrtTerm = d*d - GRAVITY*GRAVITY*Math.pow(d, 4)/Math.pow(SPEED_OF_BALL, 4)- 2*TARGET_FEET_OFF_CAMERA_HEIGHT*GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
 		sqrtTerm = Math.sqrt(sqrtTerm);
 		double numerator = d-sqrtTerm;

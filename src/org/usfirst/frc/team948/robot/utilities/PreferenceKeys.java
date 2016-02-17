@@ -16,4 +16,5 @@ public class PreferenceKeys {
 	public static final String ACQUIRER_P = "AcquirerP";
 	public static final String ACQUIRER_I = "AcquirerI";
 	public static final String ACQUIRER_D = "AcquirerD";
+	public static final String TAKE_HALF_BACK_RATIO = "TakeBackHalfRatio";
 }
