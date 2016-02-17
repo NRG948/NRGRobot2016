@@ -1,7 +1,6 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
-import org.usfirst.frc.team948.robot.subsystems.ShooterArm.ShooterAngle;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;

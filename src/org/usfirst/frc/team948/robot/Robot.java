@@ -27,7 +27,6 @@ import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -65,22 +64,16 @@ public class Robot extends IterativeRobot {
 	public static Drawbridge drawbridge = new Drawbridge();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 	public static VisionProcessing visionProcessing = new VisionProcessing();
+    
     Command autonomousCommand;
-
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    /*	USBCamera cam = new USBCamera("cam0");
-    	cam.setExposureManual(-11);
-    	cam.setWhiteBalanceHoldCurrent();
-    	cam.updateSettings();
-    	cam.openCamera();
-    	CameraServer.getInstance().startAutomaticCapture(cam);*/
-    //	am.set
-		RobotMap.init();
+        RobotMap.init();
 		DS2016.buttonInit();
+    	visionProcessing.cameraInit();
     }
 	
 	/**
@@ -178,12 +171,8 @@ public class Robot extends IterativeRobot {
     	shooterWheel.updateRightRPM();
     	visionProcessing.updateVision();
 
-    	try {
-			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
+		SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
 
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
