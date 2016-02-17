@@ -13,7 +13,7 @@ public class RaiseShooterToNextLowerAngle extends CommandBase {
 	private ShooterAngle currentAngle;
 	
 
-    public MoveShooterToLowerLevel(double angle) {
+    public RaiseShooterToNextLowerAngle(double angle) {
     	requires(shooterArm);
     	this.angle = angle;
     	

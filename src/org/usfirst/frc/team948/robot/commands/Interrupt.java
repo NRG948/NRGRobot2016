@@ -1,12 +1,24 @@
 package org.usfirst.frc.team948.robot.commands;
 
-public class Interrupt extends CommandBase{
+import edu.wpi.first.wpilibj.command.Subsystem;
 
+public class Interrupt extends CommandBase{
 	public Interrupt() {
 		requires(drive);
 		requires(acquirer);
 		requires(shooterWheel);
 		requires(shooterBar);
+		requires(shooterArm);
+		requires(drawbridge);
+		requires(climber);
+	}
+	
+	public Interrupt(Subsystem...subsystems)
+	{
+		for (Subsystem subsystem : subsystems)
+		{
+			requires(subsystem);
+		}
 	}
 
 	@Override
