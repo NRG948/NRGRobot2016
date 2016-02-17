@@ -4,12 +4,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team948.robot.commands.LowerShooterToNextLowerLevel;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
 import org.usfirst.frc.team948.robot.commands.ManualDrawbridge;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
+import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherLevel;
 import org.usfirst.frc.team948.robot.commands.RawRaise;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
@@ -74,8 +76,8 @@ public class DS2016 {
  		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
- 		xboxRBumper.whileHeld(new RawRaise(0.25));
- 		xboxLBumper.whileHeld(new RawRaise(-0.25));
+ 		xboxRBumper.whenPressed(new RaiseShooterToNextHigherLevel());
+ 		xboxLBumper.whenPressed(new LowerShooterToNextLowerLevel());
  		shooterRampUp.whileHeld(new ShooterRampUp(1));
  		//shooterRampUp.whenReleased(new ShooterRampUp(0));
  	}

@@ -3,11 +3,11 @@ package org.usfirst.frc.team948.robot.commands;
 import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm.ShooterAngle;
 
-public class MoveShooterToLowerLevel extends CommandBase{
+public class LowerShooterToNextLowerLevel extends CommandBase{
 
 	private ShooterAngle desiredAngle;
 	
-	public MoveShooterToLowerLevel() {
+	public LowerShooterToNextLowerLevel() {
 		// TODO Auto-generated constructor stub
 	requires(shooterArm);
 	}
