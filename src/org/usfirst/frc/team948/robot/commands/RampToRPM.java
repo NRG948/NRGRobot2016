@@ -5,7 +5,7 @@ import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 
-public class RampToRPM extends CommandBase implements PIDOutput{
+public class RampToRPM extends CommandBase{
 
 	private double targetRPM;
 	private double leftRPM;
@@ -24,6 +24,8 @@ public class RampToRPM extends CommandBase implements PIDOutput{
 	protected void initialize() {
 		// TODO Auto-generated method stub
 		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000001);
+		leftWheelOutput = 0;
+		rightWheelOutput = 0;
 	}
 
 	@Override
@@ -70,11 +72,6 @@ public class RampToRPM extends CommandBase implements PIDOutput{
 	protected void interrupted() {
 		// TODO Auto-generated method stub
 		end();
-	}
-	@Override
-	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		pidOutput = output;
 	}
 
 }
