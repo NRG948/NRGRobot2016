@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.LowerShooterToNextLowerLevel;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
@@ -87,6 +88,7 @@ public class DS2016 {
  		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
  		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
  		RPMButton.whileHeld(new RampToRPM(2000));
+ 		shootButton.whenReleased(new Interrupt());
  	}
  	
  	
