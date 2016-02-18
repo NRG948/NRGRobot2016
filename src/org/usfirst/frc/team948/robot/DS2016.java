@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team948.robot.commands.LowerShooterToNextLowerLevel;
+import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
 import org.usfirst.frc.team948.robot.commands.ManualDrawbridge;
@@ -81,7 +81,7 @@ public class DS2016 {
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
  		xboxRBumper.whenPressed(new RaiseShooterToNextHigherLevel());
- 		xboxLBumper.whenPressed(new LowerShooterToNextLowerLevel());
+ 		xboxLBumper.whenPressed(new RaiseShooterToNextLowerAngle());
  		shooterRampUp.whileHeld(new ShooterRampUp(1));
  		//shooterRampUp.whenReleased(new ShooterRampUp(0));
  		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
