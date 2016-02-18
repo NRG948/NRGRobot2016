@@ -1,5 +1,7 @@
 package org.usfirst.frc.team948.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
+
 public class Interrupt extends CommandBase{
 
 	public Interrupt() {
@@ -9,7 +11,15 @@ public class Interrupt extends CommandBase{
 		requires(shooterBar);
 		requires(shooterArm);
 	}
-
+	
+	public Interrupt(Subsystem...subsystems)
+	{
+		for (Subsystem subsystem : subsystems)
+		{
+			requires(subsystem);
+		}
+	}
+	
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
