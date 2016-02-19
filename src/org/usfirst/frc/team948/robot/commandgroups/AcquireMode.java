@@ -1,6 +1,8 @@
 package org.usfirst.frc.team948.robot.commandgroups;
 
 import org.usfirst.frc.team948.robot.Robot;
+import org.usfirst.frc.team948.robot.commands.CommandBase;
+import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 
@@ -11,5 +13,6 @@ public class AcquireMode extends CommandGroup {
 	public AcquireMode(){
 		addParallel(new RaiseAcquirerTo(Robot.Level.DEFAULT));
 		addSequential(new ManualAcquire(false));
+		addSequential(new Interrupt(CommandBase.acquirerArm));
 	}
 }

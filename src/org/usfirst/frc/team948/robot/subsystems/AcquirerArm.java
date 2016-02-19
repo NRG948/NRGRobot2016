@@ -63,11 +63,11 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	
 	public void raiseArmToAngle(double angleDegrees) {
 		acquirerAnglePID.setSetpoint(voltsFromDegrees(angleDegrees));
-		rawRaiseArm(pidOutput);
+		rawRaiseArm(-pidOutput);
 	}
 	
 	public void raiseArmToAngle() {
-		rawRaiseArm(pidOutput);
+		rawRaiseArm(-pidOutput);
 	}
 
 	public void raiseArmToAngleEnd(){ 

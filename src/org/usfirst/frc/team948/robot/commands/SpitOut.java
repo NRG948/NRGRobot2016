@@ -7,10 +7,11 @@ import edu.wpi.first.wpilibj.Timer;
 public class SpitOut extends CommandBase {
 	Timer halfAsecond = new Timer();
 	private final double TIME = 0.5;
-	private final double POWER=-0.5;
+	private final double POWER= -0.6;
 
 	public SpitOut() {
 		requires(shooterWheel);
+		requires(acquirerWheel);
 		requires(shooterBar);
 	}
 
@@ -24,8 +25,9 @@ public class SpitOut extends CommandBase {
 	protected void execute() {
 		RobotMap.rightShooterWheel.set(POWER);
 		RobotMap.leftShooterWheel.set(-POWER);
+		acquirerWheel.rawAcquireWheels(-POWER);
 		if (halfAsecond.get() >= TIME) {
-			shooterBar.rawBallPush(POWER);
+			shooterBar.rawBallPush(-POWER);
 		}
 	}
 
