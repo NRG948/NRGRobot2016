@@ -41,7 +41,7 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		acquirerAnglePID.reset();
 		acquirerAnglePID.setSetpoint(voltsFromDegrees(degrees));
 		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
-		acquirerAnglePID.setOutputRange(-.5, .7);
+		acquirerAnglePID.setOutputRange(-.2, .6);
 		pidOutput = 0;
 		acquirerAnglePID.enable();
 	}
