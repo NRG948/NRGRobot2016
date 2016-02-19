@@ -60,6 +60,7 @@ public class RobotMap {
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	public static AnalogInput drawbridgeEncoder = new AnalogInput(3);//CHECK VALUE
+	public static DigitalInput ballBeamBreaker = new DigitalInput(10);
 
 	public static void init() {
 //The parameters typed in for the encoder objects are random.
@@ -107,6 +108,7 @@ public class RobotMap {
 									// unknown, 6 now taken
 
 		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge Encoder", drawbridgeEncoder);
+		LiveWindow.addSensor("ShooterWheel Subsystem", "Ball Button", ballBeamBreaker);
 		
 		//place holder need a real DistancePerPusle
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(10.0/10240);
