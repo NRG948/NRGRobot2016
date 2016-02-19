@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team948.robot.commandgroups.LowbarAutonomousRoutine;
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
+import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
@@ -17,7 +18,8 @@ import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
 import org.usfirst.frc.team948.robot.commands.TurnToTarget;
-import org.usfirst.frc.team948.robot.subsystems.Acquirer;
+import org.usfirst.frc.team948.robot.subsystems.AcquirerArm;
+import org.usfirst.frc.team948.robot.subsystems.AcquirerWheel;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
@@ -58,12 +60,16 @@ public class Robot extends IterativeRobot {
 		public double getValue(){
 			return value;
 		}
+
+		
 	}
 	public static Drive drive = new Drive();
 	public static ShooterWheel shooterWheel = new ShooterWheel();
 	public static ShooterBar shooterBar = new ShooterBar();
 	public static ShooterArm shooterArm = new ShooterArm();
-	public static Acquirer acquirer = new Acquirer();
+	
+	public static AcquirerArm acquirerArm = new AcquirerArm();
+	public static AcquirerWheel acquirerWheel = new AcquirerWheel();
 	public static Climber climber = new Climber();
 	public static Drawbridge drawbridge = new Drawbridge();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();

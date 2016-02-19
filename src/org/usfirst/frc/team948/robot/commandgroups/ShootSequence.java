@@ -2,6 +2,7 @@ package org.usfirst.frc.team948.robot.commandgroups;
 
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
+import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
 import org.usfirst.frc.team948.robot.commands.Shoot;
@@ -13,6 +14,7 @@ public class ShootSequence extends CommandGroup {
 	public ShootSequence()
 	{
 		addSequential(new TurnToTarget());
+		addParallel(new RaiseAcquirerTo(0));
 		addParallel(new RaiseShooterArmTo());
 		addSequential(new RampToRPM(3300));
 		addSequential(new Shoot());

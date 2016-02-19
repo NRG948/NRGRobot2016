@@ -1,8 +1,7 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
-import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.RobotMap;
-import org.usfirst.frc.team948.robot.commands.ManualAcquire;
+import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -10,23 +9,32 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Acquirer extends Subsystem implements PIDOutput {
-
-	private PIDController acquirerAnglePID = new PIDController(0.3, 0.005, 0.02, RobotMap.armAngleEncoder, this);
+public class AcquirerArm extends Subsystem implements PIDOutput{
+	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
 	private static final double VOLTS_0 = 3.416;
 	private static final double VOLTS_90 = 2.187;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	
-	public Acquirer() {
-	}
 
+	private static final double ACQUIRER_P = 0.3;
+	private static final double ACQUIRER_I = 0.005;
+	private static final double ACQUIRER_D = 0.02;
+
+	
+	public AcquirerArm(){
+		
+	}
+	@Override
+	public void pidWrite(double arg0) {
+		pidOutput = arg0;
+		
+	}
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ManualRaiseAcquirer());
+		
 	}
-	
 	private double voltsFromDegrees(double degrees)
 	{
 		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;
@@ -38,49 +46,48 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
 	}
 
-	public void setDesiredArmAngle(double degrees) {
-		acquirerAnglePID.reset();
-		acquirerAnglePID.setSetpoint(voltsFromDegrees(degrees));
-		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
-		acquirerAnglePID.setOutputRange(-.6, .2);
-		pidOutput = 0;
-		acquirerAnglePID.enable();
-	}
-
-	public void moveArmToDesiredAngle() {
-		SmartDashboard.putNumber("Acquirer Error", acquirerAnglePID.getError());
-		SmartDashboard.putNumber("Acquirer pidOutput", pidOutput);
-		rawRaiseArm(-pidOutput);
-	}
-
-	public boolean isArmAtDesiredAngle() {
-		return acquirerAnglePID.onTarget();
-	}
-
-	public void stopArm() {
-		acquirerAnglePID.reset();
-		rawRaiseArm(0);
-		pidOutput = 0;
-	}
-
-	public void stopAcquirer() {
-		rawRaiseArm(0);
-		rawAcquireWheels(0);
-	}
-
-	public void rawAcquireWheels(double speed) {
-		RobotMap.acquireWheelVictor.set(speed);
-	}
-
-	@Override
-	public void pidWrite(double arg0) {
-		pidOutput = arg0;
-	}
-
 	public void rawRaiseArm(double power) {
 		RobotMap.acquireArmVictor.set(power);
 	}
+	public void setDesiredArmAngle(double angleDegrees) {
+		acquirerAnglePID.setSetpoint(voltsFromDegrees(angleDegrees));
+	}
+	
+	public void raiseArmToAngleInit() {
+		acquirerAnglePID.reset();
+		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
+		acquirerAnglePID.setOutputRange(-.2, .6);
+		pidOutput = 0;
+		acquirerAnglePID.enable();
+	}
+	
+	public void raiseArmToAngle(double angleDegrees) {
+		acquirerAnglePID.setSetpoint(voltsFromDegrees(angleDegrees));
+		rawRaiseArm(pidOutput);
+	}
+	
+	public void raiseArmToAngle() {
+		rawRaiseArm(pidOutput);
+	}
 
+	public void raiseArmToAngleEnd(){ 
+		stopArm();
+	}
+	
+	public boolean isArmAtDesiredAngle() {
+		return acquirerAnglePID.onTarget();
+	}
+	
+	public void stopArm() {
+		acquirerAnglePID.reset();
+		RobotMap.acquireArmVictor.disable();
+		pidOutput = 0;
+	}
+	public void stopAcquirerArm() {
+		rawRaiseArm(0);
+		
+	}
+	
 	public Level nextHigherLevel(Level currentLevel) {
 		Level[] levels = Level.values();
 		for (int i = 0; i < levels.length; i++) {
@@ -88,7 +95,7 @@ public class Acquirer extends Subsystem implements PIDOutput {
 				return levels[Math.min(levels.length - 1, i + 1)];
 			}
 		}
-		return null;
+	return null;
 	}
 
 	public Level nextLowerLevel(Level currentLevel) {
@@ -117,5 +124,6 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		}
 		return levels[nearest];
 	}
-
 }
+
+

@@ -88,8 +88,6 @@ public class Drive extends Subsystem implements PIDOutput {
 	@Override
 	public void pidWrite(double arg0) {
 		PIDOutput = arg0;
-		// TODO Auto-generated method stub
-
 	}
 	
 	public double driveOnHeadingInit(double maxOutput){

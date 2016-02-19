@@ -10,7 +10,7 @@ public class ManualAcquire extends CommandBase {
 	public ManualAcquire(boolean manual) {
 		
 
-		requires(acquirer);
+		requires(acquirerWheel);
 		this.manual = manual;
 
 	}
@@ -23,7 +23,7 @@ public class ManualAcquire extends CommandBase {
 	// Called repeatedly when this Command is scheduled to run
 
 	protected void execute() {
-		acquirer.rawAcquireWheels(-1);
+		acquirerWheel.rawAcquireWheels(-1);
 		RobotMap.shooterBallPusher.set(-POWER);
 		RobotMap.rightShooterWheel.set(-POWER);
 		RobotMap.leftShooterWheel.set(POWER);
@@ -36,7 +36,7 @@ public class ManualAcquire extends CommandBase {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		acquirer.rawAcquireWheels(0.0);
+		acquirerWheel.rawAcquireWheels(0.0);
 		RobotMap.rightShooterWheel.set(0.0);
 		RobotMap.leftShooterWheel.set(0.0);
 		RobotMap.shooterBallPusher.set(0.0);
