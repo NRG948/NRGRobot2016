@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot.utilities;
 
 import org.usfirst.frc.team948.robot.DS2016;
+import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
 
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -11,6 +12,7 @@ public class XboxTriggerButton extends Button {
 
 	public XboxTriggerButton(int axisNumber) {
 		this.axisNumber = axisNumber;
+		DS2016.xboxLTrigger.whenPressed(new AcquireMode());
 	}
 
 	@Override
