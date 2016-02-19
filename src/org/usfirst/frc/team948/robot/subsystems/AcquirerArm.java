@@ -1,21 +1,14 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
-import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.RobotMap;
-import org.usfirst.frc.team948.robot.commands.CommandBase;
-import org.usfirst.frc.team948.robot.commands.ManualAcquire;
+import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
-import org.usfirst.frc.team948.robot.utilities.MathHelper;
-import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Acquirer extends Subsystem implements PIDOutput {
-
+public class AcquirerArm extends Subsystem implements PIDOutput{
 	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
@@ -26,15 +19,20 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	private static final double ACQUIRER_P = 0.3;
 	private static final double ACQUIRER_I = 0.005;
 	private static final double ACQUIRER_D = 0.02;
- 	
-	public Acquirer() {
+	
+	public AcquirerArm(){
+		
 	}
-
+	@Override
+	public void pidWrite(double arg0) {
+		pidOutput = arg0;
+		
+	}
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ManualRaiseAcquirer());
+		
 	}
-	
 	private double voltsFromDegrees(double degrees)
 	{
 		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;
@@ -45,21 +43,6 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	{
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
 	}
-
-	public void stopAcquirer() {
-		rawRaiseArm(0);
-		rawAcquireWheels(0);
-	}
-
-	public void rawAcquireWheels(double speed) {
-		RobotMap.acquireWheelVictor.set(speed);
-	}
-
-	@Override
-	public void pidWrite(double arg0) {
-		pidOutput = arg0;
-	}
-
 	public void rawRaiseArm(double power) {
 		RobotMap.acquireArmVictor.set(power);
 	}
@@ -71,7 +54,7 @@ public class Acquirer extends Subsystem implements PIDOutput {
 				return levels[Math.min(levels.length - 1, i + 1)];
 			}
 		}
-		return null;
+	return null;
 	}
 
 	public Level nextLowerLevel(Level currentLevel) {
@@ -135,4 +118,10 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		RobotMap.acquireArmVictor.disable();
 		pidOutput = 0;
 	}
+	public void stopAcquirerArm() {
+		rawRaiseArm(0);
+		
+	}
 }
+
+

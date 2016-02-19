@@ -7,18 +7,18 @@ public class ManualTrackAcquirer extends CommandBase{
 	private static final double MAX_ARM_ANGLE = 150.0;
 	
 	public ManualTrackAcquirer() {
-		requires(acquirer);
+		requires(acquirerArm);
 	}
 	
 	@Override
 	protected void initialize() {
-		acquirer.raiseArmToAngleInit();
+		acquirerArm.raiseArmToAngleInit();
 	}
 
 	@Override
 	protected void execute() {
 		double angle = (1 - DS2016.leftJoystick.getZ())/2 * MAX_ARM_ANGLE;
-		acquirer.raiseArmToAngle(angle);
+		acquirerArm.raiseArmToAngle(angle);
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class ManualTrackAcquirer extends CommandBase{
 
 	@Override
 	protected void end() {
-		acquirer.raiseArmToAngleEnd();
+		acquirerArm.raiseArmToAngleEnd();
 	}
 
 	@Override

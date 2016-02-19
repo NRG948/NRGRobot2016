@@ -9,7 +9,7 @@ public class ManualRaiseAcquirer extends CommandBase{
 	private double power;
 	private boolean givenPower = false;
 	public ManualRaiseAcquirer() {
-		requires(acquirer);
+		requires(acquirerArm);
 	}
 	
 	public ManualRaiseAcquirer(double power){
@@ -24,13 +24,13 @@ public class ManualRaiseAcquirer extends CommandBase{
 	@Override
 	protected void execute() {
 		if(givenPower){
-			acquirer.rawRaiseArm(power);
+			acquirerArm.rawRaiseArm(power);
 			return;
 		}
 		double pLeft = DS2016.xBoxController.getRawAxis(2);
 		double pRight = DS2016.xBoxController.getRawAxis(3);
 		double power = (pLeft != 0) ? -pLeft : pRight;
-		acquirer.rawRaiseArm(power * 0.4);
+		acquirerArm.rawRaiseArm(power * 0.4);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class ManualRaiseAcquirer extends CommandBase{
 
 	@Override
 	protected void end() {
-		acquirer.stopArm();
+		acquirerArm.stopArm();
 	}
 
 	@Override

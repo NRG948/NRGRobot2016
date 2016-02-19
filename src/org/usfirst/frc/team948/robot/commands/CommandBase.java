@@ -1,7 +1,9 @@
 package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.Robot;
-import org.usfirst.frc.team948.robot.subsystems.Acquirer;
+
+import org.usfirst.frc.team948.robot.subsystems.AcquirerArm;
+import org.usfirst.frc.team948.robot.subsystems.AcquirerWheel;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
 import org.usfirst.frc.team948.robot.subsystems.Drive;
@@ -17,11 +19,12 @@ public abstract class CommandBase extends Command {
 	public static Drive drive = Robot.drive;
 	public static ShooterWheel shooterWheel = Robot.shooterWheel;
 	public static ShooterBar shooterBar = Robot.shooterBar;
-	public static Acquirer acquirer = Robot.acquirer;
+	
+	public static AcquirerArm acquirerArm = Robot.acquirerArm;
+	public static AcquirerWheel acquirerWheel = Robot.acquirerWheel;
 	public static Climber climber = Robot.climber;
 	public static Drawbridge drawbridge = Robot.drawbridge;
 	public static ShooterArm shooterArm = Robot.shooterArm;
-	
 	public static Preferences preferences = Preferences.getInstance();
 
 }
