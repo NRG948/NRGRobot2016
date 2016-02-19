@@ -60,7 +60,7 @@ public class DS2016 {
 	public static final Button xboxLBumper = new JoystickButton(xBoxController, 5);
 	public static final Button xboxRBumper = new JoystickButton(xBoxController, 6);
 	public static final Button RPMButton = new JoystickButton(rightJoystick, 8);
-	public static final Button XboxLTrigger = new XboxTriggerButton(2);
+	public static final Button xboxLTrigger = new XboxTriggerButton(2);
 	public static final Button XboxRTrigger = new XboxTriggerButton(3);
 	
 	// We need to change the button numbers later

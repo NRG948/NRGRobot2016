@@ -1,5 +1,8 @@
 package org.usfirst.frc.team948.robot.utilities;
 
+import org.usfirst.frc.team948.robot.DS2016;
+
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 public class XboxTriggerButton extends Button {
@@ -12,6 +15,6 @@ public class XboxTriggerButton extends Button {
 
 	@Override
 	public boolean get() {
-		return (axisNumber > 0.5);
+		return DS2016.xBoxController.getRawAxis(axisNumber) > 0.5;
 	}
 }
