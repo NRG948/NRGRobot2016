@@ -22,6 +22,7 @@ import org.usfirst.frc.team948.robot.commands.RawRaise;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
+import org.usfirst.frc.team948.robot.commands.SpitOut;
 import org.usfirst.frc.team948.robot.utilities.XboxTriggerButton;
 
 /**
@@ -102,6 +103,7 @@ public class DS2016 {
  		RPMButton.whileHeld(new RampToRPM(2000));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
+ 		XboxRTrigger.whenPressed(new SpitOut());
  		xboxAButton.whenPressed(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_LOW));
  		xboxBButton.whenPressed(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_HIGH));
  		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.SALLY_ENGAGED));
