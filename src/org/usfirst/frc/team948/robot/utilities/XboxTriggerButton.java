@@ -12,7 +12,6 @@ public class XboxTriggerButton extends Button {
 
 	public XboxTriggerButton(int axisNumber) {
 		this.axisNumber = axisNumber;
-		DS2016.xboxLTrigger.whenPressed(new AcquireMode());
 	}
 
 	@Override
