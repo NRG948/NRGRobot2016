@@ -8,6 +8,7 @@ import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
 import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
+import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
@@ -101,6 +102,10 @@ public class DS2016 {
  		RPMButton.whileHeld(new RampToRPM(2000));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
+ 		xboxAButton.whenPressed(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_LOW));
+ 		xboxBButton.whenPressed(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_HIGH));
+ 		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.SALLY_ENGAGED));
+ 		xboxYButton.whenPressed(new RaiseAcquirerTo(Robot.Level.SALLY_PORT_HIGH));
  	}
  	
  	
