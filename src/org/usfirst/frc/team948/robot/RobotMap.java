@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -54,13 +55,15 @@ public class RobotMap {
 	public static Encoder rightMotorEncoder  = new Encoder(0, 1);
 	public static DigitalInput acquireUpperLimit = new DigitalInput(9);
 	public static DigitalInput acquireLowerLimit = new DigitalInput(8);
+	public static DigitalInput ballBeamBreaker = new DigitalInput(10);
 	public static AnalogInput shooterLifterEncoder = new AnalogInput(2);
 	public static AnalogInput armAngleEncoder = new AnalogInput(1);
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	public static AnalogInput drawbridgeEncoder = new AnalogInput(3);//CHECK VALUE
-	public static DigitalInput ballBeamBreaker = new DigitalInput(10);
+	public static Solenoid leds = new Solenoid(7);
+
 
 	public static void init() {
 //The parameters typed in for the encoder objects are random.
@@ -111,6 +114,7 @@ public class RobotMap {
 		LiveWindow.addSensor("ShooterWheel Subsystem", "Ball Button", ballBeamBreaker);
 		
 		//place holder need a real DistancePerPusle
+		leds.set(true);
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(10.0/10240);
 		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(10.0/9986);
 		RobotMap.leftMotorEncoder.setDistancePerPulse(5.682/2494.67);
