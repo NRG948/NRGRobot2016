@@ -4,7 +4,7 @@ import org.usfirst.frc.team948.robot.RobotMap;
 
 public class ManualAcquire extends CommandBase {
 
-	private final double power = -0.5;
+	private final double POWER = -0.5;
 	private boolean manual;
 
 	public ManualAcquire(boolean manual) {
@@ -24,9 +24,9 @@ public class ManualAcquire extends CommandBase {
 
 	protected void execute() {
 		acquirer.rawAcquireWheels(-1);
-		RobotMap.shooterBallPusher.set(-power);
-		RobotMap.rightShooterWheel.set(-power);
-		RobotMap.leftShooterWheel.set(power);
+		RobotMap.shooterBallPusher.set(-POWER);
+		RobotMap.rightShooterWheel.set(-POWER);
+		RobotMap.leftShooterWheel.set(POWER);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

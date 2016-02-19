@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class SpitOut extends CommandBase {
 	Timer halfAsecond = new Timer();
 	private final double TIME = 0.5;
-	private final double POWER;
+	private final double POWER=-0.5;
 
 	public SpitOut() {
 		requires(shooterWheel);
