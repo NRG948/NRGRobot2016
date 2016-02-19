@@ -4,6 +4,7 @@ import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Timer;
 
 public class RampToRPM extends CommandBase{
 
@@ -32,7 +33,7 @@ public class RampToRPM extends CommandBase{
 	protected void execute() {
 		//difference in RPM to target
 		leftRPM = Math.abs(shooterWheel.currentLeftRPM);
-		rightRPM = shooterWheel.currentRightRPM;
+		rightRPM = Math.abs(shooterWheel.currentRightRPM);
 		double diffLeft = targetRPM - leftRPM;
 		double diffRight = targetRPM - rightRPM;
 		leftWheelOutput += diffLeft*p;

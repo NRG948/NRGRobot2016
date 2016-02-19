@@ -20,11 +20,12 @@ public class VisionProcessing implements PIDSource {
 	public double width;
 	private final double TARGET_FEET = 19.5 / 12;
 	private final double CAMERA_OFF_GROUND = 1;
-	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND; //97.0 is height from found in inches, camera is 1 foot off ground
+	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
-	private final double SPEED_OF_BALL = 6.55/6 * GRAVITY; //Three trials of shooting straight up, total time was 6.55 seconds
-	private final double FOV_ANGLE = 49.64;
-	private final double CAMERA_TO_SHOOTER = 14 / 12.0;
+	private final double SPEED_OF_BALL = 7.1/6 * GRAVITY; //Three trials of shooting straight up, total time was 7.1 seconds
+	private final double FOV_ANGLE = 49.64; //49.64 horizontal, 32.01 vertical
+	private final double CAMERA_ANGLE = 23;
+	private final double CAMERA_TO_SHOOTER = 9.5 / 12.0;
 	private double targetPixel;
 	private double fovPixel;
 	private double pidGet;
@@ -33,7 +34,7 @@ public class VisionProcessing implements PIDSource {
 
 	Image frame;
 	Image binaryFrame;
-	NIVision.Range TOTE_HUE_RANGE = new NIVision.Range(55, 95); //H value found for green
+	NIVision.Range TOTE_HUE_RANGE = new NIVision.Range(55, 130); //H value found for green
 	NIVision.Range TOTE_SAT_RANGE = new NIVision.Range(83, 255); //Sat value found for green
 	NIVision.Range TOTE_VAL_RANGE = new NIVision.Range(62, 255);  //Val value found for green
 	NIVision.ParticleFilterCriteria2 criteria[] = new NIVision.ParticleFilterCriteria2[1];
@@ -82,14 +83,22 @@ public class VisionProcessing implements PIDSource {
 	public double getWidth() {
 		return width;
 	}
+	
+	public double getHeight() {
+		return height;
+	}
 
 	public double getTotalWidth() {
 		return totalWidth;
 	}
 
+	public double getTotalHeight() {
+		return totalHeight;
+	}
+	
 	public double calcDistance()  {
 		fovPixel = getTotalWidth();
-		targetPixel = getWidth();
+		targetPixel = getWidth(); 
 		double distance = TARGET_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE / 2.0) * Math.PI / 180));
 		return distance;
 	}
@@ -127,5 +136,15 @@ public class VisionProcessing implements PIDSource {
 		double numerator = d-sqrtTerm;
 		double denom = GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
 		return Math.atan(numerator/denom)*180/Math.PI;
+	}
+	
+	public double getTurningAngle() {
+		targetPixel = getWidth();
+		double d = calcDistance();
+		d = Math.sqrt(Math.pow(d, 2)- Math.pow(TARGET_FEET_OFF_CAMERA_HEIGHT,2)) + CAMERA_TO_SHOOTER;
+		d *= targetPixel / TARGET_FEET;
+		double w = centerX - (totalWidth / 2);
+		double angle = Math.atan(w / d) * 180 / Math.PI;
+		return angle;
 	}
 }

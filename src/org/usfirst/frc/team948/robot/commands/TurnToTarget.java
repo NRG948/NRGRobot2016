@@ -18,7 +18,7 @@ public class TurnToTarget extends CommandBase implements PIDOutput {
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		targetPID = new PIDController(0.003, 0.003 * 2 * 0.05, 0.0015,Robot.visionProcessing, this);
+		targetPID = new PIDController(0.0035, 0.00025, 0.001,Robot.visionProcessing, this);
 		targetPID.reset();
 		targetPID.setSetpoint(0);
 		targetPID.setOutputRange(-0.6, 0.6);
@@ -29,7 +29,7 @@ public class TurnToTarget extends CommandBase implements PIDOutput {
 	@Override
 	protected void execute() {
 		double power = pidOutput;
-		drive.rawTankDrive(-power, power);
+		drive.rawTankDrive(power, -power);
 		
 	}
 

@@ -8,15 +8,16 @@ import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Acquirer extends Subsystem implements PIDOutput {
 
-	private PIDController acquirerAnglePID = new PIDController(0.1, 0.01, 0.005, RobotMap.armAngleEncoder, this);
+	private PIDController acquirerAnglePID = new PIDController(0.3, 0.005, 0.02, RobotMap.armAngleEncoder, this);
 	private double pidOutput;
+	private static final double VOLTS_0 = 3.416;
+	private static final double VOLTS_90 = 2.187;
+	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	private static final double VOLTS_0 = 3.0;
-	private static final double VOLTS_180 = 0.65;
-	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_180 - VOLTS_0) / 180;
 	
 	public Acquirer() {
 	}
@@ -41,13 +42,15 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		acquirerAnglePID.reset();
 		acquirerAnglePID.setSetpoint(voltsFromDegrees(degrees));
 		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
-		acquirerAnglePID.setOutputRange(-.2, .6);
+		acquirerAnglePID.setOutputRange(-.6, .2);
 		pidOutput = 0;
 		acquirerAnglePID.enable();
 	}
 
 	public void moveArmToDesiredAngle() {
-		rawRaiseArm(pidOutput);
+		SmartDashboard.putNumber("Acquirer Error", acquirerAnglePID.getError());
+		SmartDashboard.putNumber("Acquirer pidOutput", pidOutput);
+		rawRaiseArm(-pidOutput);
 	}
 
 	public boolean isArmAtDesiredAngle() {

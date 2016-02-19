@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AcquireMode extends CommandGroup {
 
 	public AcquireMode(){
-		addSequential(new RaiseAcquirerTo(Robot.Level.DEFAULT));
+		addParallel(new RaiseAcquirerTo(Robot.Level.DEFAULT));
 		addSequential(new ManualAcquire(false));
 	}
 }

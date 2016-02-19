@@ -25,7 +25,8 @@ public class RaiseAcquirerTo extends CommandBase{
 	}
 	
 	protected boolean isFinished(){
-		return CommandBase.acquirer.isArmAtDesiredAngle();
+//		return CommandBase.acquirer.isArmAtDesiredAngle();
+		return false;
 	}
 	
 	protected void end(){

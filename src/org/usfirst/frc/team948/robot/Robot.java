@@ -8,12 +8,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team948.robot.commandgroups.LowbarAutonomousRoutine;
+import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
+import org.usfirst.frc.team948.robot.commands.TurnToTarget;
 import org.usfirst.frc.team948.robot.subsystems.Acquirer;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
 import org.usfirst.frc.team948.robot.subsystems.Drawbridge;
@@ -40,7 +43,7 @@ public class Robot extends IterativeRobot {
 	
 	public enum Level {
 		PORTCULLIS_LOW(0),
-		DEFAULT(36),
+		DEFAULT(22.4),
 		PORTCULLIS_HIGH(72),
 		SALLY_ENGAGED(108),
 		SALLY_PORT_HIGH(144),
@@ -74,7 +77,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         RobotMap.init();
 		DS2016.buttonInit();
-    //	visionProcessing.cameraInit();
+    	visionProcessing.cameraInit();
     }
 	
 	/**
@@ -111,7 +114,7 @@ public class Robot extends IterativeRobot {
 			autonomousCommand = new RawTankDrive();
 			break;
 		} */
-    	
+    	autonomousCommand = new LowbarAutonomousRoutine();
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -140,6 +143,12 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Turn 135 degrees", new TurnAngle(135, 0.7));
     
         SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
+        
+        SmartDashboard.putData("Turn to target", new TurnToTarget());
+        
+        SmartDashboard.putData("Shoot sequence", new ShootSequence());
+        
+        SmartDashboard.putData("Turn set angle to target", new TurnAngle(visionProcessing.getTurningAngle(), 0.7));
     }
     
    
@@ -175,11 +184,12 @@ public class Robot extends IterativeRobot {
     	NavXTester.parameterDisplay();
     	shooterWheel.updateLeftRPM();
     	shooterWheel.updateRightRPM();
-    	//visionProcessing.updateVision();
+    	visionProcessing.updateVision();
 
 		SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 		SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
-
+		SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
+		
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
 //			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
