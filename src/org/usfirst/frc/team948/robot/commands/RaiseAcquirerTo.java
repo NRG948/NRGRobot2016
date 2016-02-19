@@ -7,29 +7,30 @@ public class RaiseAcquirerTo extends CommandBase{
 	public double angle;
 	
 	public RaiseAcquirerTo(double angle){
-		requires(CommandBase.acquirer);
+		requires(acquirer);
 		this.angle = angle;
 	}
 	
 	public RaiseAcquirerTo(Robot.Level level){
-		requires(CommandBase.acquirer);
+		requires(acquirer);
 		this.angle = level.getValue();
 	}
 	
 	protected void initialize (){
-		CommandBase.acquirer.setDesiredArmAngle(angle);
+		acquirer.raiseArmToAngleInit();
+		acquirer.setDesiredArmAngle(angle);
 	}
 	
 	protected void execute(){
-		CommandBase.acquirer.moveArmToDesiredAngle();
+		acquirer.raiseArmToAngle();
 	}
 	
 	protected boolean isFinished(){
-		return CommandBase.acquirer.isArmAtDesiredAngle();
+		return acquirer.isArmAtDesiredAngle();
 	}
 	
 	protected void end(){
-		CommandBase.acquirer.stopArm();
+		acquirer.stopArm();
 	}
 	
 	protected void interrupted(){

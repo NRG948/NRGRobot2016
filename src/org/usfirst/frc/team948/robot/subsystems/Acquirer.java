@@ -2,22 +2,31 @@ package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
+import org.usfirst.frc.team948.robot.utilities.MathHelper;
+import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Acquirer extends Subsystem implements PIDOutput {
 
-	private PIDController acquirerAnglePID = new PIDController(0.1, 0.01, 0.005, RobotMap.armAngleEncoder, this);
+	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	private static final double VOLTS_0 = 3.0;
-	private static final double VOLTS_180 = 0.65;
-	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_180 - VOLTS_0) / 180;
-	
+	private static final double VOLTS_0 = 3.416;
+	private static final double VOLTS_90 = 2.187;
+	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
+
+	private static final double ACQUIRER_P = 0.3;
+	private static final double ACQUIRER_I = 0.005;
+	private static final double ACQUIRER_D = 0.02;
+ 	
 	public Acquirer() {
 	}
 
@@ -35,29 +44,6 @@ public class Acquirer extends Subsystem implements PIDOutput {
 	private double degreesFromVolts(double volts)
 	{
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
-	}
-
-	public void setDesiredArmAngle(double degrees) {
-		acquirerAnglePID.reset();
-		acquirerAnglePID.setSetpoint(voltsFromDegrees(degrees));
-		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
-		acquirerAnglePID.setOutputRange(-.2, .6);
-		pidOutput = 0;
-		acquirerAnglePID.enable();
-	}
-
-	public void moveArmToDesiredAngle() {
-		rawRaiseArm(pidOutput);
-	}
-
-	public boolean isArmAtDesiredAngle() {
-		return acquirerAnglePID.onTarget();
-	}
-
-	public void stopArm() {
-		acquirerAnglePID.reset();
-		rawRaiseArm(0);
-		pidOutput = 0;
 	}
 
 	public void stopAcquirer() {
@@ -115,4 +101,38 @@ public class Acquirer extends Subsystem implements PIDOutput {
 		return levels[nearest];
 	}
 
+	public void setDesiredArmAngle(double angleDegrees) {
+		acquirerAnglePID.setSetpoint(voltsFromDegrees(angleDegrees));
+	}
+	
+	public void raiseArmToAngleInit() {
+		acquirerAnglePID.reset();
+		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
+		acquirerAnglePID.setOutputRange(-.2, .6);
+		pidOutput = 0;
+		acquirerAnglePID.enable();
+	}
+	
+	public void raiseArmToAngle(double angleDegrees) {
+		acquirerAnglePID.setSetpoint(voltsFromDegrees(angleDegrees));
+		rawRaiseArm(pidOutput);
+	}
+	
+	public void raiseArmToAngle() {
+		rawRaiseArm(pidOutput);
+	}
+
+	public void raiseArmToAngleEnd(){ 
+		stopArm();
+	}
+	
+	public boolean isArmAtDesiredAngle() {
+		return acquirerAnglePID.onTarget();
+	}
+	
+	public void stopArm() {
+		acquirerAnglePID.reset();
+		RobotMap.acquireArmVictor.disable();
+		pidOutput = 0;
+	}
 }

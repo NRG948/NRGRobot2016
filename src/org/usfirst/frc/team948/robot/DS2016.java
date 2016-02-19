@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
 import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
+import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
@@ -39,11 +40,13 @@ public class DS2016 {
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
 	public static final Joystick leftJoystick = new Joystick(1);
-	public static final Joystick rightJoystick = new Joystick(2);
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
 	public static final Button raiseShooterArmButton = new JoystickButton(leftJoystick, 3);
 	public static final Button lowerShooterArmButton = new JoystickButton(leftJoystick, 2);
 	public static final Button resetSensorsButton = new JoystickButton(leftJoystick, 6);
+	public static final Button acquireTrackButton = new JoystickButton(leftJoystick, 8);
+
+	public static final Joystick rightJoystick = new Joystick(2);
 	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
 	public static final Button raiseAcquirerButton = new JoystickButton(leftJoystick, 4);
 	public static final Button lowerAcquirerButton = new JoystickButton(leftJoystick, 5);
@@ -53,6 +56,7 @@ public class DS2016 {
 	public static final Button extendTapeMeasureButton = new JoystickButton(rightJoystick, 5);
 	public static final Button climbUpButton = new JoystickButton(rightJoystick, 6);
 	public static final Button shooterRampUp = new JoystickButton(rightJoystick, 10);
+	
 	public static final Joystick xBoxController = new Joystick(3);
 	public static final Button xboxAButton = new JoystickButton(xBoxController, 1);
 	public static final Button xboxBButton = new JoystickButton(xBoxController, 2);
@@ -93,6 +97,7 @@ public class DS2016 {
  		//shooterRampUp.whenReleased(new ShooterRampUp(0));
  		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
  		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
+ 		acquireTrackButton.whenPressed(new ManualTrackAcquirer());
  		RPMButton.whileHeld(new RampToRPM(2000));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
