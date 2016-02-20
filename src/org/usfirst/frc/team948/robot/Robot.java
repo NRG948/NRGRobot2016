@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team948.robot.commandgroups.LowbarAutonomousRoutine;
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
+import org.usfirst.frc.team948.robot.commandgroups.TraverseDefenseShootRoutine;
 import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
@@ -144,7 +144,7 @@ public class Robot extends IterativeRobot {
 			autonomousCommand = new RawTankDrive();
 			break;
 		} */
-    	autonomousCommand = new LowbarAutonomousRoutine();
+    	autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE);
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }

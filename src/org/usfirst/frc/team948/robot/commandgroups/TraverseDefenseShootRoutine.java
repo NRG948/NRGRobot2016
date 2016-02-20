@@ -4,6 +4,7 @@ import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.Robot.AutoPosition;
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
+import org.usfirst.frc.team948.robot.commands.TurnToTarget;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -17,6 +18,7 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 		addSequential(new DriveStraightDistance(TURN_TO_TARGET_POWER,
 				AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE));
 		addSequential(new TurnAngle(position.getAngle(), TURN_TO_TARGET_POWER));
+		addSequential(new TurnToTarget());
 		addSequential(new ShootSequence());
 	}
 }
