@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AcquireMode extends CommandGroup {
 
 	public AcquireMode(){
-		addParallel(new RaiseAcquirerTo(Robot.Level.DEFAULT));
+		addParallel(new RaiseAcquirerTo(Robot.Level.ACQUIRE));
 		addSequential(new ManualAcquire(false));
 		addSequential(new Interrupt(CommandBase.acquirerArm));
 	}

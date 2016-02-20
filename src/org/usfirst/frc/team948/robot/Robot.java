@@ -44,12 +44,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	
 	public enum Level {
-		PORTCULLIS_LOW(0),
-		DEFAULT(22.4),
-		PORTCULLIS_HIGH(72),
-		SALLY_ENGAGED(108),
-		SALLY_PORT_HIGH(144),
-		FULL_BACK_START(180);
+		DEFAULT(0),
+		ACQUIRE(30.25),
+		CHIVAL(63.75),
+		FULL_BACK(125);
 		
 		private double value;
 
@@ -194,6 +192,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 		SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
+		SmartDashboard.putNumber("Shooting Angle 2", visionProcessing.getShootingAngle2());
 		SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
 		
     	SmartDashboard.putData("PDP", pdp);

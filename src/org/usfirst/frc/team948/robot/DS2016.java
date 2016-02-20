@@ -6,9 +6,12 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
 import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
+import org.usfirst.frc.team948.robot.commandgroups.SpitOutSequence;
+import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
+import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
@@ -23,6 +26,7 @@ import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.commands.SpitOut;
+import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.utilities.XboxTriggerButton;
 
 /**
@@ -66,6 +70,7 @@ public class DS2016 {
 	public static final Button xboxYButton = new JoystickButton(xBoxController, 4);
 	public static final Button xboxLBumper = new JoystickButton(xBoxController, 5);
 	public static final Button xboxRBumper = new JoystickButton(xBoxController, 6);
+	public static final Button xboxStartButton = new JoystickButton(xBoxController, 8);
 	public static final Button RPMButton = new JoystickButton(rightJoystick, 8);
 	public static final Button xboxLTrigger = new XboxTriggerButton(2);
 	public static final Button XboxRTrigger = new XboxTriggerButton(3);
@@ -85,29 +90,33 @@ public class DS2016 {
  		resetSensorsButton.whenPressed(new ResetSensors());
 // 		raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer(0.33));//MAY NEED TO CHANGE LATER
 // 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
- 		shootButton.whenPressed(new Shoot());
+ 		shootButton.whenPressed(new Shoot(0));
 // 		shootButton.whenReleased(new ShooterRampUp());
  		//shootButton.whenReleased(new ShooterRampUp());
- 		xboxAButton.whileHeld(new ManualAcquire(true));
+// 		xboxAButton.whileHeld(new ManualAcquire(true));
  		extendDrawbridgeButton.whileHeld(new ManualDrawbridge(true));
  		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
  		xboxRBumper.whenPressed(new MoveandRamp(true , 3300));
- 		xboxLBumper.whenPressed(new MoveandRamp(false, 3300));
+ 		xboxLBumper.whenPressed(new MoveandRamp(false, 0));
+ 		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.15));
+// 		xboxRBumper.whenPressed(new RaiseShooterToNextHigherAngle());
+// 		xboxLBumper.whenPressed(new RaiseShooterToNextLowerAngle());
  		shooterRampUp.whileHeld(new ShooterRampUp(1));
  		//shooterRampUp.whenReleased(new ShooterRampUp(0));
- 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
- 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
+// 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
+// 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
  		acquireTrackButton.whenPressed(new ManualTrackAcquirer());
- 		RPMButton.whileHeld(new RampToRPM(2000));
+ 		RPMButton.whileHeld(new RampToRPM(3300));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
- 		XboxRTrigger.whenPressed(new SpitOut());
- 		xboxAButton.whenPressed(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_LOW));
- 		xboxBButton.whenPressed(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_HIGH));
- 		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.SALLY_ENGAGED));
- 		xboxYButton.whenPressed(new RaiseAcquirerTo(Robot.Level.SALLY_PORT_HIGH));
+ 		XboxRTrigger.whenPressed(new SpitOutSequence());
+ 		xboxAButton.whenPressed(new RaiseAcquirerTo(Robot.Level.DEFAULT));
+ 		xboxBButton.whenPressed(new RaiseAcquirerTo(Robot.Level.CHIVAL));
+ 		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.FULL_BACK));
+ 		xboxYButton.whenPressed(new Interrupt(CommandBase.acquirerArm));
+
  	}
  	
  	

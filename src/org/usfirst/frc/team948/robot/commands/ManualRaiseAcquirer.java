@@ -27,10 +27,10 @@ public class ManualRaiseAcquirer extends CommandBase{
 			acquirerArm.rawRaiseArm(power);
 			return;
 		}
-		double pLeft = DS2016.xBoxController.getRawAxis(2);
-		double pRight = DS2016.xBoxController.getRawAxis(3);
-		double power = (pLeft != 0) ? -pLeft : pRight;
-		acquirerArm.rawRaiseArm(power * 0.4);
+//		double pLeft = DS2016.xBoxController.getRawAxis(2);
+//		double pRight = DS2016.xBoxController.getRawAxis(3);
+//		double power = (pLeft != 0) ? -pLeft : pRight;
+//		acquirerArm.rawRaiseArm(power * 0.4);
 	}
 
 	@Override

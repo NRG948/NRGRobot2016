@@ -19,9 +19,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem implements PIDOutput {
 	private static final int REQUIRED_CYCLES_ON_TARGET = 3;//NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_P = 0.06; //NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_I = 0.00125; //NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_D = 0.15; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_P = 0.0625; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_I = 0.001; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_D = 0.2; //NEED TO CHECK/CHANGE LATER
 
 	private double PIDOutput;
 	private double PID_MIN_OUTPUT = 0;

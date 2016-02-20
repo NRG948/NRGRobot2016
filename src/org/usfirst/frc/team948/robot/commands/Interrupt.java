@@ -6,7 +6,6 @@ public class Interrupt extends CommandBase{
 
 	public Interrupt() {
 		requires(drive);
-		
 		requires(shooterWheel);
 		requires(shooterBar);
 		requires(shooterArm);

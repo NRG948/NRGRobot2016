@@ -10,18 +10,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterArm extends Subsystem implements PIDOutput{
 	private PIDController shooterElevatePID = new PIDController(0.8, 0.02, 0.5, RobotMap.shooterLifterEncoder, this);
 	private double pidOutput;
+	
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 	private static final double VOLTS_0 = 1.049;
-	private static final double VOLTS_90 = 2.279;
+	private static final double VOLTS_90 = 2.25;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 	
 	public enum ShooterAngle{
 		GROUND(0),
-		TOWER(45),
+		OUTERWORKS_CORNER(45),
+		OUTERWORKS(50),
 		LINE(55),
-		OUTERWORKS(60),
-		OUTERWORKS_CORNER(75);
-		
+		TOWER(65);
 		//Values need to be set
 		private double value;
 
@@ -34,16 +34,18 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		}
 	}
 	public ShooterArm() {
+		
 	}
 	
 	@Override
 	protected void initDefaultCommand() {
+//		setDefaultCommand(new MoveShooterLevel());
 	}
 	
 	public void rawRaiseShooter(double power){
 		RobotMap.shooterLifterMotor.set(power);
 	}
-
+	
 	public void setDesiredArmAngle(double angle) {
 		shooterElevatePID.reset();
 		shooterElevatePID.setSetpoint(voltsFromDegrees(angle));
@@ -55,7 +57,8 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	
 	public void moveArmToDesiredAngle() {
 		SmartDashboard.putNumber("Shooter raise output", pidOutput);
-		SmartDashboard.putNumber("shooter voltage", RobotMap.shooterLifterEncoder.getVoltage());
+		SmartDashboard.putNumber("Shooter desired angle", degreesFromVolts(shooterElevatePID.getSetpoint()));
+		SmartDashboard.putNumber("Shooter angle", degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
 		SmartDashboard.putNumber("Shooter error", shooterElevatePID.getError());
 		RobotMap.shooterLifterMotor.set(pidOutput);
 	}
@@ -72,7 +75,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
-
+	
 	public static double voltsFromDegrees(double degrees)
 	{
 		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;

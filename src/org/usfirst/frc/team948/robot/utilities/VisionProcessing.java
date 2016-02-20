@@ -18,13 +18,15 @@ public class VisionProcessing implements PIDSource {
 	public double area;
 	public double height;
 	public double width;
-	private final double TARGET_FEET = 19.5 / 12;
+	private final double TARGET_FEET = 19.5 / 12; //horizontal
+	private final double TARGET_FEET2 = 14.0 / 12; //vertical
 	private final double CAMERA_OFF_GROUND = 1;
 	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
 	private final double SPEED_OF_BALL = 7.1/6 * GRAVITY; //Three trials of shooting straight up, total time was 7.1 seconds
-	private final double FOV_ANGLE = 49.64; //49.64 horizontal, 32.01 vertical
-	private final double CAMERA_ANGLE = 23;
+	private final double FOV_ANGLE = 49.64;
+	private final double FOV_ANGLE2 = 32.01; //49.64 horizontal, 32.01 vertical
+	private final double CAMERA_ANGLE = 28;
 	private final double CAMERA_TO_SHOOTER = 9.5 / 12.0;
 	private double targetPixel;
 	private double fovPixel;
@@ -96,10 +98,17 @@ public class VisionProcessing implements PIDSource {
 		return totalHeight;
 	}
 	
-	public double calcDistance()  {
+	public double calcDistance() {
 		fovPixel = getTotalWidth();
 		targetPixel = getWidth(); 
 		double distance = TARGET_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE / 2.0) * Math.PI / 180));
+		return distance;
+	}
+	
+	public double calcDistance2()  {
+		fovPixel = getTotalHeight();
+		targetPixel = getHeight(); 
+		double distance = TARGET_FEET2 * Math.cos(CAMERA_ANGLE * Math.PI / 180) * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE2 / 2.0) * Math.PI / 180));
 		return distance;
 	}
 
@@ -130,6 +139,16 @@ public class VisionProcessing implements PIDSource {
 	
 	public double getShootingAngle(){
 		double d = calcDistance();
+		d = Math.sqrt(Math.pow(d, 2)- Math.pow(TARGET_FEET_OFF_CAMERA_HEIGHT,2)) + CAMERA_TO_SHOOTER;
+		double sqrtTerm = d*d - GRAVITY*GRAVITY*Math.pow(d, 4)/Math.pow(SPEED_OF_BALL, 4)- 2*TARGET_FEET_OFF_CAMERA_HEIGHT*GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
+		sqrtTerm = Math.sqrt(sqrtTerm);
+		double numerator = d-sqrtTerm;
+		double denom = GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
+		return Math.atan(numerator/denom)*180/Math.PI;
+	}
+	
+	public double getShootingAngle2(){
+		double d = calcDistance2();
 		d = Math.sqrt(Math.pow(d, 2)- Math.pow(TARGET_FEET_OFF_CAMERA_HEIGHT,2)) + CAMERA_TO_SHOOTER;
 		double sqrtTerm = d*d - GRAVITY*GRAVITY*Math.pow(d, 4)/Math.pow(SPEED_OF_BALL, 4)- 2*TARGET_FEET_OFF_CAMERA_HEIGHT*GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
 		sqrtTerm = Math.sqrt(sqrtTerm);

@@ -2,14 +2,17 @@ package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.Timer;
 
 public class TurnToTarget extends CommandBase implements PIDOutput {
 	public PIDController targetPID;
 	public double pidOutput;
+	private Timer timer = new Timer();
 
 	public TurnToTarget() {
 		requires(drive);
@@ -18,12 +21,17 @@ public class TurnToTarget extends CommandBase implements PIDOutput {
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		targetPID = new PIDController(0.0035, 0.00025, 0.001,Robot.visionProcessing, this);
+		targetPID = new PIDController(preferences.getDouble(PreferenceKeys.VISION_P, 0.002), 
+									  preferences.getDouble(PreferenceKeys.VISION_I, 0.000125), 
+									  preferences.getDouble(PreferenceKeys.VISION_D, 0.002),
+								      Robot.visionProcessing, this);
 		targetPID.reset();
 		targetPID.setSetpoint(0);
 		targetPID.setOutputRange(-0.6, 0.6);
 		targetPID.setAbsoluteTolerance(5);
 		targetPID.enable();
+		timer.reset();
+		timer.start();
 	}
 
 	@Override
@@ -36,7 +44,8 @@ public class TurnToTarget extends CommandBase implements PIDOutput {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return targetPID.onTarget();
+//		return targetPID.onTarget();
+		return timer.get() >= 12;
 	}
 
 	@Override

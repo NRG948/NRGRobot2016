@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AcquirerArm extends Subsystem implements PIDOutput{
 	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
-	private static final double VOLTS_0 = 3.416;
-	private static final double VOLTS_90 = 2.187;
+	private static final double VOLTS_0 = 3.585;
+	private static final double VOLTS_90 = 2.169;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 
-	private static final double ACQUIRER_P = 0.3;
+	private static final double ACQUIRER_P = 0.4;
 	private static final double ACQUIRER_I = 0.005;
 	private static final double ACQUIRER_D = 0.02;
 
@@ -32,7 +32,7 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new ManualRaiseAcquirer());
+//		setDefaultCommand(new ManualRaiseAcquirer());
 		
 	}
 	private double voltsFromDegrees(double degrees)
@@ -47,7 +47,14 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 
 	public void rawRaiseArm(double power) {
-		RobotMap.acquireArmVictor.set(power);
+		if ((power > 0 && hasReachedUpperLimit()) || (power < 0 && hasReachedLowerLimit()))
+		{
+			RobotMap.acquireArmVictor.set(0);
+		}
+		else {
+			RobotMap.acquireArmVictor.set(power);
+	
+		}
 	}
 	public void setDesiredArmAngle(double angleDegrees) {
 		acquirerAnglePID.setSetpoint(voltsFromDegrees(angleDegrees));
@@ -123,6 +130,14 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 			}
 		}
 		return levels[nearest];
+	}
+	
+	public boolean hasReachedUpperLimit() {
+		return !RobotMap.acquireUpperLimit.get();
+	}
+	
+	public boolean hasReachedLowerLimit() {
+		return !RobotMap.acquireLowerLimit.get();
 	}
 }
 

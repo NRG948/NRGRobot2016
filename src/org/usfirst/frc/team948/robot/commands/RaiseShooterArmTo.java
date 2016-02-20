@@ -13,6 +13,7 @@ public class RaiseShooterArmTo extends CommandBase {
 	}
 	
 	public RaiseShooterArmTo() {
+		requires(shooterArm);
 		angleFromVisionProcessing = true;
 	}
 	

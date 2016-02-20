@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class LowBarMode extends CommandGroup{
 	
 	public LowBarMode() {
-		addParallel(new RaiseAcquirerTo(Robot.Level.PORTCULLIS_LOW));
+		addParallel(new RaiseAcquirerTo(Robot.Level.DEFAULT));
 		addParallel(new RaiseShooterArmTo(0));
 		
 		//ALL VALUES NEED TO BE TESTED

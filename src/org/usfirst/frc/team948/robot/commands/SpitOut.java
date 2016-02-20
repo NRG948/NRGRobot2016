@@ -5,9 +5,10 @@ import org.usfirst.frc.team948.robot.RobotMap;
 import edu.wpi.first.wpilibj.Timer;
 
 public class SpitOut extends CommandBase {
-	Timer halfAsecond = new Timer();
-	private final double TIME = 0.5;
+	Timer timer = new Timer();
+	private final double TIME = 1.0;
 	private final double POWER= -0.6;
+	private double startTime;
 
 	public SpitOut() {
 		requires(shooterWheel);
@@ -17,8 +18,9 @@ public class SpitOut extends CommandBase {
 
 	@Override
 	protected void initialize() {
-		halfAsecond.reset();
-		halfAsecond.start();
+		timer.reset();
+		timer.start();
+		startTime = 0;
 	}
 
 	@Override
@@ -26,9 +28,13 @@ public class SpitOut extends CommandBase {
 		RobotMap.rightShooterWheel.set(POWER);
 		RobotMap.leftShooterWheel.set(-POWER);
 		acquirerWheel.rawAcquireWheels(-POWER);
-		if (halfAsecond.get() >= TIME) {
+		if (timer.get() >= TIME) {
 			shooterBar.rawBallPush(-POWER);
 		}
+		if (!shooterWheel.isBallLoaded() && startTime == 0) {
+			startTime = timer.get();
+		}
+			
 	}
 
 	@Override
@@ -36,13 +42,14 @@ public class SpitOut extends CommandBase {
 		RobotMap.rightShooterWheel.set(0);
 		RobotMap.leftShooterWheel.set(0);
 		shooterBar.rawBallPush(0);
-		halfAsecond.stop();
+		acquirerWheel.rawAcquireWheels(0);
+		timer.stop();
 	}
 
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return !shooterWheel.isBallLoaded();
+		return (startTime != 0 && timer.get() > startTime + 0.5);
 	}
 
 	@Override

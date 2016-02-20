@@ -5,6 +5,7 @@ import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RampToRPM extends CommandBase{
 
@@ -25,8 +26,8 @@ public class RampToRPM extends CommandBase{
 	protected void initialize() {
 		// TODO Auto-generated method stub
 		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000003);
-		leftWheelOutput = 0;
-		rightWheelOutput = 0;
+		leftWheelOutput = 0.5;
+		rightWheelOutput = 0.5;
 	}
 
 	@Override
