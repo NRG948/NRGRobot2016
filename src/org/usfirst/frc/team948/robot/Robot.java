@@ -47,7 +47,9 @@ public class Robot extends IterativeRobot {
 		DEFAULT(0),
 		ACQUIRE(30.25),
 		CHIVAL(63.75),
-		FULL_BACK(125);
+		FULL_BACK(125), 
+		SALLY_PORT_HIGH(110);//VALUE NEEDS TO BE CHECKED
+
 		
 		private double value;
 
