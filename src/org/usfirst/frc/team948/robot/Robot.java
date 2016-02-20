@@ -63,6 +63,30 @@ public class Robot extends IterativeRobot {
 
 		
 	}
+
+	public enum AutoPosition{
+		
+//		Angles at which to turn when performing autonomous routine
+//		Positions 1 and 2 go into the right goal
+//		Positions 3, 4, and 5 go into the middle goal
+		
+		LOWBAR_ONE(-58.69),
+		POSITION_TWO(-46.14),
+		POSITION_THREE(-13.54),
+		POSITION_FOUR(9.63),
+		POSITION_FIVE(34.36);
+		
+		private double angle;
+		
+		private AutoPosition(double angle) {
+			this.angle = angle;
+		}
+		
+		public double getAngle() {
+			return angle;
+		}
+	}
+	
 	public static Drive drive = new Drive();
 	public static ShooterWheel shooterWheel = new ShooterWheel();
 	public static ShooterBar shooterBar = new ShooterBar();
