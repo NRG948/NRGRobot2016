@@ -26,6 +26,7 @@ import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.commands.SpitOut;
+import org.usfirst.frc.team948.robot.commands.SwitchCamera;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.utilities.XboxTriggerButton;
 
@@ -47,20 +48,23 @@ public class DS2016 {
     // commands the same as any other Button.
 	public static final Joystick leftJoystick = new Joystick(1);
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
-	public static final Button raiseShooterArmButton = new JoystickButton(leftJoystick, 3);
 	public static final Button lowerShooterArmButton = new JoystickButton(leftJoystick, 2);
+
+	public static final Button raiseShooterArmButton = new JoystickButton(leftJoystick, 3);
+	public static final Button raiseAcquirerButton = new JoystickButton(leftJoystick, 4);
+	public static final Button lowerAcquirerButton = new JoystickButton(leftJoystick, 5);
 	public static final Button resetSensorsButton = new JoystickButton(leftJoystick, 6);
+	public static final Button cameraButton = new JoystickButton(leftJoystick, 7);
 	public static final Button acquireTrackButton = new JoystickButton(leftJoystick, 8);
 
 	public static final Joystick rightJoystick = new Joystick(2);
-	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
-	public static final Button raiseAcquirerButton = new JoystickButton(leftJoystick, 4);
-	public static final Button lowerAcquirerButton = new JoystickButton(leftJoystick, 5);
 	public static final Button shootButton = new JoystickButton(rightJoystick, 1);
+	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
 	public static final Button extendDrawbridgeButton = new JoystickButton(rightJoystick, 3);
 	public static final Button retractDrawbridgeButton = new JoystickButton(rightJoystick, 4);
 	public static final Button extendTapeMeasureButton = new JoystickButton(rightJoystick, 5);
 	public static final Button climbUpButton = new JoystickButton(rightJoystick, 6);
+	public static final Button RPMButton = new JoystickButton(rightJoystick, 8);
 	public static final Button shooterRampUp = new JoystickButton(rightJoystick, 10);
 	
 	public static final Joystick xBoxController = new Joystick(3);
@@ -72,7 +76,6 @@ public class DS2016 {
 	public static final Button xboxRBumper = new JoystickButton(xBoxController, 6);
 	public static final Button xboxSelectButton = new JoystickButton(xBoxController, 7);
 	public static final Button xboxStartButton = new JoystickButton(xBoxController, 8);
-	public static final Button RPMButton = new JoystickButton(rightJoystick, 8);
 	public static final Button xboxLTrigger = new XboxTriggerButton(2);
 	public static final Button XboxRTrigger = new XboxTriggerButton(3);
 	
@@ -116,26 +119,7 @@ public class DS2016 {
  		xboxBButton.whenPressed(new RaiseAcquirerTo(Robot.Level.CHIVAL));
  		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.FULL_BACK));
  		xboxYButton.whenPressed(new Interrupt(CommandBase.acquirerArm));
-
- 	}
- 	
- 	
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
-    
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new RawTankDrive());
-    
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new RawTankDrive());
-    
-    // Start the command when the button is released  and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new RawTankDrive());
-	
-	
+ 		cameraButton.whenPressed(new SwitchCamera());
+ 	}	
 }
 

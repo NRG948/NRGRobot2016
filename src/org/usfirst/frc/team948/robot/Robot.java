@@ -1,21 +1,12 @@
 	
 package org.usfirst.frc.team948.robot;
 
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
 import org.usfirst.frc.team948.robot.commandgroups.TraverseDefenseShootRoutine;
-import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
-import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
 import org.usfirst.frc.team948.robot.commands.TurnToTarget;
 import org.usfirst.frc.team948.robot.subsystems.AcquirerArm;
@@ -26,12 +17,15 @@ import org.usfirst.frc.team948.robot.subsystems.Drive;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.subsystems.ShooterBar;
 import org.usfirst.frc.team948.robot.subsystems.ShooterWheel;
+import org.usfirst.frc.team948.robot.subsystems.VisionProcessing;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
-import org.usfirst.frc.team948.robot.utilities.PositionTracker;
-import org.usfirst.frc.team948.robot.utilities.PositionTracker3D;
 import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
-import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -45,12 +39,11 @@ public class Robot extends IterativeRobot {
 	
 	public enum Level {
 		DEFAULT(0),
-		ACQUIRE(30.25),
+		ACQUIRE(45),
 		CHIVAL(63.75),
-		FULL_BACK(125), 
-		SALLY_PORT_HIGH(110);//VALUE NEEDS TO BE CHECKED
+		SALLY_PORT_HIGH(110),
+		FULL_BACK(140); //VALUE NEEDS TO BE CHECKED
 
-		
 		private double value;
 
 		private Level(double value) {
@@ -60,7 +53,6 @@ public class Robot extends IterativeRobot {
 		public double getValue(){
 			return value;
 		}
-
 		
 	}
 
@@ -93,10 +85,10 @@ public class Robot extends IterativeRobot {
 	public static ShooterArm shooterArm = new ShooterArm();	
 	public static AcquirerArm acquirerArm = new AcquirerArm();
 	public static AcquirerWheel acquirerWheel = new AcquirerWheel();
+	public static VisionProcessing visionProcessing = new VisionProcessing();
 	public static Climber climber = new Climber();
 	public static Drawbridge drawbridge = new Drawbridge();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
-	public static VisionProcessing visionProcessing = new VisionProcessing();
     
     Command autonomousCommand;
     /**
@@ -178,10 +170,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Shoot sequence", new ShootSequence());
         
 //        SmartDashboard.putData("Turn set angle to target", new TurnAngle(visionProcessing.getTurningAngle(), 0.7));
-        
-        SmartDashboard.putData("Low bar routine (longer than 15)", new LowbarAutonomousRoutine());
-        
-        visionProcessing.setCenterImage(CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0));
+                
     }
     
    

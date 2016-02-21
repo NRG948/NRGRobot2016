@@ -12,10 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AcquirerArm extends Subsystem implements PIDOutput{
 	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
+	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
+
 	private static final double VOLTS_0 = 3.585;
 	private static final double VOLTS_90 = 2.169;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
-	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 
 	private static final double ACQUIRER_P = 0.5;
 	private static final double ACQUIRER_I = 0.003;

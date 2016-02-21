@@ -3,10 +3,9 @@ package org.usfirst.frc.team948.robot.commands;
 import org.usfirst.frc.team948.robot.DS2016;
 import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.subsystems.VisionProcessing;
 
 import edu.wpi.first.wpilibj.Preferences;
-import org.usfirst.frc.team948.robot.utilities.VisionProcessing;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterRampUp extends CommandBase {
