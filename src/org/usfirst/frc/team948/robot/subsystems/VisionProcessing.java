@@ -87,9 +87,6 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	public void updateVision() {
 		if (visionTracking) {
-			cam.setExposureManual(-11);
-			cam.setWhiteBalanceHoldCurrent();
-			cam.updateSettings();
 			cam.getImage(frame);
 			NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE,
 					TARGET_VAL_RANGE); //filter particles by HSV
@@ -107,9 +104,6 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 			}
 		}
 		else {
-			cam.setExposureManual(11);
-			cam.setWhiteBalanceAuto();
-			cam.updateSettings();
 			cam.getImage(frame);
 			CameraServer.getInstance().setImage(frame);
 		}
@@ -133,6 +127,15 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	public void switchMode() {
 		visionTracking = !visionTracking;
+		if (visionTracking) {
+			cam.setExposureManual(-11);
+			cam.setWhiteBalanceHoldCurrent();
+		}
+		else {
+			cam.setExposureAuto();
+			cam.setWhiteBalanceAuto();
+		}
+		cam.updateSettings();
 	}
 	
 	public double getArea() {
