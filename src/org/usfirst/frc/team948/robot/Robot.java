@@ -90,8 +90,7 @@ public class Robot extends IterativeRobot {
 	public static Drive drive = new Drive();
 	public static ShooterWheel shooterWheel = new ShooterWheel();
 	public static ShooterBar shooterBar = new ShooterBar();
-	public static ShooterArm shooterArm = new ShooterArm();
-	
+	public static ShooterArm shooterArm = new ShooterArm();	
 	public static AcquirerArm acquirerArm = new AcquirerArm();
 	public static AcquirerWheel acquirerWheel = new AcquirerWheel();
 	public static Climber climber = new Climber();
@@ -170,7 +169,7 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
 
-        SmartDashboard.putData("Turn 135 degrees", new TurnAngle(135, 0.7));
+        SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 1));
     
         SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
         
@@ -178,7 +177,11 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putData("Shoot sequence", new ShootSequence());
         
-        SmartDashboard.putData("Turn set angle to target", new TurnAngle(visionProcessing.getTurningAngle(), 0.7));
+//        SmartDashboard.putData("Turn set angle to target", new TurnAngle(visionProcessing.getTurningAngle(), 0.7));
+        
+        SmartDashboard.putData("Low bar routine (longer than 15)", new LowbarAutonomousRoutine());
+        
+        visionProcessing.setCenterImage(CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0));
     }
     
    
@@ -218,14 +221,13 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 		SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
-		SmartDashboard.putNumber("Shooting Angle 2", visionProcessing.getShootingAngle2());
 		SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
 		
     	SmartDashboard.putData("PDP", pdp);
 //		for (int i = 0; i <= 15; i++) {
 //			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
 //		}
-//		SmartDashboard.putNumber("PDP Total Current", pdp.getTotalCurrent());
+		SmartDashboard.putNumber("PDP Total Current", pdp.getTotalCurrent());
 //		SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
 //		SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
 

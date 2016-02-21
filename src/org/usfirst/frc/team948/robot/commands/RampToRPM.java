@@ -16,7 +16,7 @@ public class RampToRPM extends CommandBase{
 	private double prevRightDiff;
 	private double leftWheelOutput;
 	private double rightWheelOutput;
-	private double p = 0.00001;
+	private double p = 0.000015;
 	private double leftH0 = 0;
 	private double rightH0 = 0;
 	public RampToRPM(double RPM){
@@ -25,9 +25,9 @@ public class RampToRPM extends CommandBase{
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
-		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000003);
-		leftWheelOutput = 0.5;
-		rightWheelOutput = 0.5;
+		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000015);
+		leftWheelOutput = 0;
+		rightWheelOutput = 0;
 	}
 
 	@Override
@@ -51,6 +51,8 @@ public class RampToRPM extends CommandBase{
 			}
 			rightH0 = rightWheelOutput;
 		}
+		SmartDashboard.putNumber("Left shooter output", leftWheelOutput);
+		SmartDashboard.putNumber("Right shooter output", rightWheelOutput);
 		RobotMap.leftShooterWheel.set(leftWheelOutput);
 		RobotMap.rightShooterWheel.set(-rightWheelOutput);
 		// TODO Auto-generated method stub

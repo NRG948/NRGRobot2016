@@ -17,8 +17,8 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 
-	private static final double ACQUIRER_P = 0.4;
-	private static final double ACQUIRER_I = 0.005;
+	private static final double ACQUIRER_P = 0.5;
+	private static final double ACQUIRER_I = 0.003;
 	private static final double ACQUIRER_D = 0.02;
 
 	
@@ -137,7 +137,7 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 	
 	public boolean hasReachedLowerLimit() {
-		return !RobotMap.acquireLowerLimit.get();
+		return RobotMap.acquireLowerLimit.get();
 	}
 }
 

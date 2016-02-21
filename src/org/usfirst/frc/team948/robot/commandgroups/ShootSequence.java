@@ -15,11 +15,11 @@ public class ShootSequence extends CommandGroup {
 	public ShootSequence()
 	{
 		addSequential(new TurnToTarget());
-		addParallel(new RaiseAcquirerTo(0));
+		addParallel(new RaiseAcquirerTo(10));
 		addParallel(new RaiseShooterArmTo());
-		addParallel(new RampToRPM(3300));
+		addParallel(new RampToRPM(2700));
 //		addParallel(new ShooterRampUp(1));
 		addSequential(new Shoot(10));
-		addSequential(new Interrupt(CommandBase.shooterArm));
+		addSequential(new Interrupt());
 	}
 }

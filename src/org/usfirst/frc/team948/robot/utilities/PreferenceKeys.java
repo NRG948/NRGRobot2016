@@ -1,7 +1,7 @@
 package org.usfirst.frc.team948.robot.utilities;
 
 public class PreferenceKeys {
-	public static final String Turn_P = "	";
+	public static final String Turn_P = "TurnP";
 	public static final String Turn_I = "TurnI";
 	public static final String Turn_D = "TurnD";
 	public static final String DRIVE_STRAIGHT_DISTANCE_P = "DriveStraightDistanceP";
@@ -20,6 +20,6 @@ public class PreferenceKeys {
 	public static final String VISION_P = "VisionP";
 	public static final String VISION_I = "VisionI";
 	public static final String VISION_D = "VisionD";
-	
+	public static final String CENTER_IMAGE = "CenterImage";
 
 }

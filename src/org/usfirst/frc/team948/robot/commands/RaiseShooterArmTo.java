@@ -20,6 +20,7 @@ public class RaiseShooterArmTo extends CommandBase {
 	@Override
 	protected void initialize() {
 		if (angleFromVisionProcessing) angle = Robot.visionProcessing.getShootingAngle();
+		shooterArm.moveArmInit();
 		shooterArm.setDesiredArmAngle(angle);
 	}
 

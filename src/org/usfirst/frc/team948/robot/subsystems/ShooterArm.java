@@ -46,20 +46,24 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		RobotMap.shooterLifterMotor.set(power);
 	}
 	
-	public void setDesiredArmAngle(double angle) {
+	public void moveArmInit() {
 		shooterElevatePID.reset();
-		shooterElevatePID.setSetpoint(voltsFromDegrees(angle));
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
 		shooterElevatePID.setOutputRange(-.2, 0.6);
 		pidOutput = 0;
 		shooterElevatePID.enable();
 	}
 	
+	public void setDesiredArmAngle(double angle) {
+		shooterElevatePID.setSetpoint(voltsFromDegrees(angle));
+		RobotMap.shooterLifterMotor.set(pidOutput);
+	}
+	
 	public void moveArmToDesiredAngle() {
-		SmartDashboard.putNumber("Shooter raise output", pidOutput);
-		SmartDashboard.putNumber("Shooter desired angle", degreesFromVolts(shooterElevatePID.getSetpoint()));
-		SmartDashboard.putNumber("Shooter angle", degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
-		SmartDashboard.putNumber("Shooter error", shooterElevatePID.getError());
+//		SmartDashboard.putNumber("Shooter raise output", pidOutput);
+//		SmartDashboard.putNumber("Shooter desired angle", degreesFromVolts(shooterElevatePID.getSetpoint()));
+//		SmartDashboard.putNumber("Shooter angle", degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
+//		SmartDashboard.putNumber("Shooter error", shooterElevatePID.getError());
 		RobotMap.shooterLifterMotor.set(pidOutput);
 	}
 	
@@ -108,12 +112,17 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		}
 		return null;
 	}
+	
+	/**
+	 * Returns the ShooterAngle nearest to the given voltage.
+	 */	
 	public ShooterAngle findNearestAngle(double voltage) {
+		double degree = degreesFromVolts(voltage);
 		ShooterAngle[] angles = ShooterAngle.values();
 		int nearest = 0;
-		double diff = Math.abs(degreesFromVolts(voltage) - angles[nearest].getValue());
+		double diff = Math.abs(degree - angles[nearest].getValue());
 		for (int i = 1; i < angles.length; i++) {
-			double d = Math.abs(degreesFromVolts(voltage) - angles[i].getValue());
+			double d = Math.abs(degree - angles[i].getValue());
 			if (d < diff) {
 				diff = d;
 				nearest = i;
@@ -121,11 +130,5 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		}
 		return angles[nearest];
 	}
-
-	/**
-	 * Returns the level nearest to the given angle.
-	 */
-	
-	
 	
 }

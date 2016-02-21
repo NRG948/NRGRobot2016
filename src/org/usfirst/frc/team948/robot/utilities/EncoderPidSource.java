@@ -26,10 +26,10 @@ public class EncoderPidSource implements PIDSource{
 	public double pidGet() {
 		// TODO Auto-generated method stub
 		
-		pidGet = Math.max(leftStartDistance - RobotMap.leftMotorEncoder.getDistance(),
+		pidGet = Math.max(RobotMap.leftMotorEncoder.getDistance() - leftStartDistance,
 				RobotMap.rightMotorEncoder.getDistance() - rightStartDistance);
 		if(pidGet < 0){
-			pidGet = Math.min(leftStartDistance - RobotMap.leftMotorEncoder.getDistance(),
+			pidGet = Math.min(RobotMap.leftMotorEncoder.getDistance() - leftStartDistance,
 					RobotMap.rightMotorEncoder.getDistance() - rightStartDistance);
 		}
 		return pidGet;

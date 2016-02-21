@@ -109,9 +109,9 @@ public class Drive extends Subsystem implements PIDOutput {
 
 		double currentPIDOutput = MathHelper.clamp(PIDOutput, -outputRange,
 				outputRange);
-		SmartDashboard.putNumber("Current PID OUTPUT", currentPIDOutput);
-		SmartDashboard.putNumber("Angle", RobotMap.driveGyro.getAngle());
-		SmartDashboard.putNumber("Error", error);
+//		SmartDashboard.putNumber("Current PID OUTPUT", currentPIDOutput);
+//		SmartDashboard.putNumber("Angle", RobotMap.driveGyro.getAngle());
+//		SmartDashboard.putNumber("Error", error);
 		double leftPower = power;
 		double rightPower = power;
 
@@ -154,7 +154,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		PIDOutput = 0;
 	}
 	
-	public boolean turnToHeadingComplete(){
+	public boolean turnToHeadingComplete(double tolerance){
+//		boolean onTarget = drivePID.getError() < tolerance;
 		boolean onTarget = drivePID.onTarget();
 //		if (onTarget) {
 //			cyclesOnTarget++;

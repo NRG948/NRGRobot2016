@@ -6,8 +6,10 @@ import org.usfirst.frc.team948.robot.utilities.AHRSGyro;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
@@ -49,9 +51,9 @@ public class RobotMap {
 	public static Victor drawbridgeArm = new Victor(11); //Might Become CANTalons
 	public static Victor climberTapeMeasure = new Victor(12); //Might Become CANTalons
 	public static Victor climberWinch = new Victor(14); //Might Become CANTalons
-	public static Encoder rightShooterWheelEncoder = new Encoder(4, 5);
-	public static Encoder leftShooterWheelEncoder = new Encoder(6, 7);
-	public static Encoder leftMotorEncoder = new Encoder(2, 3);
+	public static Encoder rightShooterWheelEncoder = new Encoder(4, 5, false, EncodingType.k1X);
+	public static Encoder leftShooterWheelEncoder = new Encoder(6, 7, true, EncodingType.k1X);
+	public static Encoder leftMotorEncoder = new Encoder(2, 3, true);
 	public static Encoder rightMotorEncoder  = new Encoder(0, 1);
 	public static DigitalInput acquireUpperLimit = new DigitalInput(9);
 	public static DigitalInput acquireLowerLimit = new DigitalInput(8);
@@ -116,7 +118,11 @@ public class RobotMap {
 		//place holder need a real DistancePerPusle
 		leds.set(true);
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(10.0/10240);
-		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(10.0/9986);
+		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(10.0/10011);
+		RobotMap.leftShooterWheelEncoder.setPIDSourceType(PIDSourceType.kRate);
+		RobotMap.rightShooterWheelEncoder.setPIDSourceType(PIDSourceType.kRate);
+		RobotMap.leftShooterWheelEncoder.setSamplesToAverage(5);
+		RobotMap.rightShooterWheelEncoder.setSamplesToAverage(5);
 		RobotMap.leftMotorEncoder.setDistancePerPulse(5.682/2494.67);
 		RobotMap.rightMotorEncoder.setDistancePerPulse(5.682/2431.33);
 	}
