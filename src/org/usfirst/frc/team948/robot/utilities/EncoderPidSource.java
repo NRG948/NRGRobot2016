@@ -18,14 +18,11 @@ public class EncoderPidSource implements PIDSource{
 
 	@Override
 	public PIDSourceType getPIDSourceType() {
-		// TODO Auto-generated method stub
 		return PIDSourceType.kDisplacement;
 	}
 
 	@Override
 	public double pidGet() {
-		// TODO Auto-generated method stub
-		
 		pidGet = Math.max(RobotMap.leftMotorEncoder.getDistance() - leftStartDistance,
 				RobotMap.rightMotorEncoder.getDistance() - rightStartDistance);
 		if(pidGet < 0){
@@ -37,7 +34,6 @@ public class EncoderPidSource implements PIDSource{
 
 	@Override
 	public void setPIDSourceType(PIDSourceType arg0) {
-		// TODO Auto-generated method stub
-	
+		
 	}
 }

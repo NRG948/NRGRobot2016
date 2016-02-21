@@ -14,13 +14,11 @@ public class ManualDrawbridge extends CommandBase {
 	
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 //		if (extend)
 //		{
 //			drawbridge.rawRaise(EXTEND_POWER);
@@ -46,8 +44,7 @@ public class ManualDrawbridge extends CommandBase {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

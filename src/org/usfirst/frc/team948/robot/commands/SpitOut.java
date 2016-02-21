@@ -48,13 +48,11 @@ public class SpitOut extends CommandBase {
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return (startTime != 0 && timer.get() > startTime + 0.5);
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		end();
 	}
 

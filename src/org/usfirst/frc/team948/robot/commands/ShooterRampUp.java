@@ -59,7 +59,6 @@ public class ShooterRampUp extends CommandBase {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		end();
 	}
 }

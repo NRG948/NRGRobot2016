@@ -31,7 +31,6 @@ public class TurnToTarget extends CommandBase {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		end();
 	}
 }
