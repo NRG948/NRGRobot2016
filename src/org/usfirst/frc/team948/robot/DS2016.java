@@ -81,7 +81,6 @@ public class DS2016 {
 		return leftJoystick.getY();
 	}
 	public static double getRightJSY() {
-		// TODO Auto-generated method stub
 		return rightJoystick.getY();
 	}
     

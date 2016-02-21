@@ -8,14 +8,12 @@ public class AcquirerWheel extends Subsystem{
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
 		
 	}
 	public void rawAcquireWheels(double speed) {
 		RobotMap.acquireWheelVictor.set(speed);
 	}
 	public void stopAcquirerWheels () {
-		
 		rawAcquireWheels(0);
 	}
 

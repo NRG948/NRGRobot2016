@@ -10,7 +10,6 @@ public class ShooterBar extends Subsystem{
 	}
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
 		
 	}
 	public void rawBallPush(double power){

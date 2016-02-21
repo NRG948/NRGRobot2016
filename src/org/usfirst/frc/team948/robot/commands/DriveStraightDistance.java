@@ -21,8 +21,7 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 	private int cyclesOnTarget;
 
 	public DriveStraightDistance(double power, double distance)
-	{
-		requires(drive);
+	{	requires(drive);
 		this.power = power;
 		this.distance = distance;
 	}
@@ -48,7 +47,6 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 //		SmartDashboard.putNumber("Distance PID OUTPUT", distancePIDOutput);
 //		SmartDashboard.putNumber("Distance PID ERROR", distancePID.getError());
 		double factor = MathHelper.clamp(distancePIDOutput, -1, 1);

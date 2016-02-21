@@ -24,7 +24,6 @@ public class RampToRPM extends CommandBase{
 	}
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000015);
 		leftWheelOutput = 0;
 		rightWheelOutput = 0;
@@ -55,26 +54,23 @@ public class RampToRPM extends CommandBase{
 		SmartDashboard.putNumber("Right shooter output", rightWheelOutput);
 		RobotMap.leftShooterWheel.set(leftWheelOutput);
 		RobotMap.rightShooterWheel.set(-rightWheelOutput);
-		// TODO Auto-generated method stub
+		
 		prevLeftDiff = diffLeft;
 		prevRightDiff = diffRight;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
 		shooterWheel.rawShoot(0);
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		end();
 	}
 

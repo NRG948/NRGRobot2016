@@ -126,7 +126,7 @@ public class VisionProcessing implements PIDSource {
 
 	@Override
 	public PIDSourceType getPIDSourceType() {
-		// TODO Auto-generated method stub
+		
 		return PIDSourceType.kDisplacement;
 	}
 
@@ -137,7 +137,7 @@ public class VisionProcessing implements PIDSource {
 
 	@Override
 	public void setPIDSourceType(PIDSourceType arg0) {
-		// TODO Auto-generated method stub
+		
 	}
 	
 	public double getShootingAngle(){

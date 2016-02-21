@@ -44,7 +44,6 @@ public class TurnToTarget extends CommandBase implements PIDOutput {
 		SmartDashboard.putNumber("TurnToTarget pidOutput", pidOutput);
 		SmartDashboard.putNumber("Center X", Robot.visionProcessing.centerX);
 		drive.rawTankDrive(power, -power);
-		
 	}
 
 	@Override
@@ -69,15 +68,12 @@ public class TurnToTarget extends CommandBase implements PIDOutput {
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		end();
 	}
 
 	@Override
 	public void pidWrite(double arg0) {
-		// TODO Auto-generated method stub
 		pidOutput = arg0;
-
 	}
 
 }
