@@ -263,4 +263,9 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
+
+	public boolean getMode() {
+		return visionTracking;
+	}
+	
 }

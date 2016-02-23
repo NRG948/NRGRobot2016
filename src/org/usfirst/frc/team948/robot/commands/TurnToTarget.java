@@ -11,7 +11,11 @@ public class TurnToTarget extends CommandBase {
 	@Override
 	protected void initialize() {
 		visionProcessing.turnToTargetInit();
-		visionProcessing.setImageCenter(CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0));
+		visionProcessing.setImageCenter(CommandBase.preferences.getDouble(
+				PreferenceKeys.CENTER_IMAGE, 160.0));
+		if (!visionProcessing.getMode()) {
+			visionProcessing.switchMode();
+		}
 	}
 
 	@Override
