@@ -55,13 +55,15 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	
 	Image frame;
 	Image binaryFrame;
+	Image ballFrame;
 	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(55, 125); //Hue value found for green
 	NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(83, 255); //Sat value found for green
 	NIVision.Range TARGET_VAL_RANGE = new NIVision.Range(62, 255);  //Val value found for green
 	NIVision.ParticleFilterCriteria2 criteria[] = new NIVision.ParticleFilterCriteria2[1];
 	NIVision.ParticleFilterOptions2 filterOptions = new NIVision.ParticleFilterOptions2(0, 0, 1, 1);
 	Command autonomousCommand;
-	USBCamera cam;
+	USBCamera targetCam;
+	USBCamera ballCam;
 	
 	@Override
 	protected void initDefaultCommand() {
@@ -71,26 +73,30 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	public void cameraInit() {
 		visionTracking = true;
-		cam = new USBCamera("cam0"); //create camera object
+		targetCam = new USBCamera("cam0"); //create camera object
+		ballCam = new USBCamera("cam1");
 		//setting Cam settings
 //		cam.setExposureManual(-11);
 //		cam.setWhiteBalanceHoldCurrent();
-		cam.setSize(320, 240);
-		cam.updateSettings();
-
+		targetCam.setSize(320, 240);
+		targetCam.updateSettings();
+		ballCam.setExposureAuto();
+		ballCam.setWhiteBalanceAuto();
+		
 		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 		binaryFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, 0.1, 100.0,
 				0, 0);//filter out particles less than 0.1% of area.
-		cam.startCapture();
+		targetCam.startCapture();
+		ballCam.startCapture();
 	}
 
 	public void updateVision() {
 		if (visionTracking) {
-			cam.getImage(frame);
+			targetCam.getImage(frame);
 			NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE,
 					TARGET_VAL_RANGE); //filter particles by HSV
-			CameraServer.getInstance().setImage(binaryFrame); //dump image to SmartDashboard
+			//CameraServer.getInstance().setImage(binaryFrame); //dump image to SmartDashboard
 			NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null); //Filter small particles
 			int numberOfParticles = NIVision.imaqCountParticles(binaryFrame, 1); //Get number of particles
 			if (numberOfParticles > 0) {
@@ -104,9 +110,11 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 			}
 		}
 		else {
-			cam.getImage(frame);
-			CameraServer.getInstance().setImage(frame);
+			targetCam.getImage(frame);
+			//CameraServer.getInstance().setImage(frame);
 		}
+		ballCam.getImage(ballFrame);
+		CameraServer.getInstance().setImage(ballFrame);
 //		cam.getImage(frame);
 ////		NIVision.imaqSetImageSize(frame, 320, 240); //shrink frame to 320px by 240px
 //		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE,
@@ -128,14 +136,14 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public void switchMode() {
 		visionTracking = !visionTracking;
 		if (visionTracking) {
-			cam.setExposureManual(-11);
-			cam.setWhiteBalanceHoldCurrent();
+			targetCam.setExposureManual(-11);
+			targetCam.setWhiteBalanceHoldCurrent();
 		}
 		else {
-			cam.setExposureAuto();
-			cam.setWhiteBalanceAuto();
+			targetCam.setExposureAuto();
+			targetCam.setWhiteBalanceAuto();
 		}
-		cam.updateSettings();
+		targetCam.updateSettings();
 	}
 	
 	public double getArea() {
