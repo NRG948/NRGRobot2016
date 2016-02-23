@@ -1,34 +1,28 @@
 package org.usfirst.frc.team948.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
 import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
 import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
 import org.usfirst.frc.team948.robot.commandgroups.SpitOutSequence;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
-import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
-import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
-import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
-import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
 import org.usfirst.frc.team948.robot.commands.ManualDrawbridge;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
-import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherAngle;
+import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
+import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
-import org.usfirst.frc.team948.robot.commands.RawRaise;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
-import org.usfirst.frc.team948.robot.commands.SpitOut;
 import org.usfirst.frc.team948.robot.commands.SwitchCamera;
-import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.utilities.XboxTriggerButton;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -95,12 +89,12 @@ public class DS2016 {
 // 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
  		shootButton.whenPressed(new Shoot(0));
 // 		shootButton.whenReleased(new ShooterRampUp());
-// 		xboxAButton.whileHeld(new ManualAcquire(true));
+ 		xboxAButton.whileHeld(new ManualAcquire(false));
  		extendDrawbridgeButton.whileHeld(new ManualDrawbridge(true));
  		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
- 		xboxRBumper.whenPressed(new MoveandRamp(true , 2700));
+ 		xboxRBumper.whenPressed(new MoveandRamp(true , 270));
  		xboxLBumper.whenPressed(new MoveandRamp(false, 0));
  		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.15));
  		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.65));
@@ -114,7 +108,7 @@ public class DS2016 {
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
  		XboxRTrigger.whenPressed(new SpitOutSequence());
- 		xboxAButton.whenPressed(new RaiseAcquirerTo(Robot.Level.DEFAULT));
+// 		xboxAButton.whenPressed(new RaiseAcquirerTo(Robot.Level.DEFAULT));
  		xboxBButton.whenPressed(new RaiseAcquirerTo(Robot.Level.CHIVAL));
  		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.FULL_BACK));
  		xboxYButton.whenPressed(new Interrupt(CommandBase.acquirerArm));

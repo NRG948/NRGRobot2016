@@ -45,6 +45,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double TURN_TARGET_P = 0.0039;
 	private final double TURN_TARGET_I =  0.00031;
 	private final double TURN_TARGET_D = 0.0123;
+	private final double PIXEL_TOLERANCE = 4;
 	
 	private static final double TOTAL_HEIGHT = 240.0;
 	private static final double TOTAL_WIDTH = 320.0;
@@ -73,8 +74,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		visionTracking = true;
 		cam = new USBCamera("cam0"); //create camera object
 		//setting Cam settings
-//		cam.setExposureManual(-11);
-//		cam.setWhiteBalanceHoldCurrent();
+		cam.setExposureManual(-11);
+		cam.setWhiteBalanceHoldCurrent();
 		cam.setSize(320, 240);
 		cam.updateSettings();
 
@@ -210,8 +211,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 				  CommandBase.preferences.getDouble(PreferenceKeys.VISION_I, TURN_TARGET_I), 
 				  CommandBase.preferences.getDouble(PreferenceKeys.VISION_D, TURN_TARGET_D));
 		targetPID.reset();
-		targetPID.setOutputRange(-0.5, 0.5);
-		targetPID.setAbsoluteTolerance(5);
+		targetPID.setOutputRange(-0.45, 0.45);
+		targetPID.setAbsoluteTolerance(PIXEL_TOLERANCE);
 		targetPID.setToleranceBuffer(3);
 		targetPID.enable();
 	}
@@ -225,19 +226,25 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		SmartDashboard.putNumber("TurnToTarget error", targetPID.getError());
 		SmartDashboard.putNumber("TurnToTarget pidOutput", pidOutput);
 		SmartDashboard.putNumber("Center X", Robot.visionProcessing.centerX);
+//		if (power > 0) {
+//			Robot.drive.rawTankDrive(power, -power / 2);
+//		}
+//		else {
+//			Robot.drive.rawTankDrive(power, -power);
+//		}
 		Robot.drive.rawTankDrive(power, -power);
 	}
 	
 	public boolean turnToTargetFinished() {
 //		SmartDashboard.putNumber("Turn to Target finish Error", targetPID.getAvgError());
-		if (Math.abs(targetPID.getError()) < 5) { //getAvgError() doesn't work
+		if (Math.abs(targetPID.getError()) < PIXEL_TOLERANCE) { //getAvgError() doesn't work
 			cyclesOnTarget++;
 		}
 		else {
 			cyclesOnTarget = 0;
 		}
 		return cyclesOnTarget >= 3;
-//		return targetPID.onTarget(); onTarget() is bugged - command never ends
+//		return targetPID.onTarget();
 	}
 	
 	public void turnToTargetEnd() {

@@ -41,6 +41,7 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 		distancePID.setOutputRange(-1, 1);
 		distancePID.setAbsoluteTolerance(tolerance);
 		distancePID.setSetpoint(distance);
+		distancePID.setToleranceBuffer(6);
 		distancePID.setPID(p,i,d);
 		distancePID.enable();
 	}
@@ -57,13 +58,14 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 	
 	// Finishes the command if the target distance has been exceeded
 	protected boolean isFinished() {
-		if (distancePID.getError() < tolerance) {
-			cyclesOnTarget++;
-		} else {
-			cyclesOnTarget = 0;
-		}
-		SmartDashboard.putNumber("Cycles On Target", cyclesOnTarget);
-		return(cyclesOnTarget >= 6);
+//		if (distancePID.getError() < tolerance) {
+//			cyclesOnTarget++;
+//		} else {
+//			cyclesOnTarget = 0;
+//		}
+//		SmartDashboard.putNumber("Cycles On Target", cyclesOnTarget);
+//		return(cyclesOnTarget >= 6);
+		return distancePID.onTarget();
 	}
 
 	protected void end() {

@@ -1,4 +1,4 @@
-	
+
 package org.usfirst.frc.team948.robot;
 
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
@@ -36,189 +36,189 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	
+
 	public enum Level {
-		DEFAULT(0),
-		ACQUIRE(45),
-		CHIVAL(63.75),
-		SALLY_PORT_HIGH(110),
-		FULL_BACK(140); //VALUE NEEDS TO BE CHECKED
+		DEFAULT(0), ACQUIRE(45), CHIVAL(63.75), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+																						// NEEDS
+																						// TO
+																						// BE
+																						// CHECKED
 
 		private double value;
 
 		private Level(double value) {
 			this.value = value;
 		}
-		
-		public double getValue(){
+
+		public double getValue() {
 			return value;
 		}
-		
+
 	}
 
-	public enum AutoPosition{
-		
-//		Angles at which to turn when performing autonomous routine
-//		Positions 1 and 2 go into the right goal
-//		Positions 3, 4, and 5 go into the middle goal
-		
-		LOWBAR_ONE(-58.69),
-		POSITION_TWO(-46.14),
-		POSITION_THREE(-13.54),
-		POSITION_FOUR(9.63),
-		POSITION_FIVE(34.36);
-		
+	public enum AutoPosition {
+
+		// Angles at which to turn when performing autonomous routine
+		// Positions 1 and 2 go into the right goal
+		// Positions 3, 4, and 5 go into the middle goal
+
+		LOWBAR_ONE(-58.69), POSITION_TWO(-46.14), POSITION_THREE(-13.54), POSITION_FOUR(9.63), POSITION_FIVE(34.36);
+
 		private double angle;
-		
+
 		private AutoPosition(double angle) {
 			this.angle = angle;
 		}
-		
+
 		public double getAngle() {
 			return angle;
 		}
 	}
-	
+
 	public static Drive drive = new Drive();
 	public static ShooterWheel shooterWheel = new ShooterWheel();
 	public static ShooterBar shooterBar = new ShooterBar();
-	public static ShooterArm shooterArm = new ShooterArm();	
+	public static ShooterArm shooterArm = new ShooterArm();
 	public static AcquirerArm acquirerArm = new AcquirerArm();
 	public static AcquirerWheel acquirerWheel = new AcquirerWheel();
 	public static VisionProcessing visionProcessing = new VisionProcessing();
 	public static Climber climber = new Climber();
 	public static Drawbridge drawbridge = new Drawbridge();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
-    
-    Command autonomousCommand;
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit() {
-        RobotMap.init();
-		DS2016.buttonInit();
-    	visionProcessing.cameraInit();
-    }
-	
+
+	private int screenUpdateCounter;
+
+	Command autonomousCommand;
+
 	/**
-     * This function is called once each time the robot enters Disabled mode.
-     * You can use it to reset any subsystem information you want to clear when
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
+	public void robotInit() {
+		RobotMap.init();
+		DS2016.buttonInit();
+		visionProcessing.cameraInit();
+	}
+
+	/**
+	 * This function is called once each time the robot enters Disabled mode.
+	 * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
-     */
-    public void disabledInit(){
-    }
-	
+	 */
+	public void disabledInit() {
+	}
+
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		periodicAll();
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
-	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
-	 * below the Gyro
+	 * This autonomous (along with the chooser code above) shows how to select
+	 * between different autonomous modes using the dashboard. The sendable
+	 * chooser code works with the Java SmartDashboard. If you prefer the
+	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+	 * getString code to get the auto name from the text box below the Gyro
 	 *
-	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
-	 * or additional comparisons to the switch structure below with additional strings & commands.
+	 * You can add additional auto modes by adding additional commands to the
+	 * chooser code above (like the commented example) or additional comparisons
+	 * to the switch structure below with additional strings & commands.
 	 */
-    public void autonomousInit() {
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new RawTankDrive();
-			break;
-		} */
-    	autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE);
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
-    }
+	public void autonomousInit() {
 
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-        periodicAll();
-    }
+		/*
+		 * String autoSelected = SmartDashboard.getString("Auto Selector",
+		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+		 * = new MyAutoCommand(); break; case "Default Auto": default:
+		 * autonomousCommand = new RawTankDrive(); break; }
+		 */
+		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE);
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null)
+			autonomousCommand.start();
+	}
 
-    public void teleopInit() {
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
+		periodicAll();
+	}
+
+	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-    	
-    //	CommandBase.drive.initDefaultCommand();
-        if (autonomousCommand != null) autonomousCommand.cancel();
+		// teleop starts running. If you want the autonomous to
+		// continue until interrupted by another command, remove
+		// this line or comment it out.
 
-        SmartDashboard.putData("Raise Shooter Arm to X degrees", new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE,  45)));
+		// CommandBase.drive.initDefaultCommand();
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
 
-        SmartDashboard.putData("Raise Acquirer to X degrees", new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
+		SmartDashboard.putData("Raise Shooter Arm to X degrees",
+				new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE, 45)));
 
-        SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 1));
-    
-        SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
-        
-        SmartDashboard.putData("Turn to target", new TurnToTarget());
-        
-        SmartDashboard.putData("Shoot sequence", new ShootSequence());
-        
-//        SmartDashboard.putData("Turn set angle to target", new TurnAngle(visionProcessing.getTurningAngle(), 0.7));
-                
-    }
-    
-   
-    
+		SmartDashboard.putData("Raise Acquirer to X degrees",
+				new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-        SmartDashboard.putNumber("left encoder", RobotMap.leftMotorEncoder.get());
-        SmartDashboard.putNumber("right encoder", RobotMap.rightMotorEncoder.get());
-        periodicAll();
-    }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-        LiveWindow.run();
-        periodicAll();
-    }
-    public void periodicAll(){
+		SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 1));
 
-    	SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
-    	SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
-    	SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
-    	SmartDashboard.putNumber("Shooter Angle", RobotMap.shooterLifterEncoder.getVoltage());
-    	SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
-    	SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
-    	//PositionTracker.updatePosition();
-    	//PositionTracker3D.computePosition();
-    	NavXTester.parameterDisplay();
-    	shooterWheel.updateLeftRPM();
-    	shooterWheel.updateRightRPM();
-    	visionProcessing.updateVision();
+		SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
 
-		SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
-		SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
-		SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
-		
-    	SmartDashboard.putData("PDP", pdp);
-//		for (int i = 0; i <= 15; i++) {
-//			SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
-//		}
-		SmartDashboard.putNumber("PDP Total Current", pdp.getTotalCurrent());
-//		SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
-//		SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
+		SmartDashboard.putData("Turn to target", new TurnToTarget());
 
-    }
+		SmartDashboard.putData("Shoot sequence", new ShootSequence());
+
+		// SmartDashboard.putData("Turn set angle to target", new
+		// TurnAngle(visionProcessing.getTurningAngle(), 0.7));
+
+	}
+
+	/**
+	 * This function is called periodically during operator control
+	 */
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("left encoder", RobotMap.leftMotorEncoder.get());
+		SmartDashboard.putNumber("right encoder", RobotMap.rightMotorEncoder.get());
+		periodicAll();
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+		LiveWindow.run();
+		periodicAll();
+	}
+
+	public void periodicAll() {
+		shooterWheel.updateLeftRPM();
+		shooterWheel.updateRightRPM();
+		NavXTester.parameterDisplay();
+		visionProcessing.updateVision();
+		// PositionTracker.updatePosition();
+		// PositionTracker3D.computePosition();
+		if (screenUpdateCounter % 10 == 0) {
+			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
+			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
+			SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
+			SmartDashboard.putNumber("Shooter Angle", RobotMap.shooterLifterEncoder.getVoltage());
+			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
+			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
+
+			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
+			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
+			SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
+
+			SmartDashboard.putData("PDP", pdp);
+			// for (int i = 0; i <= 15; i++) {
+			// 	   SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
+			// }
+			// SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
+			// SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
+		}
+		screenUpdateCounter++;
+	}
 }

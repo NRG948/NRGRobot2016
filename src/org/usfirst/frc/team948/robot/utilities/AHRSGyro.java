@@ -60,4 +60,9 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 		cycleCount = 0;
 		previousAngle = currentAngle;
 	}
+	
+	@Override
+	public double pidGet() {
+		return getAngle();
+	}
 }

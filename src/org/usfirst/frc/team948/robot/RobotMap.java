@@ -57,15 +57,15 @@ public class RobotMap {
 	public static Victor climberTapeMeasure = new Victor(12); //Might Become CANTalons
 	public static Victor climberWinch = new Victor(14); //Might Become CANTalons
 	
-	public static Encoder rightShooterWheelEncoder = new Encoder(4, 5, false, EncodingType.k1X);
-	public static Encoder leftShooterWheelEncoder = new Encoder(6, 7, true, EncodingType.k1X);
+	public static Encoder rightShooterWheelEncoder = new Encoder(6, 7, false, EncodingType.k1X);
+	public static Encoder leftShooterWheelEncoder = new Encoder(4, 5, true, EncodingType.k1X);
 	
 	public static Encoder rightMotorEncoder  = new Encoder(0, 1);
 	public static Encoder leftMotorEncoder = new Encoder(2, 3, true);
 	
 	public static AnalogInput armAngleEncoder = new AnalogInput(1);
 	
-	public static AnalogInput shooterLifterEncoder = new AnalogInput(2);
+	public static AnalogInput shooterLifterEncoder = new AnalogInput(0);
 	
 	public static AnalogInput drawbridgeEncoder = new AnalogInput(3);//CHECK VALUE
 	
@@ -121,6 +121,8 @@ public class RobotMap {
 									// unknown, 6 now taken
 
 //		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge Encoder", drawbridgeEncoder);
+		
+		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge Talon", drawbridgeArm);
 		
 		leds.set(true);
 		

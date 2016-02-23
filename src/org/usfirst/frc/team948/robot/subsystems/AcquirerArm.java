@@ -138,7 +138,7 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 	
 	public boolean hasReachedLowerLimit() {
-		return RobotMap.acquireLowerLimit.get();
+		return !RobotMap.acquireLowerLimit.get();
 	}
 }
 
