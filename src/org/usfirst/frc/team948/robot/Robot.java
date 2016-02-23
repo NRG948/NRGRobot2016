@@ -87,6 +87,7 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	private int screenUpdateCounter;
+	public static boolean competitionRobot = false;
 
 	Command autonomousCommand;
 

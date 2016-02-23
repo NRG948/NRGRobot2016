@@ -1,5 +1,6 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
+import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -12,7 +13,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	private double pidOutput;
 	
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	private static final double VOLTS_0 = 1.049;
+	private static final double VOLTS_0 = (Robot.competitionRobot)? 1.075 : 1.050;
 	private static final double VOLTS_90 = 2.25;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 	

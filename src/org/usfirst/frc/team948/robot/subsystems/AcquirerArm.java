@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.Robot.Level;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 
@@ -13,9 +14,12 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-
-	private static final double VOLTS_0 = 3.585;
-	private static final double VOLTS_90 = 2.169;
+	 
+	private static final double VOLTS_0 = (Robot.competitionRobot)? 3.425 : 3.585;
+	private static final double VOLTS_90 = (Robot.competitionRobot)? 2.160 : 2.170;
+	    
+	
+	
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
 
 	private static final double ACQUIRER_P = 0.5;
