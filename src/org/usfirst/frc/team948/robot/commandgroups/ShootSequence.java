@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShootSequence extends CommandGroup {
 	public ShootSequence()
 	{
+		addParallel(new RampToRPM(2700));
 		addSequential(new TurnToTarget());
 		addParallel(new RaiseAcquirerTo(10));
 		addParallel(new RaiseShooterArmTo());
-		addParallel(new RampToRPM(2700));
 //		addParallel(new ShooterRampUp(1));
-		addSequential(new Shoot(10));
+		addSequential(new Shoot(4));
 		addSequential(new Interrupt());
 	}
 }

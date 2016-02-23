@@ -197,7 +197,7 @@ public class Robot extends IterativeRobot {
 	public void periodicAll() {
 		shooterWheel.updateLeftRPM();
 		shooterWheel.updateRightRPM();
-		NavXTester.parameterDisplay();
+		//NavXTester.parameterDisplay();
 		visionProcessing.updateVision();
 		// PositionTracker.updatePosition();
 		// PositionTracker3D.computePosition();
