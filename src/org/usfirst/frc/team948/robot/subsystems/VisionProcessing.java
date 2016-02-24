@@ -36,10 +36,10 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double CAMERA_OFF_GROUND = 1;
 	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
-	private final double SPEED_OF_BALL = 7.1/6 * GRAVITY; //Three trials of shooting straight up, total time was 7.1 seconds
+	private final double SPEED_OF_BALL = 6.5/6 * GRAVITY; //Three trials of shooting straight up, total time was 7.1 seconds
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
-	private final double CAMERA_ANGLE = 28;
+	private final double CAMERA_ANGLE = 35;
 	private final double CAMERA_TO_SHOOTER = 9.5 / 12.0;
 	
 	private final double TURN_TARGET_P = 0.0039;
@@ -188,7 +188,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		sqrtTerm = Math.sqrt(sqrtTerm);
 		double numerator = d-sqrtTerm;
 		double denom = GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
-		return Math.atan(numerator/denom)*180/Math.PI;
+		//return Math.atan(numerator/denom)*180/Math.PI;
+		return Math.atan(TARGET_FEET_OFF_CAMERA_HEIGHT/d)*180/Math.PI;
 	}
 	
 	public double getTurningAngle() {
@@ -208,10 +209,10 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public PIDSourceType getPIDSourceType() {
 		return PIDSourceType.kDisplacement;
 	}
-
+	
 	@Override
 	public double pidGet() {
-		while(isUpdating){}
+		
 		updateVision();
 		return centerX;
 	}

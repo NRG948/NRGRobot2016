@@ -52,7 +52,7 @@ public class RobotMap {
 	public static Victor shooterLifterMotor = new Victor(8);
 	public static Victor shooterBallPusher=new Victor(9);
 	
-	public static CANTalon drawbridgeArm = new CANTalon(0); //Might Become CANTalons
+	public static CANTalon drawbridgeArm = new CANTalon(1); //Might Become CANTalons
 	
 	public static Victor climberTapeMeasure = new Victor(12); //Might Become CANTalons
 	public static Victor climberWinch = new Victor(14); //Might Become CANTalons
@@ -125,9 +125,8 @@ public class RobotMap {
 		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge Talon", drawbridgeArm);
 		
 		leds.set(true);
-		
-		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(10.0/10240);
-		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(10.0/10011);
+		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(Robot.competitionRobot? (10.0/10008.0) : (10.0/10240));
+		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(Robot.competitionRobot? 10.0/10000 : 10.0/10011);
 		RobotMap.leftShooterWheelEncoder.setPIDSourceType(PIDSourceType.kRate);
 		RobotMap.rightShooterWheelEncoder.setPIDSourceType(PIDSourceType.kRate);
 		RobotMap.leftShooterWheelEncoder.setSamplesToAverage(5);

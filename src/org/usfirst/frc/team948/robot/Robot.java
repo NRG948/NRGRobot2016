@@ -87,7 +87,7 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	private int screenUpdateCounter;
-	public static boolean competitionRobot = false;
+	public static boolean competitionRobot = true;
 
 	Command autonomousCommand;
 
@@ -211,6 +211,8 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
 			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
 
+			SmartDashboard.putNumber("Left Drive Encoder", RobotMap.leftMotorEncoder.get());
+			SmartDashboard.putNumber("Right Drive Encoder", RobotMap.rightMotorEncoder.get());
 			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
 			SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());

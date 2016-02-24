@@ -89,12 +89,12 @@ public class DS2016 {
 // 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
  		shootButton.whenPressed(new Shoot(0));
 // 		shootButton.whenReleased(new ShooterRampUp());
- 		xboxAButton.whileHeld(new ManualAcquire(false));
+ 		//xboxAButton.whileHeld(new ManualAcquire(false));
  		extendDrawbridgeButton.whileHeld(new ManualDrawbridge(true));
  		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
- 		xboxRBumper.whenPressed(new MoveandRamp(true , 270));
+ 		xboxRBumper.whenPressed(new MoveandRamp(true , 2700));
  		xboxLBumper.whenPressed(new MoveandRamp(false, 0));
  		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.15));
  		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.65));
@@ -108,10 +108,10 @@ public class DS2016 {
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
  		XboxRTrigger.whenPressed(new SpitOutSequence());
-// 		xboxAButton.whenPressed(new RaiseAcquirerTo(Robot.Level.DEFAULT));
+ 		xboxAButton.whenPressed(new RaiseAcquirerTo(Robot.Level.DEFAULT));
  		xboxBButton.whenPressed(new RaiseAcquirerTo(Robot.Level.CHIVAL));
  		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.FULL_BACK));
- 		xboxYButton.whenPressed(new Interrupt(CommandBase.acquirerArm));
+ 		xboxYButton.whenPressed(new Interrupt());
  		cameraButton.whenPressed(new SwitchCamera());
  	}	
 }

@@ -27,8 +27,8 @@ public class RampToRPM extends CommandBase{
 	@Override
 	protected void initialize() {
 		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000015);
-		leftWheelOutput = 0;
-		rightWheelOutput = 0;
+		leftWheelOutput = 0.5;
+		rightWheelOutput = 0.5;
 	}
 
 	@Override

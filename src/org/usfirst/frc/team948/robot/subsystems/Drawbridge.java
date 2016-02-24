@@ -10,7 +10,7 @@ public class Drawbridge extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new ManualDrawbridge(true));
+		//setDefaultCommand(new ManualDrawbridge(true));
 	}
 
 	public void rawRaise(double power) {

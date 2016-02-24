@@ -7,6 +7,7 @@ import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherAngle;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
+import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -18,6 +19,7 @@ public class MoveandRamp extends CommandGroup{
 		if (up)
 		{
 			addParallel(new RaiseShooterToNextHigherAngle());
+		//	addSequential(new ShooterRampUp());
 		}
 		else
 		{
