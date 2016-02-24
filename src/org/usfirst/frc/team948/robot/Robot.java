@@ -198,9 +198,7 @@ public class Robot extends IterativeRobot {
 		shooterWheel.updateLeftRPM();
 		shooterWheel.updateRightRPM();
 		//NavXTester.parameterDisplay();
-		if(!visionProcessing.isUpdating()){
-			visionProcessing.updateVision();
-		}
+		visionProcessing.updateVision();
 		// PositionTracker.updatePosition();
 		// PositionTracker3D.computePosition();
 		if (screenUpdateCounter % 10 == 0) {
