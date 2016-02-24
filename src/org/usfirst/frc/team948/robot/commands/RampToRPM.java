@@ -19,7 +19,9 @@ public class RampToRPM extends CommandBase{
 	private double p = 0.000015;
 	private double leftH0 = 0;
 	private double rightH0 = 0;
+
 	public RampToRPM(double RPM){
+		requires(shooterWheel);
 		this.targetRPM = RPM;
 	}
 	@Override
