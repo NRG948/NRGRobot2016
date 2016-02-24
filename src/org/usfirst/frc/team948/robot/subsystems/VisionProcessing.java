@@ -51,7 +51,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private static final double TOTAL_WIDTH = 320.0;
 
 	private boolean visionTracking;
-	
+	private boolean isUpdating;
 	private PIDController targetPID = new PIDController(TURN_TARGET_P, TURN_TARGET_I, TURN_TARGET_D, this, this);
 	
 	Image frame; 
@@ -91,6 +91,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	}
 
 	public void updateVision() {
+		isUpdating = true;
 		TARGET_HUE_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Hue_Low", 55), CommandBase.preferences.getInt("Hue_High", 125)); //Hue value found for green
 		TARGET_SAT_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Sat_Low", 83), CommandBase.preferences.getInt("Sat_High", 255)); //Sat value found for green
 		TARGET_VAL_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Val_Low", 62), CommandBase.preferences.getInt("Val_High", 255));  //Val value found for green
@@ -131,6 +132,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 //			width = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT) - 
 //					NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
 //		}
+		isUpdating = false;
 	}
 
 	public void switchMode() {
@@ -209,6 +211,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	@Override
 	public double pidGet() {
+		while(isUpdating){}
+		updateVision();
 		return centerX;
 	}
 
@@ -271,6 +275,10 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	public boolean getMode() {
 		return visionTracking;
+	}
+	
+	public boolean isUpdating(){
+		return isUpdating;
 	}
 	
 }
