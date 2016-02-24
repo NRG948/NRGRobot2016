@@ -45,20 +45,20 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double TURN_TARGET_P = 0.0039;
 	private final double TURN_TARGET_I =  0.00031;
 	private final double TURN_TARGET_D = 0.0123;
-	private final double PIXEL_TOLERANCE = 4;
 	
 	private static final double TOTAL_HEIGHT = 240.0;
 	private static final double TOTAL_WIDTH = 320.0;
 
 	private boolean visionTracking;
-	
+	private boolean isUpdating;
 	private PIDController targetPID = new PIDController(TURN_TARGET_P, TURN_TARGET_I, TURN_TARGET_D, this, this);
 	
-	Image frame; 
+	Image frame;
 	Image binaryFrame;
-	NIVision.Range TARGET_HUE_RANGE; //Hue value found for green
-	NIVision.Range TARGET_SAT_RANGE; //Sat value found for green
-	NIVision.Range TARGET_VAL_RANGE;  //Val value found for green
+	Image ballFrame;
+	NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(55, 125); //Hue value found for green
+	NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(83, 255); //Sat value found for green
+	NIVision.Range TARGET_VAL_RANGE = new NIVision.Range(62, 255);  //Val value found for green
 	NIVision.ParticleFilterCriteria2 criteria[] = new NIVision.ParticleFilterCriteria2[1];
 	NIVision.ParticleFilterOptions2 filterOptions = new NIVision.ParticleFilterOptions2(0, 0, 1, 1);
 	Command autonomousCommand;
@@ -74,31 +74,30 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public void cameraInit() {
 		visionTracking = true;
 		targetCam = new USBCamera("cam0"); //create camera object
-		//ballCam = new USBCamera("cam1");
+		ballCam = new USBCamera("cam1");
 		//setting Cam settings
-		targetCam.setExposureManual(-11);
-		targetCam.setWhiteBalanceHoldCurrent();
+//		cam.setExposureManual(-11);
+//		cam.setWhiteBalanceHoldCurrent();
 		targetCam.setSize(320, 240);
 		targetCam.updateSettings();
-		//ballCam.setExposureAuto();
-		//ballCam.setWhiteBalanceAuto();		
+		ballCam.setExposureAuto();
+		ballCam.setWhiteBalanceAuto();
+		
 		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 		binaryFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, 0.1, 100.0,
 				0, 0);//filter out particles less than 0.1% of area.
 		targetCam.startCapture();
-	
+		ballCam.startCapture();
 	}
 
 	public void updateVision() {
-		TARGET_HUE_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Hue_Low", 55), CommandBase.preferences.getInt("Hue_High", 125)); //Hue value found for green
-		TARGET_SAT_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Sat_Low", 83), CommandBase.preferences.getInt("Sat_High", 255)); //Sat value found for green
-		TARGET_VAL_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Val_Low", 62), CommandBase.preferences.getInt("Val_High", 255));  //Val value found for green
+		isUpdating = true;
 		if (visionTracking) {
 			targetCam.getImage(frame);
 			NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE,
 					TARGET_VAL_RANGE); //filter particles by HSV
-			CameraServer.getInstance().setImage(binaryFrame); //dump image to SmartDashboard
+			//CameraServer.getInstance().setImage(binaryFrame); //dump image to SmartDashboard
 			NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null); //Filter small particles
 			int numberOfParticles = NIVision.imaqCountParticles(binaryFrame, 1); //Get number of particles
 			if (numberOfParticles > 0) {
@@ -112,9 +111,11 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 			}
 		}
 		else {
-			//ballCam.getImage(frame);
-			CameraServer.getInstance().setImage(frame);
+			targetCam.getImage(frame);
+			//CameraServer.getInstance().setImage(frame);
 		}
+		ballCam.getImage(ballFrame);
+		CameraServer.getInstance().setImage(ballFrame);
 //		cam.getImage(frame);
 ////		NIVision.imaqSetImageSize(frame, 320, 240); //shrink frame to 320px by 240px
 //		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE,
@@ -131,23 +132,19 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 //			width = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT) - 
 //					NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
 //		}
+		isUpdating = false;
 	}
 
 	public void switchMode() {
 		visionTracking = !visionTracking;
 		if (visionTracking) {
-			//ballCam.stopCapture();
-			targetCam.startCapture();
 			targetCam.setExposureManual(-11);
 			targetCam.setWhiteBalanceHoldCurrent();
 		}
 		else {
-			targetCam.stopCapture();
-			//ballCam.startCapture();
 			targetCam.setExposureAuto();
 			targetCam.setWhiteBalanceAuto();
 		}
-		//ballCam.updateSettings();
 		targetCam.updateSettings();
 	}
 	
@@ -209,6 +206,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	@Override
 	public double pidGet() {
+		while(isUpdating()){}
+		updateVision();
 		return centerX;
 	}
 
@@ -223,8 +222,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 				  CommandBase.preferences.getDouble(PreferenceKeys.VISION_I, TURN_TARGET_I), 
 				  CommandBase.preferences.getDouble(PreferenceKeys.VISION_D, TURN_TARGET_D));
 		targetPID.reset();
-		targetPID.setOutputRange(-0.45, 0.45);
-		targetPID.setAbsoluteTolerance(PIXEL_TOLERANCE);
+		targetPID.setOutputRange(-0.5, 0.5);
+		targetPID.setAbsoluteTolerance(5);
 		targetPID.setToleranceBuffer(3);
 		targetPID.enable();
 	}
@@ -238,25 +237,19 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		SmartDashboard.putNumber("TurnToTarget error", targetPID.getError());
 		SmartDashboard.putNumber("TurnToTarget pidOutput", pidOutput);
 		SmartDashboard.putNumber("Center X", Robot.visionProcessing.centerX);
-//		if (power > 0) {
-//			Robot.drive.rawTankDrive(power, -power / 2);
-//		}
-//		else {
-//			Robot.drive.rawTankDrive(power, -power);
-//		}
 		Robot.drive.rawTankDrive(power, -power);
 	}
 	
 	public boolean turnToTargetFinished() {
 //		SmartDashboard.putNumber("Turn to Target finish Error", targetPID.getAvgError());
-		if (Math.abs(targetPID.getError()) < PIXEL_TOLERANCE) { //getAvgError() doesn't work
+		if (Math.abs(targetPID.getError()) < 5) { //getAvgError() doesn't work
 			cyclesOnTarget++;
 		}
 		else {
 			cyclesOnTarget = 0;
 		}
 		return cyclesOnTarget >= 3;
-//		return targetPID.onTarget();
+//		return targetPID.onTarget(); onTarget() is bugged - command never ends
 	}
 	
 	public void turnToTargetEnd() {
@@ -268,9 +261,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public void pidWrite(double arg0) {
 		pidOutput = arg0;
 	}
-
-	public boolean getMode() {
-		return visionTracking;
-	}
 	
+	public boolean isUpdating(){
+		return isUpdating;
+	}
 }
