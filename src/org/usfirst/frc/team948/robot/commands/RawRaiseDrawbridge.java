@@ -1,12 +1,12 @@
 package org.usfirst.frc.team948.robot.commands;
 
-public class ManualDrawbridge extends CommandBase {
+public class RawRaiseDrawbridge extends CommandBase {
 	
 	private final double EXTEND_POWER = .99;
 	private final double RETRACT_POWER = -.99;
 	private boolean extend;
 	
-	public ManualDrawbridge(boolean extend)
+	public RawRaiseDrawbridge(boolean extend)
 	{
 		requires(drawbridge);
 		this.extend = extend;

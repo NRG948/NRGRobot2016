@@ -57,8 +57,8 @@ public class RobotMap {
 	public static Victor climberTapeMeasure = new Victor(12); //Might Become CANTalons
 	public static Victor climberWinch = new Victor(14); //Might Become CANTalons
 	
-	public static Encoder rightShooterWheelEncoder = new Encoder(6, 7, false, EncodingType.k1X);
-	public static Encoder leftShooterWheelEncoder = new Encoder(4, 5, true, EncodingType.k1X);
+	public static Encoder rightShooterWheelEncoder = new Encoder(6, 7, false, EncodingType.k4X);
+	public static Encoder leftShooterWheelEncoder = new Encoder(4, 5, true, EncodingType.k4X);
 	
 	public static Encoder rightMotorEncoder  = new Encoder(0, 1);
 	public static Encoder leftMotorEncoder = new Encoder(2, 3, true);
@@ -123,16 +123,21 @@ public class RobotMap {
 //		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge Encoder", drawbridgeEncoder);
 		
 		LiveWindow.addActuator("Drawbridge Subsystem", "Drawbridge Talon", drawbridgeArm);
+
+		LiveWindow.addSensor("PDP", "PDP", Robot.pdp);
 		
 		leds.set(true);
 		RobotMap.leftShooterWheelEncoder.setDistancePerPulse(Robot.competitionRobot? (10.0/10008.0) : (10.0/10240));
 		RobotMap.rightShooterWheelEncoder.setDistancePerPulse(Robot.competitionRobot? 10.0/10000 : 10.0/10011);
 		RobotMap.leftShooterWheelEncoder.setPIDSourceType(PIDSourceType.kRate);
 		RobotMap.rightShooterWheelEncoder.setPIDSourceType(PIDSourceType.kRate);
-		RobotMap.leftShooterWheelEncoder.setSamplesToAverage(5);
-		RobotMap.rightShooterWheelEncoder.setSamplesToAverage(5);
+//		RobotMap.leftShooterWheelEncoder.setSamplesToAverage(5);
+//		RobotMap.rightShooterWheelEncoder.setSamplesToAverage(5);
 		
 		RobotMap.leftMotorEncoder.setDistancePerPulse(5.682/2494.67);
 		RobotMap.rightMotorEncoder.setDistancePerPulse(5.682/2431.33);
+		
+		RobotMap.drawbridgeArm.ConfigFwdLimitSwitchNormallyOpen(true);
+		RobotMap.drawbridgeArm.ConfigRevLimitSwitchNormallyOpen(true);
 	}
 }

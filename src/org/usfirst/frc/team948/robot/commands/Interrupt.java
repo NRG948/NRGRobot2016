@@ -11,6 +11,7 @@ public class Interrupt extends CommandBase{
 		requires(shooterArm);
 		requires(acquirerArm);
 		requires(acquirerWheel);
+		requires(drawbridge);
 	}
 	
 	public Interrupt(Subsystem...subsystems)

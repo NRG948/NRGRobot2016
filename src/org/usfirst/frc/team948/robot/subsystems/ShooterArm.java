@@ -14,7 +14,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 	private static final double VOLTS_0 = (Robot.competitionRobot)? 1.070 : 1.050;
-	private static final double VOLTS_45 = (Robot.competitionRobot)? 1.676 : 2.25;
+	private static final double VOLTS_45 = (Robot.competitionRobot)? 1.676 : 2.505;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = Robot.competitionRobot? (VOLTS_45 - VOLTS_0)/45 : (VOLTS_45 - VOLTS_0) / 90;
 	
 	public enum ShooterAngle{

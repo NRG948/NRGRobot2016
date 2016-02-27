@@ -39,7 +39,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double SPEED_OF_BALL = 6.5/6 * GRAVITY; //Three trials of shooting straight up, total time was 7.1 seconds
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
-	private final double CAMERA_ANGLE = 35;
+	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 35 : 28;
 	private final double CAMERA_TO_SHOOTER = 9.5 / 12.0;
 	
 	private final double TURN_TARGET_P = 0.0039;
@@ -73,7 +73,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	public void cameraInit() {
 		visionTracking = true;
-		targetCam = new USBCamera("cam0"); //create camera object
+		targetCam = new USBCamera("cam1"); //create camera object
 		//ballCam = new USBCamera("cam1");
 		//setting Cam settings
 		targetCam.setExposureManual(-11);
@@ -193,12 +193,18 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	}
 	
 	public double getTurningAngle() {
-		targetPixel = getWidth();
+		targetPixel = (getHeight() / Math.cos(CAMERA_ANGLE * Math.PI / 180)) * TARGET_WIDTH_FEET / TARGET_HEIGHT_FEET; //use ratio of vert to hor to calculate
 		double d = calcDistance();
 		d = Math.sqrt(Math.pow(d, 2)- Math.pow(TARGET_FEET_OFF_CAMERA_HEIGHT,2)) + CAMERA_TO_SHOOTER;
 		d *= targetPixel / TARGET_WIDTH_FEET;
 		double w = centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0);
-		double angle = Math.atan(w / d) * 180 / Math.PI;
+		double angle = Math.asin(w / d) * 180 / Math.PI;
+		return angle;
+	}
+	
+	public double getTurningAngleProportion() {
+		double diff = centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0);
+		double angle = (diff / TOTAL_WIDTH) * FOV_ANGLE_HORIZONTAL;
 		return angle;
 	}
 	public double getShooterPower() {
