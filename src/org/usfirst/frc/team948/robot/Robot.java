@@ -18,6 +18,7 @@ import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.subsystems.ShooterBar;
 import org.usfirst.frc.team948.robot.subsystems.ShooterWheel;
 import org.usfirst.frc.team948.robot.subsystems.VisionProcessing;
+import org.usfirst.frc.team948.robot.utilities.AHRSGyro;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
@@ -163,7 +164,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Raise Acquirer to X degrees",
 				new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
 
-		SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 1));
+		SmartDashboard.putData("Turn 90 degrees", new TurnAngle(9, 0.6));
 
 		SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
 
@@ -219,7 +220,9 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
 			SmartDashboard.putNumber("Turning Angle Arcsin", visionProcessing.getTurningAngle());
 			SmartDashboard.putNumber("Turning Angle Proportion", visionProcessing.getTurningAngleProportion());
-
+			
+			SmartDashboard.putNumber("Calculated Angle", RobotMap.ahrs.getYaw());
+			
 			SmartDashboard.putData("PDP", pdp);
 			// for (int i = 0; i <= 15; i++) {
 			// 	   SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
