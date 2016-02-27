@@ -24,14 +24,14 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		LINE(55),
 		TOWER(65);
 		//Values need to be set
-		private double value;
+		private double angleInDegrees;
 
-		private ShooterAngle(double value) {
-			this.value = value;
+		private ShooterAngle(double angleInDegrees) {
+			this.angleInDegrees = angleInDegrees;
 		}
 		
-		public double getValue(){
-			return value;
+		public double getAngleInDegrees(){
+			return angleInDegrees;
 		}
 	}
 	public ShooterArm() {
@@ -121,9 +121,9 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 		double degree = degreesFromVolts(voltage);
 		ShooterAngle[] angles = ShooterAngle.values();
 		int nearest = 0;
-		double diff = Math.abs(degree - angles[nearest].getValue());
+		double diff = Math.abs(degree - angles[nearest].getAngleInDegrees());
 		for (int i = 1; i < angles.length; i++) {
-			double d = Math.abs(degree - angles[i].getValue());
+			double d = Math.abs(degree - angles[i].getAngleInDegrees());
 			if (d < diff) {
 				diff = d;
 				nearest = i;

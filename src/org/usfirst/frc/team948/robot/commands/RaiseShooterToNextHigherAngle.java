@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm.ShooterAngle;
 
 public class RaiseShooterToNextHigherAngle extends CommandBase{
@@ -14,10 +15,11 @@ public class RaiseShooterToNextHigherAngle extends CommandBase{
 	@Override
 	protected void initialize() {
 		double voltage = RobotMap.shooterLifterEncoder.getVoltage();
-		ShooterAngle currentAngle = shooterArm.findNearestAngle(voltage);	
+		double angle = ShooterArm.degreesFromVolts(voltage);
+		ShooterAngle currentAngle = shooterArm.findNearestAngle(angle);	
 		desiredAngle = shooterArm.nextHigherAngle(currentAngle);
 		shooterArm.moveArmInit();
-		shooterArm.setDesiredArmAngle(desiredAngle.getValue());
+		shooterArm.setDesiredArmAngle(desiredAngle.getAngleInDegrees());
 	}
 	
 	@Override
