@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -51,8 +54,10 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private static final double TOTAL_WIDTH = 320.0;
 
 	private boolean visionTracking;
-	private boolean isUpdating;
+	
 	private PIDController targetPID = new PIDController(TURN_TARGET_P, TURN_TARGET_I, TURN_TARGET_D, this, this);
+	private Timer timer = new Timer();
+	private final long VISION_PROCESSING_PERIOD = 100;
 	
 	Image frame; 
 	Image binaryFrame;
@@ -87,11 +92,18 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, 0.1, 100.0,
 				0, 0);//filter out particles less than 0.1% of area.
 		targetCam.startCapture();
+		timer.schedule(new TimerTask(){
+
+			@Override
+			public void run() {
+				updateVision();
+			}}, 0 , VISION_PROCESSING_PERIOD);
+		
 	
 	}
 
 	public void updateVision() {
-		isUpdating = true;
+		
 		TARGET_HUE_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Hue_Low", 55), CommandBase.preferences.getInt("Hue_High", 125)); //Hue value found for green
 		TARGET_SAT_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Sat_Low", 83), CommandBase.preferences.getInt("Sat_High", 255)); //Sat value found for green
 		TARGET_VAL_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Val_Low", 62), CommandBase.preferences.getInt("Val_High", 255));  //Val value found for green
@@ -132,7 +144,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 //			width = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT) - 
 //					NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
 //		}
-		isUpdating = false;
+		
 	}
 
 	public void switchMode() {
@@ -284,8 +296,6 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		return visionTracking;
 	}
 	
-	public boolean isUpdating(){
-		return isUpdating;
-	}
+	
 	
 }

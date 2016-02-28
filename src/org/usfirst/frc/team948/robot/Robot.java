@@ -100,6 +100,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 		DS2016.buttonInit();
 		visionProcessing.cameraInit();
+		
 	}
 
 	/**
@@ -200,9 +201,7 @@ public class Robot extends IterativeRobot {
 		shooterWheel.updateRightRPM();
 		shooterWheel.addRPMValueToArray();
 		//NavXTester.parameterDisplay();
-		if(!visionProcessing.isUpdating()){
-			visionProcessing.updateVision();
-		}
+		
 		// PositionTracker.updatePosition();
 		// PositionTracker3D.computePosition();
 		if (screenUpdateCounter % 10 == 0) {
