@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnAngle extends CommandBase{
 	private final double DEFAULT_TOLERANCE = 2.0; //This needs value needs to be changed
@@ -8,7 +9,7 @@ public class TurnAngle extends CommandBase{
 	private double angle;
 	private double power;
 	private double tolerance;
-	private Timer timer;
+	private boolean vision = false;
 	private final double VISION_TOLERANCE = 1;
 	
 	public TurnAngle(double angle, double power, double tolerance){
@@ -23,21 +24,22 @@ public class TurnAngle extends CommandBase{
 		this.angle = angle;
 		this.power = power;
 		tolerance = DEFAULT_TOLERANCE;
-		timer = new Timer();
 	}
 	public TurnAngle(double power){
 		requires(drive);
-		angle = visionProcessing.getTurningAngleProportion();
+		vision = true;
 		tolerance = VISION_TOLERANCE;
 		this.power = power;
 		}
 	
 	
 	protected void initialize (){
-		timer.reset();
-		timer.start();
+		if (vision) {
+			angle = visionProcessing.getTurningAngleProportion();
+		}
 		double initialHeading = drive.turnToHeadingInit(tolerance, power);
 		finalHeading = initialHeading + angle;
+		SmartDashboard.putNumber("turn final heading", finalHeading);
 	}
 	
 	protected void execute(){
@@ -49,7 +51,6 @@ public class TurnAngle extends CommandBase{
 	}
 	
 	protected void end(){
-		timer.stop();
 		drive.rawStop();
 		drive.turnToHeadingEnd(finalHeading);  
 	}

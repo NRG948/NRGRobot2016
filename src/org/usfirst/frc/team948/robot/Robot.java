@@ -164,7 +164,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Raise Acquirer to X degrees",
 				new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
 
-		SmartDashboard.putData("Turn 90 degrees", new TurnAngle(9, 0.6));
+		SmartDashboard.putData("Turn Angle to Target", new TurnAngle(0.6));
 
 		SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
 
@@ -184,6 +184,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("left encoder", RobotMap.leftMotorEncoder.get());
 		SmartDashboard.putNumber("right encoder", RobotMap.rightMotorEncoder.get());
+		SmartDashboard.putBoolean("Has Ball", shooterWheel.isBallLoaded());
 		periodicAll();
 	}
 

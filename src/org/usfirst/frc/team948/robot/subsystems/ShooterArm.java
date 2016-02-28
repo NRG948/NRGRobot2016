@@ -13,9 +13,10 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	private double pidOutput;
 	
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	private static final double VOLTS_0 = (Robot.competitionRobot)? 1.070 : 1.050;
-	private static final double VOLTS_45 = (Robot.competitionRobot)? 1.676 : 2.505;
-	private static final double SLOPE_VOLTS_FROM_DEGREES = Robot.competitionRobot? (VOLTS_45 - VOLTS_0)/45 : (VOLTS_45 - VOLTS_0) / 90;
+	private static final double VOLTS_0 = (Robot.competitionRobot)? 1.070 : 0.945;
+	private static final double VOLTS_VARIABLE = (Robot.competitionRobot)? 1.676 : 1.498;
+	private static final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 45 : 41;
+	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0)/ VARIABLE_ANGLE;
 	
 	public enum ShooterAngle{
 		GROUND(0),
@@ -61,15 +62,16 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	}
 	
 	public void moveArmToDesiredAngle() {
-//		SmartDashboard.putNumber("Shooter raise output", pidOutput);
+		SmartDashboard.putNumber("Shooter raise output", pidOutput);
 //		SmartDashboard.putNumber("Shooter desired angle", degreesFromVolts(shooterElevatePID.getSetpoint()));
 //		SmartDashboard.putNumber("Shooter angle", degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
-//		SmartDashboard.putNumber("Shooter error", shooterElevatePID.getError());
+		SmartDashboard.putNumber("Shooter error", shooterElevatePID.getError());
 		RobotMap.shooterLifterMotor.set(pidOutput);
 	}
 	
 	public boolean isArmAtDesiredAngle() {
-		return shooterElevatePID.onTarget();
+//		return shooterElevatePID.onTarget();
+		return Math.abs(shooterElevatePID.getError()) < TOLERANCE;
 	}
 
 	public void stopArm() {
@@ -117,8 +119,7 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	/**
 	 * Returns the ShooterAngle nearest to the given voltage.
 	 */	
-	public ShooterAngle findNearestAngle(double voltage) {
-		double degree = degreesFromVolts(voltage);
+	public ShooterAngle findNearestAngle(double degree) {
 		ShooterAngle[] angles = ShooterAngle.values();
 		int nearest = 0;
 		double diff = Math.abs(degree - angles[nearest].getAngleInDegrees());

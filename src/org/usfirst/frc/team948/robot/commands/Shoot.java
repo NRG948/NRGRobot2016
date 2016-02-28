@@ -12,7 +12,7 @@ public class Shoot extends CommandBase {
 	private static final double BALL_PUSH_TIME = 1.0;
 
 	public Shoot(double time) {
-		requires(shooterWheel);
+		//requires(shooterWheel);
 		requires(shooterBar);
 		this.time = time;                  
 	}

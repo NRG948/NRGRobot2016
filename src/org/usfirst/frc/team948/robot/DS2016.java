@@ -2,6 +2,7 @@ package org.usfirst.frc.team948.robot;
 
 import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
 import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
+import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
 import org.usfirst.frc.team948.robot.commandgroups.SpitOutSequence;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
@@ -89,15 +90,18 @@ public class DS2016 {
 // 		raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer(0.33));//MAY NEED TO CHANGE LATER
 // 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
  		shootButton.whenPressed(new Shoot(0));
+// 		shootButton.whenPressed(new ShootSequence());
 // 		shootButton.whenReleased(new ShooterRampUp());
  		//xboxAButton.whileHeld(new ManualAcquire(false));
- 		extendDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(true));
+// 		extendDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(true));
+ 		extendDrawbridgeButton.whenPressed(new ShootSequence());
  		retractDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
  		xboxRBumper.whenPressed(new MoveandRamp(true , 2700));
- 		xboxLBumper.whenPressed(new MoveDrawbridgeToEnd());
- 		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.15));
+ 		xboxLBumper.whenPressed(new MoveandRamp(false, 0));
+// 		xboxLBumper.whenPressed(new MoveDrawbridgeToEnd());
+ 		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.25));
  		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.65));
 // 		xboxRBumper.whenPressed(new RaiseShooterToNextHigherAngle());
 // 		xboxLBumper.whenPressed(new RaiseShooterToNextLowerAngle());
@@ -105,7 +109,7 @@ public class DS2016 {
 // 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
 // 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
  		acquireTrackButton.whenPressed(new ManualTrackAcquirer());
- 		RPMButton.whileHeld(new RampToRPM(1000));
+ 		RPMButton.whileHeld(new RampToRPM(2000));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
  		XboxRTrigger.whenPressed(new SpitOutSequence());

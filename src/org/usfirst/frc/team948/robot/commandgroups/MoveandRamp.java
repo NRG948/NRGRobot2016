@@ -4,6 +4,7 @@ import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
+import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherAngle;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
@@ -15,17 +16,20 @@ public class MoveandRamp extends CommandGroup{
 	
 	public MoveandRamp(boolean up , double RPM)
 	{
-		addParallel(new RaiseAcquirerTo(Robot.Level.DEFAULT));
+//		addParallel(new RaiseAcquirerTo(Robot.Level.DEFAULT));
 		if (up)
 		{
-			addParallel(new RaiseShooterToNextHigherAngle());
+//			addParallel(new RaiseShooterToNextHigherAngle());
+			addParallel(new RaiseShooterArmTo(45));
+			addSequential(new RampToRPM(RPM));
 		//	addSequential(new ShooterRampUp());
 		}
 		else
 		{
-			addParallel(new RaiseShooterToNextLowerAngle());
+//			addParallel(new RaiseShooterToNextLowerAngle());
+			addParallel(new RaiseShooterArmTo(0));
 		}
-		addSequential(new RampToRPM(RPM));
+//		addSequential(new RampToRPM(RPM));
 	}
 	
 

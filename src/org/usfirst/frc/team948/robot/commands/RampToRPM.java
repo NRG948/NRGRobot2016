@@ -26,9 +26,12 @@ public class RampToRPM extends CommandBase{
 	}
 	@Override
 	protected void initialize() {
+		if (!visionProcessing.getMode()) {
+			visionProcessing.switchMode();
+		}
 		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000015);
-		leftWheelOutput = 0.5;
-		rightWheelOutput = 0.5;
+		leftWheelOutput = 0.7;
+		rightWheelOutput = 0.7;
 	}
 
 	@Override
@@ -68,7 +71,7 @@ public class RampToRPM extends CommandBase{
 
 	@Override
 	protected void end() {
-		shooterWheel.rawShoot(0);
+		//shooterWheel.rawShoot(0);
 	}
 
 	@Override
