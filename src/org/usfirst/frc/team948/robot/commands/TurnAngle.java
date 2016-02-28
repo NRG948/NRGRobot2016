@@ -9,6 +9,7 @@ public class TurnAngle extends CommandBase{
 	private double power;
 	private double tolerance;
 	private Timer timer;
+	private final double VISION_TOLERANCE = 1;
 	
 	public TurnAngle(double angle, double power, double tolerance){
 		requires(drive);
@@ -24,6 +25,13 @@ public class TurnAngle extends CommandBase{
 		tolerance = DEFAULT_TOLERANCE;
 		timer = new Timer();
 	}
+	public TurnAngle(double power){
+		requires(drive);
+		angle = visionProcessing.getTurningAngleProportion();
+		tolerance = VISION_TOLERANCE;
+		this.power = power;
+		}
+	
 	
 	protected void initialize (){
 		timer.reset();

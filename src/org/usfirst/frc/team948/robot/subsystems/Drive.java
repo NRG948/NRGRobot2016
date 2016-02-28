@@ -19,9 +19,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem implements PIDOutput {
 	private static final int REQUIRED_CYCLES_ON_TARGET = 3;//NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_P = 0.0625; //NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_I = 0.001; //NEED TO CHECK/CHANGE LATER
-	private static final double TURN_TO_HEADING_D = 0.2; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_P = 0.039; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_I = 0.0056; //NEED TO CHECK/CHANGE LATER
+	private static final double TURN_TO_HEADING_D = 0.06825; //NEED TO CHECK/CHANGE LATER
 
 	private double PIDOutput;
 	private double PID_MIN_OUTPUT = 0;
@@ -142,7 +142,6 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 	public void turnToHeading(double finalHeading, double power){
 		drivePID.setSetpoint(finalHeading);
-		SmartDashboard.putNumber("Turn Error", drivePID.getError());
 		SmartDashboard.putNumber("Turn PIDOutput", PIDOutput);
 		double currentPower = MathHelper.clamp(PIDOutput, -power, power);
 		rawTankDrive(-currentPower, currentPower);
@@ -155,15 +154,19 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 	
 	public boolean turnToHeadingComplete(double tolerance){
-//		boolean onTarget = drivePID.getError() < tolerance;
-		boolean onTarget = drivePID.onTarget();
-//		if (onTarget) {
-//			cyclesOnTarget++;
-//		}
-//		else {
-//			cyclesOnTarget = 0;
-//		}
-		cyclesOnTarget = (onTarget) ? cyclesOnTarget ++ : 0;
+		boolean onTarget = Math.abs(drivePID.getError()) < tolerance;
+		SmartDashboard.putNumber("Turn Error", drivePID.getError());
+		
+		
+		//boolean onTarget = drivePID.onTarget();
+		SmartDashboard.putBoolean("Turn onTarget?", onTarget);
+		if (onTarget) {
+			cyclesOnTarget++;
+		}
+		else {
+			cyclesOnTarget = 0;
+		}
+		
 		return cyclesOnTarget >= getRequiredCyclesOnTarget();
 	}
 	
