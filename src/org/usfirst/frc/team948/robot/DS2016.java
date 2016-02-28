@@ -7,12 +7,11 @@ import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
-import org.usfirst.frc.team948.robot.commands.RawRaiseDrawbridge;
+import org.usfirst.frc.team948.robot.commands.ManualDrawbridge;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
-import org.usfirst.frc.team948.robot.commands.MoveDrawbridgeToEnd;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
@@ -73,6 +72,7 @@ public class DS2016 {
 	public static final Button xboxStartButton = new JoystickButton(xBoxController, 8);
 	public static final Button xboxLTrigger = new XboxTriggerButton(2);
 	public static final Button XboxRTrigger = new XboxTriggerButton(3);
+	double emem = xBoxController.getRawAxis(0);
 	
 	// We need to change the button numbers later
 	public static double getLeftJSY() {		
@@ -91,12 +91,12 @@ public class DS2016 {
  		shootButton.whenPressed(new Shoot(0));
 // 		shootButton.whenReleased(new ShooterRampUp());
  		//xboxAButton.whileHeld(new ManualAcquire(false));
- 		extendDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(true));
- 		retractDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(false));
+ 		extendDrawbridgeButton.whileHeld(new ManualDrawbridge(true));
+ 		retractDrawbridgeButton.whileHeld(new ManualDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));
  		xboxRBumper.whenPressed(new MoveandRamp(true , 2700));
- 		xboxLBumper.whenPressed(new MoveDrawbridgeToEnd());
+ 		xboxLBumper.whenPressed(new MoveandRamp(false, 0));
  		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.15));
  		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.65));
 // 		xboxRBumper.whenPressed(new RaiseShooterToNextHigherAngle());
@@ -105,7 +105,7 @@ public class DS2016 {
 // 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
 // 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
  		acquireTrackButton.whenPressed(new ManualTrackAcquirer());
- 		RPMButton.whileHeld(new RampToRPM(1000));
+ 		RPMButton.whileHeld(new RampToRPM(2700));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
  		XboxRTrigger.whenPressed(new SpitOutSequence());
