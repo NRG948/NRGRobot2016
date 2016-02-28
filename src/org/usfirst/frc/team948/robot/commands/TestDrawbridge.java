@@ -13,7 +13,7 @@ public class TestDrawbridge extends CommandBase {
 
 	@Override
 	protected void execute() {
-		drawbridge.rawRaise(DS2016.xBoxController.getRawAxis(0));
+		drawbridge.rawRaise(-DS2016.xBoxController.getRawAxis(1));
 	}
 
 	@Override

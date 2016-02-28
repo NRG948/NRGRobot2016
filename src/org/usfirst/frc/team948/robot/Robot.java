@@ -39,11 +39,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public enum Level {
-		DEFAULT(0), 
-		ACQUIRE(45), 
-		CHIVAL(63.75), 
-		SALLY_PORT_HIGH(110), 
-		FULL_BACK(140);
+		DEFAULT(0), ACQUIRE(45), CHIVAL(63.75), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+																						// NEEDS
+																						// TO
+																						// BE
+																						// CHECKED
 
 		private double value;
 
@@ -100,6 +100,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 		DS2016.buttonInit();
 		visionProcessing.cameraInit();
+		
 	}
 
 	/**
@@ -199,39 +200,37 @@ public class Robot extends IterativeRobot {
 	public void periodicAll() {
 		shooterWheel.updateLeftRPM();
 		shooterWheel.updateRightRPM();
+		shooterWheel.addRPMValueToArray();
 		//NavXTester.parameterDisplay();
-		if(!visionProcessing.isUpdating()){
-			visionProcessing.updateVision();
-		}
+		
 		// PositionTracker.updatePosition();
 		// PositionTracker3D.computePosition();
-		if (true) {
+		if (screenUpdateCounter % 10 == 0) {
 			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
-			SmartDashboard.putBoolean("Upper Acquirer Limit", RobotMap.acquireUpperLimit.get());
-			SmartDashboard.putBoolean("Lower Acquirer Limit", RobotMap.acquireLowerLimit.get());
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
 			SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
 			SmartDashboard.putNumber("Shooter Angle", RobotMap.shooterLifterEncoder.getVoltage());
-			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.getRaw());
-			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.getRaw());
+			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
+			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
 
-			SmartDashboard.putNumber("Left Drive Encoder", RobotMap.leftMotorEncoder.get());
-			SmartDashboard.putNumber("Right Drive Encoder", RobotMap.rightMotorEncoder.get());
 			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
+
+			SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
+
+
 			SmartDashboard.putNumber("Turning Angle Arcsin", visionProcessing.getTurningAngle());
 			SmartDashboard.putNumber("Turning Angle Proportion", visionProcessing.getTurningAngleProportion());
 			
 			SmartDashboard.putNumber("Calculated Angle", RobotMap.ahrs.getYaw());
 			
+
 			SmartDashboard.putData("PDP", pdp);
 			// for (int i = 0; i <= 15; i++) {
 			// 	   SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
 			// }
 			// SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
 			// SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
-			SmartDashboard.putBoolean("Upper Drawbridge Limit", RobotMap.drawbridgeArm.isFwdLimitSwitchClosed());
-			SmartDashboard.putBoolean("Lower Drawbridge Limit", RobotMap.drawbridgeArm.isRevLimitSwitchClosed());
 		}
 		screenUpdateCounter++;
 	}
