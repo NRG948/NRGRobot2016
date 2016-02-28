@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShooterWheel extends Subsystem {
 	public double currentLeftRPM;
 	public double currentRightRPM;
-	private static final int MAX_RPM_SAMPLES = 100;
+	public static final int MAX_RPM_SAMPLES = 100;
 	private double[] rpmValues = new double[MAX_RPM_SAMPLES];
 	private int index;
 	private int currentCount;
