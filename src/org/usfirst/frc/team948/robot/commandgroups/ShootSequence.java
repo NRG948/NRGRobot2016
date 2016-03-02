@@ -17,16 +17,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShootSequence extends CommandGroup {
 	public ShootSequence()
 	{
-		addSequential(new SwitchCamera());
-		addSequential(new Delay(1));
+//		addSequential(new SwitchCamera());
+//		addSequential(new Delay(1));
 		addParallel(new RampToRPM(2000));
 		addSequential(new TurnAndRaise());
 		addSequential(new Interrupt());
-		addSequential(new SwitchCamera());
+//		addSequential(new SwitchCamera());
 	}
 	
 	private class TurnAndRaise extends CommandGroup{
 		public TurnAndRaise(){
+		addSequential(new Delay(1));
 		addSequential(new TurnAngle(0.6));
 		addSequential(new RaiseShooterArmTo());
 		addSequential(new Shoot(0));

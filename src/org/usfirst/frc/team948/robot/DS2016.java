@@ -102,7 +102,7 @@ public class DS2016 {
  		xboxLBumper.whenPressed(new MoveandRamp(false, 0));
 // 		xboxLBumper.whenPressed(new MoveDrawbridgeToEnd());
  		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.25));
- 		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.65));
+ 		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.35));
 // 		xboxRBumper.whenPressed(new RaiseShooterToNextHigherAngle());
 // 		xboxLBumper.whenPressed(new RaiseShooterToNextLowerAngle());
  		shooterRampUp.whileHeld(new ShooterRampUp(1));

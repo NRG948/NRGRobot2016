@@ -201,11 +201,12 @@ public class Robot extends IterativeRobot {
 		shooterWheel.updateLeftRPM();
 		shooterWheel.updateRightRPM();
 		shooterWheel.addRPMValueToArray();
+		SmartDashboard.putNumber("Periodic all in nanos", shooterWheel.currentTimeNanos());
 		//NavXTester.parameterDisplay();
 		
 		// PositionTracker.updatePosition();
 		// PositionTracker3D.computePosition();
-		if (screenUpdateCounter % 10 == 0) {
+		if (true) {
 			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
 			SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());

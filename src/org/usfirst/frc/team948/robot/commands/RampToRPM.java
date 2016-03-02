@@ -43,6 +43,12 @@ public class RampToRPM extends CommandBase{
 		double diffRight = targetRPM - rightRPM;
 		leftWheelOutput += diffLeft*p;
 		rightWheelOutput += diffRight*p;
+		if (leftWheelOutput > 1.0) {
+			leftWheelOutput = 1.0;
+		}
+		if (rightWheelOutput > 1.0) {
+			rightWheelOutput = 1.0;
+		}
 		if(diffLeft*prevLeftDiff < 0){
 			if(leftH0 != 0){
 				leftWheelOutput = (leftWheelOutput + leftH0)/2;
@@ -71,7 +77,7 @@ public class RampToRPM extends CommandBase{
 
 	@Override
 	protected void end() {
-		//shooterWheel.rawShoot(0);
+		shooterWheel.rawShoot(0);
 	}
 
 	@Override

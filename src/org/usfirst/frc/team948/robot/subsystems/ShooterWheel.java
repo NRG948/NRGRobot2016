@@ -5,13 +5,25 @@ import org.usfirst.frc.team948.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ShooterWheel extends Subsystem {
-	public double currentLeftRPM;
-	public double currentRightRPM;
+	public volatile double currentLeftRPM;
+	public volatile double currentRightRPM;
 	public static final int MAX_RPM_SAMPLES = 100;
 	private double[] rpmValues = new double[MAX_RPM_SAMPLES];
 	private int index;
 	private int currentCount;
+	
+	private long prevTimeLeft = 0;
+	private long prevTimeRight = 0;
+	private long currentTimeLeft = 0;
+	private long currentTimeRight = 0;
+	
+	private double prevEncoderLeft = 0;
+	private double prevEncoderRight = 0;
+	private double currentEncoderLeft = 0;
+	private double currentEncoderRight = 0;
 
+	private long prevTimeNano = 0;
+	
 	public ShooterWheel() {
 
 	}
@@ -53,13 +65,27 @@ public class ShooterWheel extends Subsystem {
 	}
 
 	public void updateLeftRPM() {
-		currentLeftRPM = 60 * RobotMap.leftShooterWheelEncoder.getRate();
+		currentEncoderLeft = RobotMap.leftShooterWheelEncoder.getDistance();
+		currentTimeLeft = System.currentTimeMillis();
+		currentLeftRPM = ((currentEncoderLeft - prevEncoderLeft) / (currentTimeLeft - prevTimeLeft)) * 60000.0;
+		prevEncoderLeft = currentEncoderLeft;
+		prevTimeLeft = currentTimeLeft;
 	}
 
 	public void updateRightRPM() {
-		currentRightRPM = 60 * RobotMap.rightShooterWheelEncoder.getRate();
+		currentEncoderRight = RobotMap.rightShooterWheelEncoder.getDistance();
+		currentTimeRight = System.currentTimeMillis();
+		currentRightRPM = ((currentEncoderRight - prevEncoderRight) / (currentTimeRight - prevTimeRight)) * 60000.0;
+		prevEncoderRight = currentEncoderRight;
+		prevTimeRight = currentTimeRight;
 	}
 
+	public long currentTimeNanos() {
+		long difference = System.nanoTime() - prevTimeNano;
+		prevTimeNano = System.nanoTime();
+		return difference;
+	}
+	
 	public boolean isBallLoaded() {
 		return !RobotMap.ballButton.get();
 	}

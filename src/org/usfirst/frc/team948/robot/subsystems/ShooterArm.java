@@ -2,6 +2,8 @@ package org.usfirst.frc.team948.robot.subsystems;
 
 import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.commands.CommandBase;
+import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -9,13 +11,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterArm extends Subsystem implements PIDOutput{
-	private PIDController shooterElevatePID = new PIDController(0.8, 0.02, 0.5, RobotMap.shooterLifterEncoder, this);
+	private PIDController shooterElevatePID;
 	private double pidOutput;
 	
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 	private static final double VOLTS_0 = (Robot.competitionRobot)? 1.070 : 0.945;
-	private static final double VOLTS_VARIABLE = (Robot.competitionRobot)? 1.676 : 1.498;
-	private static final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 45 : 41;
+	private static final double VOLTS_VARIABLE = (Robot.competitionRobot)? 1.676 : 1.460;
+	private static final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 45 : 37;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0)/ VARIABLE_ANGLE;
 	
 	public enum ShooterAngle{
@@ -49,6 +51,10 @@ public class ShooterArm extends Subsystem implements PIDOutput{
 	}
 	
 	public void moveArmInit() {
+		shooterElevatePID =  new PIDController(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_P, 1.0), 
+											   CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_I, 0.02), 
+											   CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_D, 0.5), 
+											   RobotMap.shooterLifterEncoder, this);
 		shooterElevatePID.reset();
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
 		shooterElevatePID.setOutputRange(-.2, 0.6);

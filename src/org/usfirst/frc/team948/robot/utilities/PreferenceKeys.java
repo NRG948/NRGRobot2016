@@ -20,6 +20,9 @@ public class PreferenceKeys {
 	public static final String VISION_P = "VisionP";
 	public static final String VISION_I = "VisionI";
 	public static final String VISION_D = "VisionD";
+	public static final String SHOOTER_P = "ShooterP";
+	public static final String SHOOTER_I = "ShooterI";
+	public static final String SHOOTER_D = "ShooterD";
 	public static final String CENTER_IMAGE = "CenterImage";
 
 }
