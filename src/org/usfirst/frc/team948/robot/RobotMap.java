@@ -2,6 +2,7 @@ package org.usfirst.frc.team948.robot;
 
 import org.usfirst.frc.team948.robot.utilities.AHRSAccelerometer;
 import org.usfirst.frc.team948.robot.utilities.AHRSGyro;
+import org.usfirst.frc.team948.robot.utilities.PositionTrackerWithEncoder;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -77,8 +78,10 @@ public class RobotMap {
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
 	public static Gyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
+	public static PositionTrackerWithEncoder positionTracker = new PositionTrackerWithEncoder();
 	
 	public static Solenoid leds = new Solenoid(7);
+	
 
 
 	public static void init() {

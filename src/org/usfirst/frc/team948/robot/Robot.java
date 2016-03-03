@@ -146,6 +146,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		RobotMap.positionTracker.update();
 		periodicAll();
 	}
 
@@ -186,6 +187,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("left encoder", RobotMap.leftMotorEncoder.get());
 		SmartDashboard.putNumber("right encoder", RobotMap.rightMotorEncoder.get());
 		SmartDashboard.putBoolean("Has Ball", shooterWheel.isBallLoaded());
+		RobotMap.positionTracker.update();
 		periodicAll();
 	}
 
@@ -224,7 +226,8 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Turning Angle Proportion", visionProcessing.getTurningAngleProportion());
 			
 			SmartDashboard.putNumber("Calculated Angle", RobotMap.ahrs.getYaw());
-			
+			SmartDashboard.putNumber("Robot X", RobotMap.positionTracker.getX());
+			SmartDashboard.putNumber("Robot Y", RobotMap.positionTracker.getY());
 
 			SmartDashboard.putData("PDP", pdp);
 			// for (int i = 0; i <= 15; i++) {
