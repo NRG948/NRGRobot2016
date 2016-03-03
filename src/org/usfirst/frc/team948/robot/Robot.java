@@ -200,7 +200,7 @@ public class Robot extends IterativeRobot {
 	public void periodicAll() {
 		shooterWheel.updateLeftRPM();
 		shooterWheel.updateRightRPM();
-		shooterWheel.addRPMValueToArray();
+		shooterWheel.addRPMValueToArrays();
 		SmartDashboard.putNumber("Periodic all in nanos", shooterWheel.currentTimeNanos());
 		//NavXTester.parameterDisplay();
 		
