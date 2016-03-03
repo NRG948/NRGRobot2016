@@ -27,8 +27,8 @@ public class WaitForRPM extends CommandBase {
 	// or equal to tolerance, return true
 	@Override
 	protected boolean isFinished() {
-		double diffLeft = Math.abs(shooterWheel.getAverageLeftRPM(ShooterWheel.MAX_RPM_SAMPLES) - targetRPM);
-		double diffRight = Math.abs(shooterWheel.getAverageRightRPM(ShooterWheel.MAX_RPM_SAMPLES) - targetRPM);
+		double diffLeft = Math.abs(shooterWheel.getAverageLeftRPM(50) - targetRPM);
+		double diffRight = Math.abs(shooterWheel.getAverageRightRPM(50) - targetRPM);
 		return Math.max(diffLeft, diffRight) <= tolerance;
 	}
 

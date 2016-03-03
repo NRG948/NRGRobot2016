@@ -13,9 +13,9 @@ public class ShooterWheel extends Subsystem {
 	private int index;
 	private int currentCount;
 	
-	private long prevTimeLeft = 0;
+	private long prevTime = 0;
 	private long prevTimeRight = 0;
-	private long currentTimeLeft = 0;
+	private long currentTime = 0;
 	private long currentTimeRight = 0;
 	
 	private double prevEncoderLeft = 0;
@@ -82,20 +82,15 @@ public class ShooterWheel extends Subsystem {
 		return sum / numberOfValues;
 	}
 	
-	public void updateLeftRPM() {
+	public void updateRPM() {
 		currentEncoderLeft = RobotMap.leftShooterWheelEncoder.getDistance();
-		currentTimeLeft = System.currentTimeMillis();
-		currentLeftRPM = ((currentEncoderLeft - prevEncoderLeft) / (currentTimeLeft - prevTimeLeft)) * 60000.0;
-		prevEncoderLeft = currentEncoderLeft;
-		prevTimeLeft = currentTimeLeft;
-	}
-
-	public void updateRightRPM() {
 		currentEncoderRight = RobotMap.rightShooterWheelEncoder.getDistance();
-		currentTimeRight = System.currentTimeMillis();
-		currentRightRPM = ((currentEncoderRight - prevEncoderRight) / (currentTimeRight - prevTimeRight)) * 60000.0;
+		currentTime = System.nanoTime();
+		currentLeftRPM = ((currentEncoderLeft - prevEncoderLeft) / (currentTime - prevTime)) * 60000000000.0;
+		currentRightRPM = ((currentEncoderRight - prevEncoderRight) / (currentTime - prevTime)) * 60000000000.0;
+		prevEncoderLeft = currentEncoderLeft;
 		prevEncoderRight = currentEncoderRight;
-		prevTimeRight = currentTimeRight;
+		prevTime = currentTime;
 	}
 
 	public long currentTimeNanos() {

@@ -9,6 +9,7 @@ import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
 import org.usfirst.frc.team948.robot.commands.TurnToTarget;
+import org.usfirst.frc.team948.robot.commands.WaitForRPM;
 import org.usfirst.frc.team948.robot.subsystems.AcquirerArm;
 import org.usfirst.frc.team948.robot.subsystems.AcquirerWheel;
 import org.usfirst.frc.team948.robot.subsystems.Climber;
@@ -168,12 +169,14 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Turn Angle to Target", new TurnAngle(0.6));
 
+		
 		SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
 
 		SmartDashboard.putData("Turn to target", new TurnToTarget());
 
 		SmartDashboard.putData("Shoot sequence", new ShootSequence());
 
+		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 50));
 		// SmartDashboard.putData("Turn set angle to target", new
 		// TurnAngle(visionProcessing.getTurningAngle(), 0.7));
 
@@ -200,9 +203,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void periodicAll() {
-		shooterWheel.updateLeftRPM();
-		shooterWheel.updateRightRPM();
-		shooterWheel.addRPMValueToArrays();
 		SmartDashboard.putNumber("Periodic all in nanos", shooterWheel.currentTimeNanos());
 		//NavXTester.parameterDisplay();
 		

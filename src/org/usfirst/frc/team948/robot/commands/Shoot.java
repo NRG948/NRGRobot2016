@@ -1,6 +1,10 @@
 package org.usfirst.frc.team948.robot.commands;
 
+import org.usfirst.frc.team948.robot.RobotMap;
+import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
+
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shoot extends CommandBase {
 	
@@ -19,6 +23,7 @@ public class Shoot extends CommandBase {
 
 	@Override
 	protected void initialize() {
+		SmartDashboard.putString("Shooting Dat", "Left RPM: " + shooterWheel.currentLeftRPM + " Right RPM: " + shooterWheel.currentRightRPM + " Shooting Angle " + ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
 		timer1.reset();
 		timer1.start();
 	}

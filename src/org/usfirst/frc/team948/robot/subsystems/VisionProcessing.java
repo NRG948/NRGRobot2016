@@ -39,7 +39,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double CAMERA_OFF_GROUND = 1;
 	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND + TARGET_HEIGHT_FEET; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
-	private final double SPEED_OF_BALL = 2.514/2 * GRAVITY; //Three trials of shooting straight up, total time was 7.1 seconds
+	private final double SPEED_OF_BALL = 32.8227; //Three trials of shooting straight up, total time was 7.1 seconds
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
 	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 35 : 28;
@@ -191,6 +191,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	
 	public double calcDistance() {
 		fovPixel = getTotalWidth();
+		SmartDashboard.putNumber("Height of Object", getHeight());
 		targetPixel = (getHeight() / Math.cos(CAMERA_ANGLE * Math.PI / 180)) * TARGET_WIDTH_FEET / TARGET_HEIGHT_FEET; //use ratio of vert to hor to calculate
 //		targetPixel = getWidth();
 		double distance = TARGET_WIDTH_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE_HORIZONTAL / 2.0) * Math.PI / 180));
