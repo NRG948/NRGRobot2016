@@ -176,7 +176,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Shoot sequence", new ShootSequence());
 
-		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 50));
+		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 20));
 		// SmartDashboard.putData("Turn set angle to target", new
 		// TurnAngle(visionProcessing.getTurningAngle(), 0.7));
 
@@ -203,7 +203,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void periodicAll() {
-		SmartDashboard.putNumber("Periodic all in nanos", shooterWheel.currentTimeNanos());
+		//SmartDashboard.putNumber("Periodic all in nanos", shooterWheel.currentTimeNanos());
 		//NavXTester.parameterDisplay();
 		
 		// PositionTracker.updatePosition();

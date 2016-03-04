@@ -27,6 +27,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public double area;
 	public double height;
 	public double width;
+	public double convexHullPerimeter;
 	public volatile double centerX;
 	
 	private double targetPixel;
@@ -125,6 +126,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 						 NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
 				width = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT) - 
 						NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
+				convexHullPerimeter = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CONVEX_HULL_PERIMETER);
 			}
 			SmartDashboard.putNumber("Time To Do Vision", System.currentTimeMillis() - prevMillis);
 		}
@@ -192,7 +194,11 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public double calcDistance() {
 		fovPixel = getTotalWidth();
 		SmartDashboard.putNumber("Height of Object", getHeight());
-		targetPixel = (getHeight() / Math.cos(CAMERA_ANGLE * Math.PI / 180)) * TARGET_WIDTH_FEET / TARGET_HEIGHT_FEET; //use ratio of vert to hor to calculate
+		double realHeight = ((4*convexHullPerimeter - 2*getHeight()) - Math.sqrt(Math.pow(4*convexHullPerimeter - 2*getHeight(),2) - 12*(Math.pow(convexHullPerimeter, 2)- 2*Math.pow(getWidth(), 2) - Math.pow(getHeight(), 2))))/6.0;
+		SmartDashboard.putNumber("Real Height", realHeight);
+		SmartDashboard.putNumber("Perimeter", convexHullPerimeter);
+		SmartDashboard.putNumber("Obs Length", getWidth());
+		targetPixel = (realHeight / Math.cos(CAMERA_ANGLE * Math.PI / 180)) * TARGET_WIDTH_FEET / TARGET_HEIGHT_FEET; //use ratio of vert to hor to calculate
 //		targetPixel = getWidth();
 		double distance = TARGET_WIDTH_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE_HORIZONTAL / 2.0) * Math.PI / 180));
 		return distance;

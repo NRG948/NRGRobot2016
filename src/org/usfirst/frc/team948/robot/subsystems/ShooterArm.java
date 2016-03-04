@@ -53,7 +53,7 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 				CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_D, 0.5), RobotMap.shooterLifterEncoder, this);
 		shooterElevatePID.reset();
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
-		shooterElevatePID.setOutputRange(-.2, 0.6);
+		shooterElevatePID.setOutputRange(-.6, 0.6);
 		pidOutput = 0;
 		shooterElevatePID.enable();
 	}

@@ -20,11 +20,20 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 	private PIDController distancePID = new PIDController(p, i, d, encoderPIDSource, (PIDOutput) this);
 	private int cyclesOnTarget;
 
+	public DriveStraightDistance(double power, double distance, double tolerance){
+		requires(drive);
+		this.power = power;
+		this.distance = distance;
+		this.tolerance = tolerance;
+	}
+	
 	public DriveStraightDistance(double power, double distance)
-	{	requires(drive);
+	{	
+		requires(drive);
 		this.power = power;
 		this.distance = distance;
 	}
+
 	
 	@Override
 	protected void initialize() {
@@ -65,7 +74,7 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 //		}
 //		SmartDashboard.putNumber("Cycles On Target", cyclesOnTarget);
 //		return(cyclesOnTarget >= 6);
-		return distancePID.onTarget();
+		return distancePID.getError() < tolerance;
 	}
 
 	protected void end() {

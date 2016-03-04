@@ -16,9 +16,9 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 
 	public TraverseDefenseShootRoutine(Robot.AutoPosition position) {
 		addSequential(new DriveStraightDistance(TURN_TO_TARGET_POWER,
-				AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE));
+				AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE, 1.0));
 		addSequential(new TurnAngle(position.getAngle(), TURN_TO_TARGET_POWER));
-		addSequential(new TurnToTarget());
+	//	addSequential(new TurnToTarget());
 		addSequential(new ShootSequence());
 	}
 }

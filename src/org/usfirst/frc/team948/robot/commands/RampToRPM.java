@@ -48,7 +48,7 @@ public class RampToRPM extends CommandBase {
 			RobotMap.leftShooterWheel.set(leftWheelOutput);
 			if (shooterWheel.currentLeftRPM - targetRPM > 0) {
 				passedThresholdLeft = true;
-				leftWheelOutput = 0.4;
+				leftWheelOutput = 0.42;
 			}
 			SmartDashboard.putNumber("Left shooter output", leftWheelOutput);
 		} else {
@@ -70,7 +70,7 @@ public class RampToRPM extends CommandBase {
 			RobotMap.rightShooterWheel.set(-rightWheelOutput);
 			if (shooterWheel.currentRightRPM - targetRPM > 0) {
 				passedThresholdRight = true;
-				rightWheelOutput = 0.45;
+				rightWheelOutput = 0.47;
 			}
 			SmartDashboard.putNumber("Right shooter output", rightWheelOutput);
 		} else {

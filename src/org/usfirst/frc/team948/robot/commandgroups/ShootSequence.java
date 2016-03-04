@@ -31,7 +31,7 @@ public class ShootSequence extends CommandGroup {
 		addSequential(new Delay(1));
 		addSequential(new TurnAngle(0.6));
 		addSequential(new RaiseShooterArmTo());
-		addSequential(new WaitForRPM(2000, 50));
+		addSequential(new WaitForRPM(2000, 20));
 		addSequential(new Shoot(0));
 		addSequential(new RaiseShooterArmTo(-10));
 		}
