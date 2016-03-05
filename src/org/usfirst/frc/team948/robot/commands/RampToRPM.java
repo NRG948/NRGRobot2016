@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RampToRPM extends CommandBase {
 
-	private double targetRPM;
+	private double leftTargetRPM;
+	private double rightTargetRPM;
 	private double leftRPM;
 	private double rightRPM;
 	private double prevLeftDiff;
@@ -25,8 +26,16 @@ public class RampToRPM extends CommandBase {
 
 	public RampToRPM(double RPM) {
 		requires(shooterWheel);
-		this.targetRPM = RPM;
+		this.leftTargetRPM = RPM;
+		this.rightTargetRPM = RPM;
 	}
+	
+	public RampToRPM() {
+		requires(shooterWheel);
+		this.leftTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_LEFT_TARGET_RPM, 2000);
+		this.rightTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_RIGHT_TARGET_RPM, 2000);
+	}
+	
 
 	@Override
 	protected void initialize() {
@@ -46,14 +55,14 @@ public class RampToRPM extends CommandBase {
 		shooterWheel.addRPMValueToArrays();
 		if (!passedThresholdLeft) {
 			RobotMap.leftShooterWheel.set(leftWheelOutput);
-			if (shooterWheel.currentLeftRPM - targetRPM > 0) {
+			if (shooterWheel.currentLeftRPM - leftTargetRPM > 0) {
 				passedThresholdLeft = true;
 				leftWheelOutput = 0.42;
 			}
 			SmartDashboard.putNumber("Left shooter output", leftWheelOutput);
 		} else {
 			leftRPM = Math.abs(shooterWheel.currentLeftRPM);
-			double diffLeft = targetRPM - leftRPM;
+			double diffLeft = leftTargetRPM - leftRPM;
 			leftWheelOutput += diffLeft * p;
 			leftWheelOutput = MathHelper.clamp(leftWheelOutput, -1.0, 1.0);
 			if (diffLeft * prevLeftDiff < 0) {
@@ -68,7 +77,7 @@ public class RampToRPM extends CommandBase {
 		}
 		if (!passedThresholdRight) {
 			RobotMap.rightShooterWheel.set(-rightWheelOutput);
-			if (shooterWheel.currentRightRPM - targetRPM > 0) {
+			if (shooterWheel.currentRightRPM - rightTargetRPM > 0) {
 				passedThresholdRight = true;
 				rightWheelOutput = 0.47;
 			}
@@ -76,7 +85,7 @@ public class RampToRPM extends CommandBase {
 		} else {
 			// difference in RPM to target
 			rightRPM = Math.abs(shooterWheel.currentRightRPM);
-			double diffRight = targetRPM - rightRPM;
+			double diffRight = rightTargetRPM - rightRPM;
 			rightWheelOutput += diffRight * p;
 			rightWheelOutput = MathHelper.clamp(rightWheelOutput, -1.0, 1.0);
 			if (diffRight * prevRightDiff < 0) {

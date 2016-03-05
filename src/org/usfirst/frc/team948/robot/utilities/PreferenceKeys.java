@@ -24,5 +24,6 @@ public class PreferenceKeys {
 	public static final String SHOOTER_I = "ShooterI";
 	public static final String SHOOTER_D = "ShooterD";
 	public static final String CENTER_IMAGE = "CenterImage";
-
+	public static final String SHOOTER_LEFT_TARGET_RPM = "ShooterLeftTargetRPM";
+	public static final String SHOOTER_RIGHT_TARGET_RPM = "ShooterRightTargetRPM";
 }
