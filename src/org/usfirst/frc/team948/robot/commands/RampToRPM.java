@@ -42,7 +42,7 @@ public class RampToRPM extends CommandBase {
 		passedThresholdLeft = false;
 		passedThresholdRight = false;
 		if (!visionProcessing.getMode()) {
-			visionProcessing.switchMode();
+			visionProcessing.switchCamera();
 		}
 		p = preferences.getDouble(PreferenceKeys.TAKE_HALF_BACK_RATIO, 0.000015);
 		leftWheelOutput = 1;

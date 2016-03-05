@@ -43,7 +43,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double SPEED_OF_BALL = 32.8227; //Three trials of shooting straight up, total time was 7.1 seconds
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
-	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 35 : 28;
+	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 34 : 34;
 	private final double CAMERA_TO_SHOOTER = 9.5 / 12.0;
 	
 	private final double TURN_TARGET_P = 0.0039;
@@ -74,8 +74,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	
 	@Override
 	protected void initDefaultCommand() {
-		
-		
+				
 	}
 
 	public void cameraInit() {
@@ -153,22 +152,35 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 //		isUpdating = false;
 	}
 
-	public void switchMode() {
-		visionTracking = !visionTracking;
-		if (visionTracking) {
-			ballCam.stopCapture();
-			targetCam.startCapture();
-			targetCam.setExposureManual(-11);
-			targetCam.setWhiteBalanceHoldCurrent();
-		}
-		else {
-			targetCam.stopCapture();
-			ballCam.startCapture();
-			targetCam.setExposureAuto();
-			targetCam.setWhiteBalanceAuto();
-		}
+	public void setToDriverCamera() {
+		visionTracking = false;
+		
+		targetCam.stopCapture();
+//		targetCam.setExposureAuto();
+//		targetCam.setWhiteBalanceAuto();
+		
+		ballCam.updateSettings();
+		ballCam.startCapture();
+		targetCam.updateSettings();
+	}
+	
+	public void setToVisionCamera() {
+		visionTracking = true;
+		
+		ballCam.stopCapture();
+		targetCam.setExposureManual(-11);
+		targetCam.setWhiteBalanceHoldCurrent();
+		
 		ballCam.updateSettings();
 		targetCam.updateSettings();
+		targetCam.startCapture();
+	}
+	
+	public void switchCamera() {
+		if (visionTracking)
+			setToDriverCamera();
+		else
+			setToVisionCamera();
 	}
 	
 	public double getArea() {

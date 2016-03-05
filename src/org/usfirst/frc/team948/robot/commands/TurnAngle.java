@@ -29,7 +29,7 @@ public class TurnAngle extends CommandBase{
 	}
 	
 	
-	protected void initialize (){
+	protected void initialize () {
 		if (vision) {
 			angle = visionProcessing.getTurningAngleProportion();
 		}
@@ -39,15 +39,15 @@ public class TurnAngle extends CommandBase{
 		SmartDashboard.putNumber("turn final heading", finalHeading);
 	}
 	
-	protected void execute(){
+	protected void execute() {
 		drive.turnToHeading(finalHeading, power);
 	}
 	
-	protected boolean isFinished(){
+	protected boolean isFinished() {
 		return angle == 0 || drive.turnToHeadingComplete(tolerance); //|| timer.get() > 5;
 	}
 	
-	protected void end(){
+	protected void end() {
 		drive.rawStop();
 		drive.turnToHeadingEnd(finalHeading);  
 	}

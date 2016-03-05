@@ -14,7 +14,7 @@ public class TurnToTarget extends CommandBase {
 		visionProcessing.setImageCenter(CommandBase.preferences.getDouble(
 				PreferenceKeys.CENTER_IMAGE, 160.0));
 		if (!visionProcessing.getMode()) {
-			visionProcessing.switchMode();
+			visionProcessing.setToVisionCamera();
 		}
 	}
 
