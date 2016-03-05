@@ -26,13 +26,17 @@ public class RaiseShooterArmTo extends CommandBase {
 
 	@Override
 	protected void execute() {
-		shooterArm.moveArmToDesiredAngle();
+		//if(angleFromVisionProcessing){
+		//	shooterArm.moveArmToDesiredAngleVisionTracking();
+		//}else{
+			shooterArm.moveArmToDesiredAngle();
+		//}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return shooterArm.isArmAtDesiredAngle();
-//		return false;
+		//return shooterArm.isArmAtDesiredAngle();
+		return false;
 	}
 
 	@Override

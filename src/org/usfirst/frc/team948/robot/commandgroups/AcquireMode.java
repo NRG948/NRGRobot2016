@@ -13,7 +13,7 @@ public class AcquireMode extends CommandGroup {
 
 	public AcquireMode(){
 		addParallel(new RaiseShooterArmTo(-10));
-//		addParallel(new RaiseAcquirerTo(Robot.Level.ACQUIRE));
+		addParallel(new RaiseAcquirerTo(Robot.Level.ACQUIRE));
 		addSequential(new ManualAcquire(false));
 		addSequential(new Interrupt(CommandBase.acquirerArm));
 	}

@@ -2,6 +2,8 @@ package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.subsystems.ShooterWheel;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class WaitForRPM extends CommandBase {
 
 	// targetRPM and tolerance values
@@ -29,6 +31,7 @@ public class WaitForRPM extends CommandBase {
 	protected boolean isFinished() {
 		double diffLeft = Math.abs(shooterWheel.getAverageLeftRPM(50) - targetRPM);
 		double diffRight = Math.abs(shooterWheel.getAverageRightRPM(50) - targetRPM);
+		SmartDashboard.putNumber("Difference to Target RPM",  Math.max(diffLeft, diffRight));
 		return Math.max(diffLeft, diffRight) <= tolerance;
 	}
 

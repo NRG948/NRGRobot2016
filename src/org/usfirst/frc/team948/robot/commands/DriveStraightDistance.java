@@ -57,8 +57,8 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 
 	@Override
 	protected void execute() {
-//		SmartDashboard.putNumber("Distance PID OUTPUT", distancePIDOutput);
-//		SmartDashboard.putNumber("Distance PID ERROR", distancePID.getError());
+		SmartDashboard.putNumber("Distance PID OUTPUT", distancePIDOutput);
+		SmartDashboard.putNumber("Distance PID ERROR", distancePID.getError());
 		double factor = MathHelper.clamp(distancePIDOutput, -1, 1);
 		SmartDashboard.putNumber("Drive Distance Error", distancePID.getError());
 		drive.driveOnHeading(-power*factor, heading);
@@ -67,14 +67,14 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 	
 	// Finishes the command if the target distance has been exceeded
 	protected boolean isFinished() {
-//		if (distancePID.getError() < tolerance) {
-//			cyclesOnTarget++;
-//		} else {
-//			cyclesOnTarget = 0;
-//		}
-//		SmartDashboard.putNumber("Cycles On Target", cyclesOnTarget);
-//		return(cyclesOnTarget >= 6);
-		return distancePID.getError() < tolerance;
+		if (distancePID.getError() < tolerance) {
+			cyclesOnTarget++;
+		} else {
+			cyclesOnTarget = 0;
+		}
+		SmartDashboard.putNumber("Cycles On Target", cyclesOnTarget);
+		return(cyclesOnTarget >= 6);
+//		return distancePID.getError() < tolerance;
 	}
 
 	protected void end() {

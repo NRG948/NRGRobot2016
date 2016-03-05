@@ -44,7 +44,11 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	}
 
 	public void rawRaiseShooter(double power) {
-		RobotMap.shooterLifterMotor.set(power);
+		if(degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) < -12 && power < 0){
+			RobotMap.shooterLifterMotor.set(0);
+		}else{
+			RobotMap.shooterLifterMotor.set(power);
+		}
 	}
 
 	public void moveArmInit() {
@@ -53,7 +57,7 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 				CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_D, 0.5), RobotMap.shooterLifterEncoder, this);
 		shooterElevatePID.reset();
 		shooterElevatePID.setAbsoluteTolerance(TOLERANCE);
-		shooterElevatePID.setOutputRange(-.6, 0.6);
+		shooterElevatePID.setOutputRange(-.1, 0.6);
 		pidOutput = 0;
 		shooterElevatePID.enable();
 	}
@@ -68,8 +72,8 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 		// degreesFromVolts(shooterElevatePID.getSetpoint()));
 		// SmartDashboard.putNumber("Shooter angle",
 		// degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
-		SmartDashboard.putNumber("Shooter error", shooterElevatePID.getError());
-		RobotMap.shooterLifterMotor.set(pidOutput);
+		SmartDashboard.putNumber("Shooter error degs", shooterElevatePID.getError()/SLOPE_VOLTS_FROM_DEGREES);
+		rawRaiseShooter(pidOutput);
 	}
 
 	public void moveArmToDesiredAngleVisionTracking() {
