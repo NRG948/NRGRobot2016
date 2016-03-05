@@ -5,7 +5,7 @@ import org.usfirst.frc.team948.robot.Robot.AutoPosition;
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
-import org.usfirst.frc.team948.robot.commands.TurnToTarget;
+import org.usfirst.frc.team948.robot.commands.TurnToVisionTargetContinuous;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

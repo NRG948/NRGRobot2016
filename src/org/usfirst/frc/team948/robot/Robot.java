@@ -8,7 +8,8 @@ import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
-import org.usfirst.frc.team948.robot.commands.TurnToTarget;
+import org.usfirst.frc.team948.robot.commands.TurnToVisionTarget;
+import org.usfirst.frc.team948.robot.commands.TurnToVisionTargetContinuous;
 import org.usfirst.frc.team948.robot.commands.WaitForRPM;
 import org.usfirst.frc.team948.robot.subsystems.AcquirerArm;
 import org.usfirst.frc.team948.robot.subsystems.AcquirerWheel;
@@ -177,12 +178,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Raise Acquirer to X degrees",
 				new RaiseAcquirerTo(CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_ANGLE, 90)));
 
-		SmartDashboard.putData("Turn Angle to Target", new TurnAngle(0.6));
+		SmartDashboard.putData("Turn Angle to Target", new TurnToVisionTarget(0.6));
 
 		
 		SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
 
-		SmartDashboard.putData("Turn to target", new TurnToTarget());
+		SmartDashboard.putData("Turn to target", new TurnToVisionTargetContinuous());
 
 		SmartDashboard.putData("Shoot sequence", new ShootSequence());
 

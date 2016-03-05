@@ -2,9 +2,10 @@ package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
-public class TurnToTarget extends CommandBase {
+public class TurnToVisionTargetContinuous extends CommandBase {
 
-	public TurnToTarget() {
+	public TurnToVisionTargetContinuous() {
+		requires(visionProcessing);
 		requires(drive);
 	}
 

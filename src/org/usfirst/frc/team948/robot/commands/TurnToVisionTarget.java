@@ -2,26 +2,21 @@ package org.usfirst.frc.team948.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class TurnAngle extends CommandBase {
-	private static final double DEFAULT_TOLERANCE = 2.0;
+public class TurnToVisionTarget extends CommandBase {
+	private static final double VISION_TOLERANCE = 1;
 	private double finalHeading;
 	private double angle;
 	private double power;
-	private double tolerance;
 
-	public TurnAngle(double angle, double power, double tolerance) {
+	public TurnToVisionTarget(double power) {
 		requires(drive);
-		this.angle = angle;
+		requires(visionProcessing);
 		this.power = power;
-		this.tolerance = tolerance;
-	}
-
-	public TurnAngle(double angle, double power) {
-		this(angle, power, DEFAULT_TOLERANCE);
 	}
 
 	protected void initialize() {
-		double initialHeading = drive.turnToHeadingInit(tolerance, power);
+		double initialHeading = drive.turnToHeadingInit(VISION_TOLERANCE, power);
+		angle = visionProcessing.getTurningAngleProportion();
 		finalHeading = initialHeading + angle;
 		SmartDashboard.putNumber("turn final heading", finalHeading);
 	}
@@ -31,7 +26,7 @@ public class TurnAngle extends CommandBase {
 	}
 
 	protected boolean isFinished() {
-		return angle == 0 || drive.turnToHeadingComplete(tolerance);
+		return angle == 0 || drive.turnToHeadingComplete(VISION_TOLERANCE);
 	}
 
 	protected void end() {

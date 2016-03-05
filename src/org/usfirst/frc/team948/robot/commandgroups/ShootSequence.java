@@ -1,16 +1,11 @@
 package org.usfirst.frc.team948.robot.commandgroups;
 
-import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.Delay;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
-import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
 import org.usfirst.frc.team948.robot.commands.Shoot;
-import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
-import org.usfirst.frc.team948.robot.commands.SwitchCamera;
-import org.usfirst.frc.team948.robot.commands.TurnAngle;
-import org.usfirst.frc.team948.robot.commands.TurnToTarget;
+import org.usfirst.frc.team948.robot.commands.TurnToVisionTarget;
 import org.usfirst.frc.team948.robot.commands.WaitForRPM;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -29,7 +24,7 @@ public class ShootSequence extends CommandGroup {
 	private class TurnAndRaise extends CommandGroup{
 		public TurnAndRaise(){
 		addSequential(new Delay(1));
-		addSequential(new TurnAngle(0.6));
+		addSequential(new TurnToVisionTarget(0.6));
 		addParallel(new RaiseShooterArmTo());
 		addSequential(new WaitForRPM(2000, 20));
 		addSequential(new Shoot(0));
