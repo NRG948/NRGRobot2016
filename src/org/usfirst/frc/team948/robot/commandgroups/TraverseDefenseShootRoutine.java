@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class TraverseDefenseShootRoutine extends CommandGroup {
 	// Positions 1-5(enum Robot.AutoPosition)
-	private static final double AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE = 12;
+	private static final double AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE = 11;
 	private static final double TURN_TO_TARGET_POWER = 0.7;
 
 	public TraverseDefenseShootRoutine(Robot.AutoPosition position, Robot.Defense defense) {

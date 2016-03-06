@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 		// Positions 1 and 2 go into the right goal
 		// Positions 3, 4, and 5 go into the middle goal
 
-		LOWBAR_ONE(-58.69), POSITION_TWO(-46.14), POSITION_THREE(-13.54), POSITION_FOUR(9.63), POSITION_FIVE(6);
+		LOWBAR_ONE(-58.69), POSITION_TWO(-46.14), POSITION_THREE(-13.54), POSITION_FOUR(9.63), POSITION_FIVE(10);
 
 		private double angle;
 		private AutoPosition(double angle) {
