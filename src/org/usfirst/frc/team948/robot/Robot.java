@@ -41,7 +41,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public enum Level {
-		DEFAULT(0), ACQUIRE(27), CHIVAL(63.75), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+		DEFAULT(0), ACQUIRE(32), CHIVAL(63.75), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
 																						// NEEDS
 																						// TO
 																						// BE
@@ -223,7 +223,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
 			SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
-			SmartDashboard.putNumber("Shooter Angle", ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
+			SmartDashboard.putNumber("Shooter Angle Value", ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
 			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
 			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
 

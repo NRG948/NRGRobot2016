@@ -6,13 +6,14 @@ import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.ManualAcquire;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
+import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AcquireMode extends CommandGroup {
 
 	public AcquireMode(){
-		addParallel(new RaiseShooterArmTo(-10));
+		addParallel(new RaiseShooterArmTo(-15, ShooterArm.TOLERANCE*2));
 		addParallel(new RaiseAcquirerTo(Robot.Level.ACQUIRE));
 		addSequential(new ManualAcquire(false));
 		addSequential(new Interrupt(CommandBase.acquirerArm));

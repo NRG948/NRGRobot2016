@@ -14,14 +14,14 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	private PIDController shooterElevatePID;
 	private double pidOutput;
 
-	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	private static final double VOLTS_0 = (Robot.competitionRobot) ? 1.070 : 0.945;
-	private static final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.676 : 1.460;
-	private static final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 45 : 37;
+	private static final double VOLTS_0 = (Robot.competitionRobot) ? 1.070 : 0.950;
+	private static final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.676 : 2.160;
+	private static final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 45 : 90;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0) / VARIABLE_ANGLE;
-
+	public final static double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
+	
 	public enum ShooterAngle {
-		GROUND(0), OUTERWORKS_CORNER(45), OUTERWORKS(50), LINE(55), TOWER(65);
+		GROUND(-15), OUTERWORKS_CORNER(45), OUTERWORKS(50), LINE(55), TOWER(65);
 		// Values need to be set
 		private double angleInDegrees;
 
@@ -62,6 +62,9 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 		shooterElevatePID.enable();
 	}
 
+	public void setTolerance(double tolerance){
+		shooterElevatePID.setAbsoluteTolerance(tolerance);
+	}
 	public void setDesiredArmAngle(double angle) {
 		shooterElevatePID.setSetpoint(voltsFromDegrees(angle));
 	}

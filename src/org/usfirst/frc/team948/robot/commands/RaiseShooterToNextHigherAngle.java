@@ -4,10 +4,12 @@ import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm.ShooterAngle;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class RaiseShooterToNextHigherAngle extends CommandBase{
 
 	private ShooterAngle desiredAngle;
-	
+	private static int a = 0;
 	public RaiseShooterToNextHigherAngle() {
 		requires(shooterArm);
 	}
@@ -16,8 +18,10 @@ public class RaiseShooterToNextHigherAngle extends CommandBase{
 	protected void initialize() {
 		double voltage = RobotMap.shooterLifterEncoder.getVoltage();
 		double angle = ShooterArm.degreesFromVolts(voltage);
-		ShooterAngle currentAngle = shooterArm.findNearestAngle(angle);	
+		ShooterAngle currentAngle = shooterArm.findNearestAngle(angle);
 		desiredAngle = shooterArm.nextHigherAngle(currentAngle);
+		a++;
+		SmartDashboard.putString("Next Higher Level Seek", a+""+desiredAngle.getAngleInDegrees());
 		shooterArm.moveArmInit();
 		shooterArm.setDesiredArmAngle(desiredAngle.getAngleInDegrees());
 	}
@@ -29,7 +33,7 @@ public class RaiseShooterToNextHigherAngle extends CommandBase{
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return shooterArm.isArmAtDesiredAngle();
 	}
 
 	@Override

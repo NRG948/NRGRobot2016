@@ -15,8 +15,8 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	private double pidOutput;
 	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 	 
-	private static final double VOLTS_0 = (Robot.competitionRobot)? 3.300 : 4.048;
-	private static final double VOLTS_90 = (Robot.competitionRobot)? 2.060 : 2.88;
+	private static final double VOLTS_0 = (Robot.competitionRobot)? 3.300 : 2.438;
+	private static final double VOLTS_90 = (Robot.competitionRobot)? 2.060 : 1.217;
 	    
 	
 	
@@ -92,7 +92,7 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	
 	public void stopArm() {
 		acquirerAnglePID.reset();
-		RobotMap.acquireArmVictor.disable();
+		RobotMap.acquireArmVictor.set(0);
 		pidOutput = 0;
 	}
 	public void stopAcquirerArm() {

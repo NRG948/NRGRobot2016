@@ -19,15 +19,15 @@ public class MoveandRamp extends CommandGroup{
 //		addParallel(new RaiseAcquirerTo(Robot.Level.DEFAULT));
 		if (up)
 		{
-//			addParallel(new RaiseShooterToNextHigherAngle());
-			addParallel(new RaiseShooterArmTo(45));
-			addSequential(new RampToRPM(RPM));
+			addParallel(new RaiseShooterToNextHigherAngle());
+//			addParallel(new RaiseShooterArmTo(45));
+		//	addSequential(new RampToRPM(RPM));
 		//	addSequential(new ShooterRampUp());
 		}
 		else
 		{
-//			addParallel(new RaiseShooterToNextLowerAngle());
-			addParallel(new RaiseShooterArmTo(0));
+			addParallel(new RaiseShooterToNextLowerAngle());
+			//addParallel(new RaiseShooterArmTo(0));
 		}
 //		addSequential(new RampToRPM(RPM));
 	}

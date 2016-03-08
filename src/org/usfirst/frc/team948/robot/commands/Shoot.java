@@ -10,8 +10,6 @@ public class Shoot extends CommandBase {
 	
 	public Timer timer1 = new Timer();
 	private double time;
-	private double timeWhenStart;
-	private boolean changedState = true;
 	
 	private static final double PUSH_POWER = 1.0;
 	
@@ -32,21 +30,12 @@ public class Shoot extends CommandBase {
 
  	@Override
 	protected void execute() {
-		if (shooterArm.isArmAtDesiredAngle()){
-			if(changedState){
-				timeWhenStart = timer1.get();
-				changedState = false;
-			}
-			shooterBar.rawBallPush(PUSH_POWER);
-		}
+		shooterBar.rawBallPush(PUSH_POWER);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		if(!shooterArm.isArmAtDesiredAngle()){
-			return false;
-		}
-		return (timer1.get() > BALL_PUSH_TIME + time+timeWhenStart);
+		return (timer1.get() > BALL_PUSH_TIME + time);
 //		Finishes command if the current time is greater than the Ball Push Time
 	}
 
