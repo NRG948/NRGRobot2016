@@ -24,7 +24,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private static final double TURN_TO_HEADING_D = 0.06825; //NEED TO CHECK/CHANGE LATER
 
 	private double PIDOutput;
-	private double PID_MIN_OUTPUT = 0;
+	private double PID_MIN_OUTPUT = 0.1;
 	private double PID_MAX_OUTPUT = 0.5;
 	private double desiredHeading;
 	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.025;
@@ -74,6 +74,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	public void setDesiredHeading(double angle) {
 		desiredHeading = RobotMap.driveGyro.getAngle();
 	}
+	
 	public double drivePIDInit(double p, double i, double d, double maxOutput) {
 		drivePID = new PIDController(0.01,
 				0.01 * 2 * 0.05, 0.005, (PIDSource)RobotMap.driveGyro, this);
