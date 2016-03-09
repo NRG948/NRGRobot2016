@@ -7,6 +7,20 @@ public class RaiseShooterArmTo extends CommandBase {
 	private double angle;
 	private boolean angleFromVisionProcessing;
 	private double tolerance = ShooterArm.TOLERANCE;
+	
+	public RaiseShooterArmTo(ShooterArm.ShooterAngle angle, double tolerance) {
+		requires(shooterArm);
+		this.angle = angle.getAngleInDegrees();
+		this.tolerance = tolerance;
+		angleFromVisionProcessing = false;
+	}
+	
+	public RaiseShooterArmTo(ShooterArm.ShooterAngle angle) {
+		requires(shooterArm);
+		this.angle = angle.getAngleInDegrees();
+		angleFromVisionProcessing = false;
+	}
+	
 	public RaiseShooterArmTo(double angle) {
 		requires(shooterArm);
 		this.angle = angle;
