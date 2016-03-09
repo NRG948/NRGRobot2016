@@ -6,7 +6,7 @@ import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherAngle;
-import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextLowerAngle;
+import org.usfirst.frc.team948.robot.commands.LowerShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
 
@@ -26,7 +26,7 @@ public class MoveandRamp extends CommandGroup{
 		}
 		else
 		{
-			addParallel(new RaiseShooterToNextLowerAngle());
+			addParallel(new LowerShooterToNextLowerAngle());
 			//addParallel(new RaiseShooterArmTo(0));
 		}
 //		addSequential(new RampToRPM(RPM));

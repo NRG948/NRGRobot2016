@@ -6,11 +6,11 @@ import org.usfirst.frc.team948.robot.subsystems.ShooterArm.ShooterAngle;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class RaiseShooterToNextLowerAngle extends CommandBase{
+public class LowerShooterToNextLowerAngle extends CommandBase{
 
 	private ShooterAngle desiredAngle;
 	private static int a = 0;
-	public RaiseShooterToNextLowerAngle() {
+	public LowerShooterToNextLowerAngle() {
 		requires(shooterArm);
 	}
 	
