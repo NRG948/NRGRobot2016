@@ -240,7 +240,11 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Robot X", RobotMap.positionTracker.getX());
 			SmartDashboard.putNumber("Robot Y", RobotMap.positionTracker.getY());
 
-			SmartDashboard.putData("PDP", pdp);
+			try {
+				SmartDashboard.putData("PDP", pdp);
+			} catch (Exception e) {
+				//Silently ignore the exception
+			}
 			// for (int i = 0; i <= 15; i++) {
 			// 	   SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
 			// }
