@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 		// Positions 1 and 2 go into the right goal
 		// Positions 3, 4, and 5 go into the middle goal
 
-		LOWBAR_ONE(-58.69), POSITION_TWO(-46.14), POSITION_THREE(-13.54), POSITION_FOUR(9.63), POSITION_FIVE(10);
+		LOWBAR_ONE(+58.69), POSITION_TWO(-46.14), POSITION_THREE(-13.54), POSITION_FOUR(9.63), POSITION_FIVE(10);
 
 		private double angle;
 		private AutoPosition(double angle) {
@@ -78,7 +78,8 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public enum Defense{
-		RAMPARTS(90);
+		RAMPARTS(90),
+		LOW_BAR(10);
 		private double acquirerAngle;
 		private Defense(double acquirerAngle){
 			this.acquirerAngle = acquirerAngle;
@@ -147,7 +148,7 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new RawTankDrive(); break; }
 		 */
-		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.RAMPARTS);
+		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE, Defense.LOW_BAR);
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -185,7 +186,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Turn to target", new TurnToVisionTargetContinuous());
 
-		SmartDashboard.putData("Shoot sequence", new ShootSequence());
+		SmartDashboard.putData("Shoot sequence", new ShootSequence(true));
 
 		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 20));
 		// SmartDashboard.putData("Turn set angle to target", new
@@ -222,7 +223,7 @@ public class Robot extends IterativeRobot {
 		if (true) {
 			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
-			SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
+			SmartDashboard.putNumber("Arm Angle", (RobotMap.armAngleEncoder.getVoltage()-CommandBase.acquirerArm.VOLTS_0)/CommandBase.acquirerArm.SLOPE_VOLTS_FROM_DEGREES);
 			SmartDashboard.putNumber("Shooter Angle Value", ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
 			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
 			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot.commandgroups;
 
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
+import org.usfirst.frc.team948.robot.commands.RampToRPM;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -14,8 +15,14 @@ public class LowbarAutonomousRoutine extends CommandGroup {
 	
 	public LowbarAutonomousRoutine()
 	{
-		addSequential(new DriveStraightDistance(AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_POWER, AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE));
-		addSequential(new TurnAngle(TURN_TO_TARGET_ANGLE, TURN_TO_TARGET_POWER));
-		addSequential(new ShootSequence());
+		addParallel(new RampToRPM(2000));
+		addSequential(new DriveTurnAndShoot());
+	}
+	private class DriveTurnAndShoot extends CommandGroup{
+		public DriveTurnAndShoot(){
+			addSequential(new DriveStraightDistance(AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_POWER, AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE));
+			addSequential(new TurnAngle(TURN_TO_TARGET_ANGLE, TURN_TO_TARGET_POWER));
+			addSequential(new ShootSequence(false));
+		}
 	}
 }

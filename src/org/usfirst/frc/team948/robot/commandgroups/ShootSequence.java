@@ -11,13 +11,17 @@ import org.usfirst.frc.team948.robot.commands.WaitForRPM;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ShootSequence extends CommandGroup {
-	public ShootSequence()
+	public ShootSequence(boolean ramp)
 	{
 //		addSequential(new SwitchCamera());
 //		addSequential(new Delay(1));
-		addParallel(new RampToRPM(2000));
+		if(ramp){
+			addParallel(new RampToRPM(2000));
+		}
 		addSequential(new TurnAndRaise());
-		addSequential(new Interrupt());
+		if(ramp){
+			addSequential(new Interrupt());
+		}
 //		addSequential(new SwitchCamera());
 	}
 	

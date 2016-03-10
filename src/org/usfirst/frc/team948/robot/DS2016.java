@@ -98,7 +98,7 @@ public class DS2016 {
 // 		shootButton.whenReleased(new ShooterRampUp());
  		//xboxAButton.whileHeld(new ManualAcquire(false));
 // 		extendDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(true));
- 		extendDrawbridgeButton.whenPressed(new ShootSequence());
+ 		extendDrawbridgeButton.whenPressed(new ShootSequence(true));
  		retractDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(false));
  		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
  		climbUpButton.whileHeld(new ManualClimb(false));

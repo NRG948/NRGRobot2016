@@ -127,7 +127,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 						NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
 				convexHullPerimeter = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CONVEX_HULL_PERIMETER);
 			}
-			SmartDashboard.putNumber("Time To Do Vision", System.currentTimeMillis() - prevMillis);
+		//	SmartDashboard.putNumber("Time To Do Vision", System.currentTimeMillis() - prevMillis);
 		}
 		else {
 			ballCam.getImage(frame);
@@ -209,8 +209,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		//SmartDashboard.putNumber("Length of Object", getWidth());
 		//double realHeight = ((4*convexHullPerimeter - 2*getHeight()) - Math.sqrt(Math.pow(4*convexHullPerimeter - 2*getHeight(),2) - 12*(Math.pow(convexHullPerimeter, 2)- 2*Math.pow(getWidth(), 2) - Math.pow(getHeight(), 2))))/6.0;
 		//SmartDashboard.putNumber("Real Height", realHeight);
-		SmartDashboard.putNumber("Perimeter", convexHullPerimeter);
-		SmartDashboard.putNumber("Obs Length", getWidth());
+		//SmartDashboard.putNumber("Perimeter", convexHullPerimeter);
+		//SmartDashboard.putNumber("Obs Length", getWidth());
 		targetPixel = (getHeight() / Math.cos(CAMERA_ANGLE * Math.PI / 180)) * TARGET_WIDTH_FEET / TARGET_HEIGHT_FEET; //use ratio of vert to hor to calculate
 //		targetPixel = getWidth();
 		double distance = TARGET_WIDTH_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE_HORIZONTAL / 2.0) * Math.PI / 180));
@@ -282,9 +282,9 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	public void turnToTarget() {
 		double power = pidOutput;
-		SmartDashboard.putNumber("TurnToTarget error", targetPID.getError());
-		SmartDashboard.putNumber("TurnToTarget pidOutput", pidOutput);
-		SmartDashboard.putNumber("Center X", Robot.visionProcessing.centerX);
+//		SmartDashboard.putNumber("TurnToTarget error", targetPID.getError());
+//		SmartDashboard.putNumber("TurnToTarget pidOutput", pidOutput);
+//		SmartDashboard.putNumber("Center X", Robot.visionProcessing.centerX);
 //		if (power > 0) {
 //			Robot.drive.rawTankDrive(power, -power / 2);
 //		}

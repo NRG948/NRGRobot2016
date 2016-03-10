@@ -3,7 +3,9 @@ package org.usfirst.frc.team948.robot.subsystems;
 import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.Robot.Level;
+import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
+import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -13,18 +15,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AcquirerArm extends Subsystem implements PIDOutput{
 	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
-	private final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 	 
-	private static final double VOLTS_0 = (Robot.competitionRobot)? 3.300 : 2.438;
-	private static final double VOLTS_90 = (Robot.competitionRobot)? 2.060 : 1.217;
+	public static final double VOLTS_0 = (Robot.competitionRobot)? 3.300 : 2.089;
+	private static final double VOLTS_90 = (Robot.competitionRobot)? 2.060 : 0.909;
 	    
 	
 	
-	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
-
-	private static final double ACQUIRER_P = 0.5;
-	private static final double ACQUIRER_I = 0.003;
-	private static final double ACQUIRER_D = 0.02;
+	public static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
+	private final double TOLERANCE = Math.abs(2.0 * SLOPE_VOLTS_FROM_DEGREES);
+	private static double ACQUIRER_P = 1.2;
+	private static double ACQUIRER_I = 0.05;
+	private static double ACQUIRER_D = 0.02;
 
 	
 	public AcquirerArm(){
@@ -66,9 +67,14 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 	
 	public void raiseArmToAngleInit() {
+		ACQUIRER_P = CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_P, 1.2);
+		ACQUIRER_I = CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_I, 0.02);
+		ACQUIRER_D = CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_D, 0.02);
+		acquirerAnglePID.setPID(ACQUIRER_P, 0, ACQUIRER_D);
 		acquirerAnglePID.reset();
 		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
-		acquirerAnglePID.setOutputRange(-.2, .6);
+		//NOTE, When pidOUTPUT is negative, the acquirer goes up
+		acquirerAnglePID.setOutputRange(-.6, .3);
 		pidOutput = 0;
 		acquirerAnglePID.enable();
 	}
@@ -79,6 +85,13 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 	
 	public void raiseArmToAngle() {
+		SmartDashboard.putNumber("Acquirer Error", acquirerAnglePID.getError());
+		SmartDashboard.putNumber("Acquirer Output", pidOutput);
+		if(Math.abs(acquirerAnglePID.getError()) < Math.abs(5*SLOPE_VOLTS_FROM_DEGREES)){
+			acquirerAnglePID.setPID(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D);
+		}else{
+			acquirerAnglePID.setPID(ACQUIRER_P, 0, ACQUIRER_D);
+		}
 		rawRaiseArm(-pidOutput);
 	}
 
@@ -87,7 +100,7 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 	
 	public boolean isArmAtDesiredAngle() {
-		return acquirerAnglePID.onTarget();
+		return Math.abs(acquirerAnglePID.getError()) < TOLERANCE;
 	}
 	
 	public void stopArm() {

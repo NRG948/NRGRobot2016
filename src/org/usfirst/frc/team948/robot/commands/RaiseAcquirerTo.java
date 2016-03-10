@@ -5,7 +5,7 @@ import org.usfirst.frc.team948.robot.Robot;
 public class RaiseAcquirerTo extends CommandBase{
 
 	public double angle;
-	
+	private int counter = 0;
 	public RaiseAcquirerTo(double angle){
 		requires(acquirerArm);
 		this.angle = angle;
@@ -17,6 +17,7 @@ public class RaiseAcquirerTo extends CommandBase{
 	}
 	
 	protected void initialize (){
+		counter = 0;
 		acquirerArm.raiseArmToAngleInit();
 		acquirerArm.setDesiredArmAngle(angle);
 	}
@@ -26,7 +27,14 @@ public class RaiseAcquirerTo extends CommandBase{
 	}
 	
 	protected boolean isFinished(){
-//		return acquirerArm.isArmAtDesiredAngle();
+		if(acquirerArm.isArmAtDesiredAngle()){
+			counter++;
+		}else{
+			counter = 0;
+		}
+		if(counter > 1){
+			return true;
+		}
 		return false;
 	}
 	

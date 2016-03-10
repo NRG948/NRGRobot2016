@@ -24,7 +24,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private static final double TURN_TO_HEADING_D = 0.06825; //NEED TO CHECK/CHANGE LATER
 
 	private double PIDOutput;
-	private double PID_MIN_OUTPUT = 0;
+	private double PID_MIN_OUTPUT = 0.05;
 	private double PID_MAX_OUTPUT = 0.5;
 	private double desiredHeading;
 	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.025;
@@ -75,10 +75,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		desiredHeading = RobotMap.driveGyro.getAngle();
 	}
 	public double drivePIDInit(double p, double i, double d, double maxOutput) {
-		drivePID = new PIDController(0.01,
-				0.01 * 2 * 0.05, 0.005, (PIDSource)RobotMap.driveGyro, this);
+		drivePID = new PIDController(p, i, d, (PIDSource)RobotMap.driveGyro, this);
 		drivePID.reset();
-		drivePID.setPID(p,i,d);
 		drivePID.setOutputRange(-Math.abs(maxOutput), Math.abs(maxOutput));
 		drivePID.enable();
 		System.out.println("Drive P:" + p + " I:" + i + " D:" + d);
@@ -107,10 +105,10 @@ public class Drive extends Subsystem implements PIDOutput {
 				0, PID_MAX_OUTPUT);
 		drivePID.setOutputRange(-outputRange, outputRange);
 
-		double currentPIDOutput = MathHelper.clamp(PIDOutput, -outputRange,
-				outputRange);
+		double currentPIDOutput = MathHelper.clamp(PIDOutput, -PID_MAX_OUTPUT,
+				PID_MAX_OUTPUT);
 		SmartDashboard.putNumber("Current PID OUTPUT", currentPIDOutput);
-		SmartDashboard.putNumber("Angle", RobotMap.driveGyro.getAngle());
+		//SmartDashboard.putNumber("Angle", RobotMap.driveGyro.getAngle());
 		SmartDashboard.putNumber("Error", error);
 		double leftPower = power;
 		double rightPower = power;
@@ -120,7 +118,8 @@ public class Drive extends Subsystem implements PIDOutput {
 		} else {
 			rightPower += currentPIDOutput;
 		}
-
+		SmartDashboard.putNumber("Left Drive Straight output", leftPower);
+		SmartDashboard.putNumber("Right Drive Straight output", rightPower);
 		rawTankDrive(leftPower, rightPower);
 	}
 	public void driveOnHeadingEnd(){ 
