@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class PositionTrackerWithEncoder {
-	private final Gyro gyro = RobotMap.driveGyro;
 	private final Encoder leftQuad = RobotMap.rightMotorEncoder;
 	private final Encoder rightQuad = RobotMap.leftMotorEncoder;
 	
@@ -28,7 +27,7 @@ public class PositionTrackerWithEncoder {
 		double leftChange = leftQuad.getDistance() - lastLeftQuadDistance;
 		double rightChange = rightQuad.getDistance() - lastRightQuadDistance;
 		double averageChange = (leftChange + rightChange) / 2.0;
-		double angle = Math.toRadians(MathHelper.headingToDegrees(gyro.getAngle()));
+		double angle = Math.toRadians(MathHelper.headingToDegrees(RobotMap.driveGyro.getAngle()));
 		long time = System.nanoTime();
 		x += averageChange * Math.cos(angle);
 		y += averageChange * Math.sin(angle);
@@ -46,16 +45,16 @@ public class PositionTrackerWithEncoder {
 		isInitialized = true;
 	}
 
+	public double getVelocity() {
+		return velocity;
+	}
+	
 	public double getX() {
 		return x;
 	}
 
 	public double getY() {
 		return y;
-	}
-
-	public double getVelocity() {
-		return velocity;
 	}
 
 	public void setPosition(double x, double y) {
