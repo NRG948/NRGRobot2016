@@ -76,7 +76,7 @@ public class RobotMap {
 	public static DigitalInput ballButton = new DigitalInput(10);
 
 	public static AHRS ahrs = new AHRS(SPI.Port.kMXP);
-	public static Gyro driveGyro = new AHRSGyro();
+	public static AHRSGyro driveGyro = new AHRSGyro();
 	public static Accelerometer accelerometer = new AHRSAccelerometer();
 	public static PositionTrackerWithEncoder positionTracker = new PositionTrackerWithEncoder();
 	

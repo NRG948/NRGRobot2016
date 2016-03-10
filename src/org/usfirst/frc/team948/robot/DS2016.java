@@ -1,23 +1,17 @@
 package org.usfirst.frc.team948.robot;
 
 import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
-import org.usfirst.frc.team948.robot.commandgroups.InterruptThenLower;
-import org.usfirst.frc.team948.robot.commandgroups.InterruptThenRaise;
-import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
 import org.usfirst.frc.team948.robot.commandgroups.SpitOutSequence;
-import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
-import org.usfirst.frc.team948.robot.commands.ManualAcquire;
+import org.usfirst.frc.team948.robot.commands.LowerShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.ManualClimb;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
-import org.usfirst.frc.team948.robot.commands.MoveDrawbridgeToEnd;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherAngle;
-import org.usfirst.frc.team948.robot.commands.LowerShooterToNextLowerAngle;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
 import org.usfirst.frc.team948.robot.commands.RawRaiseDrawbridge;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
@@ -107,8 +101,10 @@ public class DS2016 {
 // 		xboxLBumper.whenPressed(new MoveDrawbridgeToEnd());
  		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.25));
  		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.35));
- 		xboxRBumper.whenPressed(new InterruptThenRaise());
- 		xboxLBumper.whenPressed(new InterruptThenLower());
+ 		xboxRBumper.whenPressed(new RaiseShooterToNextHigherAngle());
+ 		xboxLBumper.whenPressed(new LowerShooterToNextLowerAngle());
+ 		xboxRBumper.whenReleased(new Interrupt(Robot.shooterArm));
+ 		xboxLBumper.whenReleased(new Interrupt(Robot.shooterArm));
  		shooterRampUp.whileHeld(new ShooterRampUp(1));
 // 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
 // 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));

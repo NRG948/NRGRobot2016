@@ -47,7 +47,7 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	}
 
 	public void rawRaiseShooter(double power) {
-		if(degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) < -12 && power < 0){
+		if(degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) < 16 || power < 0){
 			RobotMap.shooterLifterMotor.set(0);
 		}else{
 			RobotMap.shooterLifterMotor.set(power);

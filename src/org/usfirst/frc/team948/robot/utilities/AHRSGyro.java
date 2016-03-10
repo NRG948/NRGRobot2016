@@ -16,6 +16,7 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 	private double cycleCount;
 	private double previousAngle;
     private double currentAngle;
+    private double angleOffset = 0;
     
 	public AHRSGyro() {
 		
@@ -26,6 +27,10 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 		
 	}
 
+	public void setAngleOffset(double angleOffset){
+		this.angleOffset = angleOffset;
+	}
+	
 	@Override
 	public void free() {
 		ahrs.free();
@@ -46,7 +51,7 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 		
 		previousAngle = ahrs.getYaw();
 		//Add 360 times number of cycles to make continuous
-		return currentAngle + cycleCount * 360;
+		return currentAngle + cycleCount * 360 + angleOffset;
 	}
 
 	@Override
