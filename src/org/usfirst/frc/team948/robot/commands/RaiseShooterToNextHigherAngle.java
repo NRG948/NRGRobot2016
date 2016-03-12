@@ -23,17 +23,25 @@ public class RaiseShooterToNextHigherAngle extends CommandBase{
 		a++;
 		SmartDashboard.putString("Next Higher Level Seek", a+""+desiredAngle.getAngleInDegrees());
 		shooterArm.moveArmInit();
-		shooterArm.setDesiredArmAngle(desiredAngle.getAngleInDegrees());
+		/*if ((desiredAngle.getAngleInDegrees() - ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) > 30)) {
+			shooterArm.setDesiredArmAngle(desiredAngle.getAngleInDegrees() + ShooterArm.OFFSET_SLOP_DEGREES);
+		}
+		else {*/
+			shooterArm.setDesiredArmAngle(desiredAngle.getAngleInDegrees());
+		//}
+
 	}
 	
 	@Override
 	protected void execute() {
+
 		shooterArm.moveArmToDesiredAngle();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return shooterArm.isArmAtDesiredAngle();
+		return false;
+//		return shooterArm.isArmAtDesiredAngle();
 	}
 
 	@Override

@@ -17,16 +17,17 @@ public class TurnToHeading extends CommandBase{
 	}
 	
 	public TurnToHeading(double heading, double power){
-		this(heading,power,DEFAULT_TOLERANCE);
+		this(heading, power, DEFAULT_TOLERANCE);
 	}
 
-	public TurnToHeading(double power){
-		this(power, 0.5, DEFAULT_TOLERANCE);
+	public TurnToHeading(double heading){
+		this(heading, 0.5, DEFAULT_TOLERANCE);
 		}
 	
 	
 	protected void initialize (){
 		SmartDashboard.putNumber("turn final heading", finalHeading);
+		drive.turnToHeadingInit(tolerance, power);
 	}
 	
 	protected void execute(){

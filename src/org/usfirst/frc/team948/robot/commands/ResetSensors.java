@@ -20,8 +20,8 @@ public class ResetSensors extends CommandBase {
 	    
 	}
 	protected boolean isFinished(){
-		return Math.abs(RobotMap.driveGyro.getAngle()) < 0.5;
-		
+//		return Math.abs(RobotMap.driveGyro.getAngle()) < 0.5;
+		return true;
 	}
 	protected void end(){
 		

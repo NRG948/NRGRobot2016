@@ -8,6 +8,7 @@ import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
+import org.usfirst.frc.team948.robot.commands.TurnToHeading;
 import org.usfirst.frc.team948.robot.commands.TurnToVisionTarget;
 import org.usfirst.frc.team948.robot.commands.TurnToVisionTargetContinuous;
 import org.usfirst.frc.team948.robot.commands.WaitForRPM;
@@ -41,7 +42,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public enum Level {
-		DEFAULT(0), ACQUIRE(32), CHIVAL(63.75), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+		DEFAULT(5), ACQUIRE(26), CHIVAL(65), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
 																						// NEEDS
 																						// TO
 																						// BE
@@ -64,26 +65,50 @@ public class Robot extends IterativeRobot {
 		// Angles at which to turn when performing autonomous routine
 		// Positions 1 and 2 go into the right goal
 		// Positions 3, 4, and 5 go into the middle goal
+		//TWO: -46.14
+		LOWBAR_ONE(17.2, +58.69, 0), POSITION_TWO(19.33, 50, 3), POSITION_THREE(11, 15, 0), POSITION_FOUR(12, 0, 0), POSITION_FIVE(11, 10, 0);
 
-		LOWBAR_ONE(+58.69), POSITION_TWO(-46.14), POSITION_THREE(-13.54), POSITION_FOUR(9.63), POSITION_FIVE(10);
-
+		private double distance;
 		private double angle;
-		private AutoPosition(double angle) {
+		private double backDistance;
+		
+		private AutoPosition(double distance, double angle, double backDistance) {
+			this.distance = distance;
 			this.angle = angle;
+			this.backDistance = backDistance;
 		}
 
+		public double getDistance() {
+			return distance;
+		}
+		
 		public double getAngle() {
 			return angle;
+		}
+		
+		public double getBackDistance() {
+			return backDistance;
 		}
 	}
 	
 	public enum Defense{
-		RAMPARTS(90),
-		LOW_BAR(10);
+		RAMPARTS(0.64, 90),
+		ROUGH_TERRAIN(0.85, 90),
+		ROCK_WALL(0.6, 90),
+		LOW_BAR(0.64, 10);
+		
+		private double power;
 		private double acquirerAngle;
-		private Defense(double acquirerAngle){
+		
+		private Defense(double power, double acquirerAngle){
+			this.power = power;
 			this.acquirerAngle = acquirerAngle;
 		}
+		
+		public double getPower() {
+			return power;
+		}
+		
 		public double getAcquirerAngle(){
 			return acquirerAngle;
 		}
@@ -148,7 +173,7 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new RawTankDrive(); break; }
 		 */
-		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE, Defense.LOW_BAR);
+		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FOUR, Defense.ROCK_WALL);
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -172,7 +197,7 @@ public class Robot extends IterativeRobot {
 		// CommandBase.drive.initDefaultCommand();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
+		
 		SmartDashboard.putData("Raise Shooter Arm to X degrees",
 				new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE, 45)));
 
@@ -189,9 +214,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Shoot sequence", new ShootSequence(true));
 
 		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 20));
+		
+		SmartDashboard.putData("Turn to Heading 90 degs", new TurnToHeading(90));
 		// SmartDashboard.putData("Turn set angle to target", new
 		// TurnAngle(visionProcessing.getTurningAngle(), 0.7));
-
+		
 	}
 
 	/**
@@ -223,21 +250,21 @@ public class Robot extends IterativeRobot {
 		if (true) {
 			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
-			SmartDashboard.putNumber("Arm Angle", (RobotMap.armAngleEncoder.getVoltage()-CommandBase.acquirerArm.VOLTS_0)/CommandBase.acquirerArm.SLOPE_VOLTS_FROM_DEGREES);
+			SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
 			SmartDashboard.putNumber("Shooter Angle Value", ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
+			SmartDashboard.putNumber("Shooter Encoder Value", RobotMap.shooterLifterEncoder.getVoltage());
 			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
 			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
 
 			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
 
-			SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
-
+//			SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
 
 			SmartDashboard.putNumber("Turning Angle Arcsin", visionProcessing.getTurningAngle());
 			SmartDashboard.putNumber("Turning Angle Proportion", visionProcessing.getTurningAngleProportion());
 			
-			SmartDashboard.putNumber("Calculated Angle", RobotMap.ahrs.getYaw());
+			SmartDashboard.putNumber("Gyro", RobotMap.driveGyro.getAngle());
 			SmartDashboard.putNumber("Robot X", RobotMap.positionTracker.getX());
 			SmartDashboard.putNumber("Robot Y", RobotMap.positionTracker.getY());
 

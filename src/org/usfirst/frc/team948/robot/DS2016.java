@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot;
 
 import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
+import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
 import org.usfirst.frc.team948.robot.commandgroups.SpitOutSequence;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
@@ -101,7 +102,7 @@ public class DS2016 {
 // 		xboxLBumper.whenPressed(new MoveDrawbridgeToEnd());
  		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.25));
  		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.35));
- 		xboxRBumper.whenPressed(new RaiseShooterToNextHigherAngle());
+ 		xboxRBumper.whenPressed(new MoveandRamp(true, 2000));
  		xboxLBumper.whenPressed(new LowerShooterToNextLowerAngle());
  		xboxRBumper.whenReleased(new Interrupt(Robot.shooterArm));
  		xboxLBumper.whenReleased(new Interrupt(Robot.shooterArm));
@@ -109,7 +110,7 @@ public class DS2016 {
 // 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
 // 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
  		acquireTrackButton.whenPressed(new ManualTrackAcquirer());
- 		RPMButton.whileHeld(new RampToRPM(2000));
+ 		RPMButton.whileHeld(new RampToRPM(1400));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
  		XboxRTrigger.whenPressed(new SpitOutSequence());

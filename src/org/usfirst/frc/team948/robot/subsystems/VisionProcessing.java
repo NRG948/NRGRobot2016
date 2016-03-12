@@ -79,6 +79,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	public void cameraInit() {
 		visionTracking = true;
+//		visionTracking = false;
 		targetCam = new USBCamera("cam1"); //create camera object
 		ballCam = new USBCamera("cam0");
 		//setting Cam settings
@@ -87,12 +88,14 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		targetCam.setSize(320, 240);
 		targetCam.updateSettings();
 		ballCam.setExposureAuto();
-		ballCam.setWhiteBalanceAuto();		
+		ballCam.setWhiteBalanceAuto();
+		ballCam.updateSettings();
 		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 		binaryFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, 0.1, 100.0,
 				0, 0);//filter out particles less than 0.1% of area.
 		targetCam.startCapture();
+//		ballCam.startCapture();
 		timer.schedule(new TimerTask(){
 
 			@Override
@@ -159,6 +162,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 //		targetCam.setExposureAuto();
 //		targetCam.setWhiteBalanceAuto();
 		
+		ballCam.setExposureAuto();
+		ballCam.setWhiteBalanceAuto();
 		ballCam.updateSettings();
 		ballCam.startCapture();
 		targetCam.updateSettings();

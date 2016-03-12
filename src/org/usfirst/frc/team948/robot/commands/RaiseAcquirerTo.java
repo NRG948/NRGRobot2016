@@ -6,6 +6,7 @@ public class RaiseAcquirerTo extends CommandBase{
 
 	public double angle;
 	private int counter = 0;
+
 	public RaiseAcquirerTo(double angle){
 		requires(acquirerArm);
 		this.angle = angle;

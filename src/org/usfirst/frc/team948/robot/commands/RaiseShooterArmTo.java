@@ -1,6 +1,7 @@
 package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.Robot;
+import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 
 public class RaiseShooterArmTo extends CommandBase {
@@ -42,6 +43,9 @@ public class RaiseShooterArmTo extends CommandBase {
 		if (angleFromVisionProcessing) angle = Robot.visionProcessing.getShootingAngle();
 		shooterArm.moveArmInit();
 		shooterArm.setDesiredArmAngle(angle);
+		/*if (angle - ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) > 30) {
+			angle += ShooterArm.OFFSET_SLOP_DEGREES;
+		}*/
 		shooterArm.setTolerance(tolerance);
 	}
 
@@ -56,14 +60,14 @@ public class RaiseShooterArmTo extends CommandBase {
 	int counter = 0;
 	@Override
 	protected boolean isFinished() {
-		return shooterArm.isArmAtDesiredAngle();
+//		return shooterArm.isArmAtDesiredAngle();
 		/*if(shooterArm.isArmAtDesiredAngle()){
 			counter ++;
 		}else{
 			counter = 0;
 		}
 		return counter > 4;*/
-		//return false;
+		return false;
 	}
 
 	@Override

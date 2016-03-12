@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class SpitOut extends CommandBase {
 	Timer timer = new Timer();
-	private final double TIME = 1.0;
+	private final double TIME = 0.6;
 	private final double POWER= -0.6;
 	private double startTime;
 

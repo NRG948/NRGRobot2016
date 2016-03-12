@@ -16,8 +16,8 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
 	 
-	public static final double VOLTS_0 = (Robot.competitionRobot)? 3.300 : 2.089;
-	private static final double VOLTS_90 = (Robot.competitionRobot)? 2.060 : 0.909;
+	public static final double VOLTS_0 = (Robot.competitionRobot)? 3.300 : 4.685;
+	private static final double VOLTS_90 = (Robot.competitionRobot)? 2.060 : 3.445;
 	    
 	
 	
@@ -53,13 +53,11 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 
 	public void rawRaiseArm(double power) {
-		if ((power > 0 && hasReachedUpperLimit()) || (power < 0 && hasReachedLowerLimit()))
+		if ((hasReachedUpperLimit() && power > 0) || (hasReachedLowerLimit() && power < 0))
 		{
 			RobotMap.acquireArmVictor.set(0);
-		}
-		else {
+		} else {
 			RobotMap.acquireArmVictor.set(power);
-	
 		}
 	}
 	public void setDesiredArmAngle(double angleDegrees) {
@@ -75,6 +73,7 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 		acquirerAnglePID.setAbsoluteTolerance(TOLERANCE);
 		//NOTE, When pidOUTPUT is negative, the acquirer goes up
 		acquirerAnglePID.setOutputRange(-.6, .3);
+		acquirerAnglePID.setToleranceBuffer(3);
 		pidOutput = 0;
 		acquirerAnglePID.enable();
 	}
