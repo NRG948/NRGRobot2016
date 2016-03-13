@@ -26,14 +26,14 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	private PIDController shooterElevatePID = new PIDController(p,i,d, RobotMap.shooterLifterEncoder, this);
 	
 	public enum ShooterAngle {
-		GROUND(-10), LINE(45), BATTER(68); //, LINE(55), TOWER(65);
+		GROUND(-10), LINE(51), BATTER(69); //, LINE(55), TOWER(65);
 		// Values need to be set
 		private double angleInDegrees;
 
 		private ShooterAngle(double angleInDegrees) {
 			this.angleInDegrees = angleInDegrees;
 		}
-
+		
 		public double getAngleInDegrees() {
 			return angleInDegrees;
 		}
@@ -96,7 +96,7 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 
 	public void moveArmToDesiredAngleVisionTracking() {
 		moveArmToDesiredAngle();
-		shooterElevatePID.setSetpoint(voltsFromDegrees(Robot.visionProcessing.getShootingAngle()));
+		shooterElevatePID.setSetpoint(voltsFromDegrees(Robot.visionProcessing.getShootingAngle() + 1));
 	}
 
 	public boolean isArmAtDesiredAngle() {

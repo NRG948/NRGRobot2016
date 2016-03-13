@@ -27,6 +27,8 @@ public class Drive extends Subsystem implements PIDOutput {
 	private double PID_MIN_OUTPUT = 0.05;
 	private double PID_MAX_OUTPUT = 0.5;
 	private double desiredHeading;
+	private double prevError;
+	private double counter;
 	private final double DRIVE_STRAIGHT_ON_HEADING_P = 0.025;
 	private final double DRIVE_STRAIGHT_ON_HEADING_I = 0.01;
 	private final double DRIVE_STRAIGHT_ON_HEADING_D = 0.02;
@@ -72,7 +74,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	}
 	
 	public void setDesiredHeading(double angle) {
-		desiredHeading = RobotMap.driveGyro.getAngle();
+		desiredHeading = angle;
 	}
 	
 	public double drivePIDInit(double p, double i, double d, double maxOutput) {
@@ -138,13 +140,26 @@ public class Drive extends Subsystem implements PIDOutput {
 				maxOutput);
 		drivePID.setAbsoluteTolerance(tolerance);
 		SmartDashboard.putNumber("Desired Heading", desiredHeading);
+		prevError = 0;
+		counter = 0;
 		return desiredHeading;     
 	}
 	public void turnToHeading(double finalHeading, double power){
 		drivePID.setSetpoint(finalHeading);
+		double currentError = drivePID.getError();
 		SmartDashboard.putNumber("Turn PIDOutput", PIDOutput);
-		double currentPower = MathHelper.clamp(PIDOutput, -power, power);
-		rawTankDrive(-currentPower, currentPower);
+		double revisedPower = MathHelper.clamp(PIDOutput, -power, power);
+//		if (Math.abs(revisedPower) < 0.22) {
+//			revisedPower = 0.22 * Math.signum(currentError);
+//		}
+		if(prevError * currentError < 0) { //if cross over setpoint, apply brakes
+			revisedPower = 0.5 * Math.signum(prevError);
+			SmartDashboard.putNumber("Brake Power", revisedPower);
+			counter++;
+		}
+		prevError = currentError;
+		SmartDashboard.putNumber("Turn Heading Cross Setpoint", counter);
+		rawTankDrive(-revisedPower, revisedPower);
 	}
 	
 	public void turnToHeadingEnd(double newHeading){

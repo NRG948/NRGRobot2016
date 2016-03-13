@@ -61,7 +61,9 @@ public class AHRSGyro extends GyroBase implements Gyro, PIDSource, LiveWindowSen
 
 	@Override
 	public void reset() {
-		ahrs.reset();
+		ahrs.zeroYaw();
+//		ahrs.reset();
+		angleOffset = 0;
 		cycleCount = 0;
 		previousAngle = currentAngle;
 	}

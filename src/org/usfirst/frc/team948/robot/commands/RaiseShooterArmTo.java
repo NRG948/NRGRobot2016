@@ -51,11 +51,11 @@ public class RaiseShooterArmTo extends CommandBase {
 
 	@Override
 	protected void execute() {
-		//if(angleFromVisionProcessing){
-		//	shooterArm.moveArmToDesiredAngleVisionTracking();
-		//}else{
+		if(angleFromVisionProcessing){
+			shooterArm.moveArmToDesiredAngleVisionTracking();
+		}else{
 			shooterArm.moveArmToDesiredAngle();
-		//}
+		}
 	}
 	int counter = 0;
 	@Override

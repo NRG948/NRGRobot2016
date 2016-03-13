@@ -32,7 +32,8 @@ public class WaitForRPM extends CommandBase {
 		double diffLeft = Math.abs(shooterWheel.getAverageLeftRPM(50) - targetRPM);
 		double diffRight = Math.abs(shooterWheel.getAverageRightRPM(50) - targetRPM);
 		SmartDashboard.putNumber("Difference to Target RPM",  Math.max(diffLeft, diffRight));
-		return Math.max(diffLeft, diffRight) <= tolerance;
+		return Math.max(diffLeft, diffRight) <= tolerance && Math.max(Math.abs(shooterWheel.currentLeftRPM- targetRPM),
+																	Math.abs(shooterWheel.currentRightRPM-targetRPM)) <= 2*tolerance;
 	}
 
 	@Override

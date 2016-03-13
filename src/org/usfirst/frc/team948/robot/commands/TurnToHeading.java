@@ -21,7 +21,7 @@ public class TurnToHeading extends CommandBase{
 	}
 
 	public TurnToHeading(double heading){
-		this(heading, 0.5, DEFAULT_TOLERANCE);
+		this(heading, 0.64, DEFAULT_TOLERANCE);
 		}
 	
 	

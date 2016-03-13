@@ -42,7 +42,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public enum Level {
-		DEFAULT(5), ACQUIRE(26), CHIVAL(65), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+		DEFAULT(5), ACQUIRE(30), CHIVAL(65), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
 																						// NEEDS
 																						// TO
 																						// BE
@@ -66,16 +66,18 @@ public class Robot extends IterativeRobot {
 		// Positions 1 and 2 go into the right goal
 		// Positions 3, 4, and 5 go into the middle goal
 		//TWO: -46.14
-		LOWBAR_ONE(17.2, +58.69, 0), POSITION_TWO(19.33, 50, 3), POSITION_THREE(11, 15, 0), POSITION_FOUR(12, 0, 0), POSITION_FIVE(11, 10, 0);
+		LOWBAR_ONE(17.2, +58.69, 0, 0), POSITION_TWO(19.33, 50, -3, 0), POSITION_THREE(11, 15, 0, 0), POSITION_FOUR(12, 0, 0, 0), POSITION_FIVE(11, -55, 3.5, 0);
 
 		private double distance;
 		private double angle;
-		private double backDistance;
+		private double secondDistance;
+		private double secondAngle;
 		
-		private AutoPosition(double distance, double angle, double backDistance) {
+		private AutoPosition(double distance, double angle, double secondDistance, double secondAngle) {
 			this.distance = distance;
 			this.angle = angle;
-			this.backDistance = backDistance;
+			this.secondDistance = secondDistance;
+			this.secondAngle = secondAngle;
 		}
 
 		public double getDistance() {
@@ -86,14 +88,18 @@ public class Robot extends IterativeRobot {
 			return angle;
 		}
 		
-		public double getBackDistance() {
-			return backDistance;
+		public double getSecondDistance() {
+			return secondDistance;
+		}
+		
+		public double getSecondAngle() {
+			return secondAngle;
 		}
 	}
 	
 	public enum Defense{
-		RAMPARTS(0.64, 90),
-		ROUGH_TERRAIN(0.85, 90),
+		RAMPARTS(0.75, 90),
+		ROUGH_TERRAIN(0.75, 90),
 		ROCK_WALL(0.6, 90),
 		LOW_BAR(0.64, 10);
 		
@@ -173,7 +179,8 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new RawTankDrive(); break; }
 		 */
-		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FOUR, Defense.ROCK_WALL);
+		RobotMap.driveGyro.reset();
+		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.ROUGH_TERRAIN);
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -207,7 +214,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Turn Angle to Target", new TurnToVisionTarget(0.6));
 
 		
-		SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(1, 3));
+		SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(0.6, 3));
 
 		SmartDashboard.putData("Turn to target", new TurnToVisionTargetContinuous());
 

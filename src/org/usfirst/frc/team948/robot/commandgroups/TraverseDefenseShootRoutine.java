@@ -21,6 +21,7 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 
 	public TraverseDefenseShootRoutine(Robot.AutoPosition position, Robot.Defense defense) {
 //		addSequential(new ResetSensors());
+		addParallel(new RampToRPM(2000));
 		addSequential(new RaiseAcquirerDriveAndShoot(position, defense));
 		addSequential(new Interrupt());
 	}
@@ -29,11 +30,20 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 			addParallel(new RaiseAcquirerTo(defense.getAcquirerAngle()));
 			addSequential(new DriveStraightDistance(defense.getPower(),
 					position.getDistance(), 0.6));
+//			addParallel(new RaiseAcquirerTo(0));
+//			addSequential(new TurnToHeading(position.getAngle(), TURN_TO_TARGET_POWER));
+			addSequential(new LowerAcquirerAndTurn(position));
+			addSequential(new DriveStraightDistance(Math.signum(position.getSecondDistance()) * defense.getPower(),
+					Math.abs(position.getSecondDistance()), 0.6));
+			addSequential(new TurnToHeading(position.getSecondAngle(), TURN_TO_TARGET_POWER, 5));
+			addSequential(new ShootSequence(false));
+		}
+	}
+	
+	private class LowerAcquirerAndTurn extends CommandGroup {
+		public LowerAcquirerAndTurn(Robot.AutoPosition position) {
 			addParallel(new RaiseAcquirerTo(0));
-			addSequential(new TurnToHeading(position.getAngle(), TURN_TO_TARGET_POWER));
-			addSequential(new DriveStraightDistance(-defense.getPower(),
-					position.getBackDistance(), 0.6));
-			addSequential(new ShootSequence(true));
+			addSequential(new TurnToHeading(position.getAngle(), TURN_TO_TARGET_POWER, 5));
 		}
 	}
 }

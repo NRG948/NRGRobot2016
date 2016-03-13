@@ -29,9 +29,7 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 	
 	public DriveStraightDistance(double power, double distance)
 	{	
-		requires(drive);
-		this.power = power;
-		this.distance = distance;
+		this(power, distance, 2.0/12);
 	}
 
 	
@@ -41,9 +39,8 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 		heading = drive.getDesiredHeading();
 		
 		p = preferences.getDouble(PreferenceKeys.DRIVE_STRAIGHT_DISTANCE_P, 0.5);
-		i = preferences.getDouble(PreferenceKeys.DRIVE_STRAIGHT_DISTANCE_I, 0.001);
+		i = preferences.getDouble(PreferenceKeys.DRIVE_STRAIGHT_DISTANCE_I, 0.01);
 		d = preferences.getDouble(PreferenceKeys.DRIVE_STRAIGHT_DISTANCE_D, 1.5);
-		tolerance = 1/12;
 		encoderPIDSource.reset();
 		distancePIDOutput = 0.0;
 		distancePID.reset();
@@ -60,14 +57,17 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 		SmartDashboard.putNumber("Distance PID OUTPUT", distancePIDOutput);
 		SmartDashboard.putNumber("Distance PID ERROR", distancePID.getError());
 		double factor = MathHelper.clamp(distancePIDOutput, -1, 1);
-		SmartDashboard.putNumber("Drive Distance Error", distancePID.getError());
-		drive.driveOnHeading(-power*factor, heading);
+		double revisedPower = power * -factor;
+		if (Math.abs(revisedPower) < 0.3) {
+			revisedPower = 0.3 * Math.signum(-distancePID.getError());
+		}
+		drive.driveOnHeading(revisedPower, heading);
 	}
 
 	
 	// Finishes the command if the target distance has been exceeded
 	protected boolean isFinished() {
-		if (distancePID.getError() < tolerance) {
+		if (Math.abs(distancePID.getError()) < tolerance) {
 			cyclesOnTarget++;
 		} else {
 			cyclesOnTarget = 0;
