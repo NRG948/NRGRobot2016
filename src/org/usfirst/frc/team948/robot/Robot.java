@@ -101,7 +101,8 @@ public class Robot extends IterativeRobot {
 		RAMPARTS(0.75, 90),
 		ROUGH_TERRAIN(0.75, 90),
 		ROCK_WALL(0.6, 90),
-		LOW_BAR(0.64, 10);
+		LOW_BAR(0.64, 10),
+		MOAT(0.7, 90);
 		
 		private double power;
 		private double acquirerAngle;
@@ -222,7 +223,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 20));
 		
-		SmartDashboard.putData("Turn to Heading 90 degs", new TurnToHeading(90));
+		SmartDashboard.putData("Turn to heading 90 dumb", new TurnToTargetDumb(90, 0.6));
 		// SmartDashboard.putData("Turn set angle to target", new
 		// TurnAngle(visionProcessing.getTurningAngle(), 0.7));
 		
