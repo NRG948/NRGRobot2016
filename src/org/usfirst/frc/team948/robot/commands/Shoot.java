@@ -50,7 +50,7 @@ public class Shoot extends CommandBase {
 	protected void end() {
 		timer1.stop();
 		shooterWheel.rawShoot(0);
-	//	shooterBar.rawBallPush(0);
+		shooterBar.rawBallPush(0);
 	}
 
 	@Override

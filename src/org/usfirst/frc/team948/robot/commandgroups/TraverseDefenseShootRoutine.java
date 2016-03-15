@@ -9,6 +9,7 @@ import org.usfirst.frc.team948.robot.commands.RampToRPM;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
 import org.usfirst.frc.team948.robot.commands.TurnToHeading;
+import org.usfirst.frc.team948.robot.commands.TurnToTargetDumb;
 import org.usfirst.frc.team948.robot.commands.TurnToVisionTargetContinuous;
 import org.usfirst.frc.team948.robot.utilities.PositionTracker;
 
@@ -35,7 +36,7 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 			addSequential(new LowerAcquirerAndTurn(position));
 			addSequential(new DriveStraightDistance(Math.signum(position.getSecondDistance()) * defense.getPower(),
 					Math.abs(position.getSecondDistance()), 0.6));
-			addSequential(new TurnToHeading(position.getSecondAngle(), TURN_TO_TARGET_POWER, 5));
+			addSequential(new TurnToTargetDumb(position.getSecondAngle(), TURN_TO_TARGET_POWER));
 			addSequential(new ShootSequence(false));
 		}
 	}
@@ -43,7 +44,7 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 	private class LowerAcquirerAndTurn extends CommandGroup {
 		public LowerAcquirerAndTurn(Robot.AutoPosition position) {
 			addParallel(new RaiseAcquirerTo(0));
-			addSequential(new TurnToHeading(position.getAngle(), TURN_TO_TARGET_POWER, 5));
+			addSequential(new TurnToTargetDumb(position.getAngle(), TURN_TO_TARGET_POWER));
 		}
 	}
 }

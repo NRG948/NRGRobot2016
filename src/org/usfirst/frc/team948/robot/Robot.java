@@ -9,6 +9,7 @@ import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
 import org.usfirst.frc.team948.robot.commands.TurnToHeading;
+import org.usfirst.frc.team948.robot.commands.TurnToTargetDumb;
 import org.usfirst.frc.team948.robot.commands.TurnToVisionTarget;
 import org.usfirst.frc.team948.robot.commands.TurnToVisionTargetContinuous;
 import org.usfirst.frc.team948.robot.commands.WaitForRPM;
@@ -180,8 +181,8 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new RawTankDrive(); break; }
 		 */
-		RobotMap.driveGyro.reset();
-		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.ROUGH_TERRAIN);
+		resetSensors();
+		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.MOAT);
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -288,5 +289,14 @@ public class Robot extends IterativeRobot {
 			// SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
 		}
 		screenUpdateCounter++;
+	}
+	
+	public void resetSensors() {
+		RobotMap.ahrs.resetDisplacement();
+		RobotMap.driveGyro.reset();
+		RobotMap.leftMotorEncoder.reset();
+		RobotMap.leftShooterWheelEncoder.reset();
+		RobotMap.rightMotorEncoder.reset();
+		RobotMap.rightShooterWheelEncoder.reset();
 	}
 }

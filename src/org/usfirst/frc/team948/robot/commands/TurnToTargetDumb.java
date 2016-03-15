@@ -13,6 +13,7 @@ public class TurnToTargetDumb extends CommandBase{
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
+		drive.drivePIDInit(0, 0, 0, 1);
 		drive.drivePID.setSetpoint(heading);
 		previousError = drive.drivePID.getError();
 	}
@@ -40,14 +41,11 @@ public class TurnToTargetDumb extends CommandBase{
 	@Override
 	protected void end() {
 		drive.rawStop();
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
+		end();
 	}
 
 }
