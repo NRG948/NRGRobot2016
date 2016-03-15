@@ -30,10 +30,11 @@ public class TurnToTargetDumb extends CommandBase{
 
 	@Override
 	protected boolean isFinished() {
-		if(previousError * drive.drivePID.getError() < 0){
+		double error = drive.drivePID.getError();
+		if(previousError * error < 0){
 			return true;
 		}else{
-			previousError = drive.drivePID.getError();
+			previousError = error;
 			return false;
 		}
 	}

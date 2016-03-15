@@ -222,9 +222,43 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Shoot sequence", new ShootSequence(true));
 
+		SmartDashboard.putData("Turn to heading 90 dumb", new TurnToTargetDumb(90, 0.6));
+		
 		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 20));
 		
-		SmartDashboard.putData("Turn to heading 90 dumb", new TurnToTargetDumb(90, 0.6));
+		SmartDashboard.putData("Switch To Area Calculation", new Command(){
+			@Override
+			protected void initialize() {}
+			@Override
+			protected void execute() {
+				CommandBase.visionProcessing.switchToCalcDistanceFromArea();
+			}
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+			@Override
+			protected void end() {}
+			@Override
+			protected void interrupted() {}
+		
+		});
+		SmartDashboard.putData("Switch to Height Calculation", new Command(){
+			@Override
+			protected void initialize() {}
+			@Override
+			protected void execute() {
+				CommandBase.visionProcessing.switchToCalcDistanceFromHeight();
+			}
+			@Override
+			protected boolean isFinished() {
+				return true;
+			}
+			@Override
+			protected void end() {}
+			@Override
+			protected void interrupted() {}
+		});
 		// SmartDashboard.putData("Turn set angle to target", new
 		// TurnAngle(visionProcessing.getTurningAngle(), 0.7));
 		

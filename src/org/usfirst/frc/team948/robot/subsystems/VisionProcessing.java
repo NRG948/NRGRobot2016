@@ -27,7 +27,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public double area;
 	public double height;
 	public double width;
-	public double convexHullPerimeter;
+	public double convexHullArea;
 	public volatile double centerX;
 	
 	private double targetPixel;
@@ -51,12 +51,14 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double TURN_TARGET_D = 0.0123;
 	private final double PIXEL_TOLERANCE = 4;
 	
+	private double setArea = 1;
+	private double setDistance = 1;
 	private static final double TOTAL_HEIGHT = 240.0;
 	private static final double TOTAL_WIDTH = 320.0;
 
 //	private boolean isUpdating;
 	private boolean visionTracking;
-	
+	private boolean distanceByArea = false;
 	private PIDController targetPID = new PIDController(TURN_TARGET_P, TURN_TARGET_I, TURN_TARGET_D, this, this);
 	private Timer timer = new Timer();
 	private final long VISION_PROCESSING_PERIOD = 100;
@@ -120,15 +122,26 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 			CameraServer.getInstance().setImage(binaryFrame); //dump image to SmartDashboard
 			NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null); //Filter small particles
 			int numberOfParticles = NIVision.imaqCountParticles(binaryFrame, 1); //Get number of particles
+			//finding the particle closest to center
+			int centerParticleIndex = 0;
+			double centerParticleDistanceToCenter = Integer.MAX_VALUE;
+			for(int i = 0; i < numberOfParticles; i++){
+				centerX = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_X);
+				double temp = Math.abs(centerX - 160);
+				if(temp < centerParticleDistanceToCenter){
+					centerParticleDistanceToCenter = temp;
+					centerParticleIndex = i;
+				}
+			}
 			if (numberOfParticles > 0) {
-				centerX = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_X);
-				centerY = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_Y);
-				area = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_AREA);
-				height = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM) -
-						 NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
-				width = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT) - 
-						NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
-				convexHullPerimeter = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CONVEX_HULL_PERIMETER);
+				centerX = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_X);
+				centerY = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_Y);
+				area = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_AREA);
+				height = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM) -
+						 NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
+				width = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT) - 
+						NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
+				convexHullArea = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_CONVEX_HULL_AREA);
 			}
 		//	SmartDashboard.putNumber("Time To Do Vision", System.currentTimeMillis() - prevMillis);
 		}
@@ -136,22 +149,6 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 			ballCam.getImage(frame);
 			CameraServer.getInstance().setImage(frame);
 		}
-//		cam.getImage(frame);
-////		NIVision.imaqSetImageSize(frame, 320, 240); //shrink frame to 320px by 240px
-//		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE,
-//				TARGET_VAL_RANGE); //filter particles by HSV
-//		CameraServer.getInstance().setImage(binaryFrame); //dump image to SmartDashboard
-//		NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null); //Filter small particles
-//		int numberOfParticles = NIVision.imaqCountParticles(binaryFrame, 1); //Get number of particles
-//		if (numberOfParticles > 0) {
-//			centerX = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_X);
-//			centerY = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_CENTER_OF_MASS_Y);
-//			area = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_AREA);
-//			height = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM) -
-//					 NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
-//			width = NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT) - 
-//					NIVision.imaqMeasureParticle(binaryFrame, 0, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
-//		}
 //		isUpdating = false;
 	}
 
@@ -209,17 +206,32 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	}
 	
 	public double calcDistance() {
-		fovPixel = getTotalWidth();
+		double distance = 0;
+		SmartDashboard.putNumber("Area", convexHullArea);
 		SmartDashboard.putNumber("Height of Object", getHeight());
-		//SmartDashboard.putNumber("Length of Object", getWidth());
-		//double realHeight = ((4*convexHullPerimeter - 2*getHeight()) - Math.sqrt(Math.pow(4*convexHullPerimeter - 2*getHeight(),2) - 12*(Math.pow(convexHullPerimeter, 2)- 2*Math.pow(getWidth(), 2) - Math.pow(getHeight(), 2))))/6.0;
-		//SmartDashboard.putNumber("Real Height", realHeight);
-		//SmartDashboard.putNumber("Perimeter", convexHullPerimeter);
-		//SmartDashboard.putNumber("Obs Length", getWidth());
-		targetPixel = (getHeight() / Math.cos(CAMERA_ANGLE * Math.PI / 180)) * TARGET_WIDTH_FEET / TARGET_HEIGHT_FEET; //use ratio of vert to hor to calculate
-//		targetPixel = getWidth();
-		double distance = TARGET_WIDTH_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE_HORIZONTAL / 2.0) * Math.PI / 180));
+		if(!distanceByArea){
+			fovPixel = getTotalWidth();
+			//SmartDashboard.putNumber("Length of Object", getWidth());
+			//double realHeight = ((4*convexHullPerimeter - 2*getHeight()) - Math.sqrt(Math.pow(4*convexHullPerimeter - 2*getHeight(),2) - 12*(Math.pow(convexHullPerimeter, 2)- 2*Math.pow(getWidth(), 2) - Math.pow(getHeight(), 2))))/6.0;
+			//SmartDashboard.putNumber("Real Height", realHeight);
+			//SmartDashboard.putNumber("Obs Length", getWidth());
+			targetPixel = (getHeight() / Math.cos(CAMERA_ANGLE * Math.PI / 180)) * TARGET_WIDTH_FEET / TARGET_HEIGHT_FEET; //use ratio of vert to hor to calculate
+	//		targetPixel = getWidth();
+			distance = TARGET_WIDTH_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE_HORIZONTAL / 2.0) * Math.PI / 180));
+		}else{
+			distance = Math.sqrt(setArea/convexHullArea)*setDistance;
+		}
 		return distance;
+	}
+	
+	public void switchToCalcDistanceFromArea(){
+		setArea = convexHullArea;
+		setDistance = calcDistance();
+		distanceByArea = true;
+	}
+	
+	public void switchToCalcDistanceFromHeight(){
+		distanceByArea = false;
 	}
 	
 	public double getShootingAngle(){
@@ -248,10 +260,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		double angle = (diff / TOTAL_WIDTH) * FOV_ANGLE_HORIZONTAL;
 		return angle;
 	}
-	public double getShooterPower() {
-		return 1; // Temporary
-	}
-
+	
 	@Override
 	public PIDSourceType getPIDSourceType() {
 		return PIDSourceType.kDisplacement;
