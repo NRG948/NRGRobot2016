@@ -110,7 +110,7 @@ public class DS2016 {
 // 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
 // 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
  		acquireTrackButton.whenPressed(new ManualTrackAcquirer());
- 		RPMButton.whileHeld(new RampToRPM(1400));
+ 		RPMButton.whileHeld(new RampToRPM(2000));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
  		XboxRTrigger.whenPressed(new SpitOutSequence());

@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot {
 		// Positions 1 and 2 go into the right goal
 		// Positions 3, 4, and 5 go into the middle goal
 		//TWO: -46.14
-		LOWBAR_ONE(17.2, +58.69, 0, 0), POSITION_TWO(19.33, 50, -3, 0), POSITION_THREE(11, 15, 0, 0), POSITION_FOUR(12, 0, 0, 0), POSITION_FIVE(11, -55, 3.5, 0);
+		LOWBAR_ONE(17.2, +58.69, 0, 0), POSITION_TWO(19.33, 50, -3, 0), POSITION_THREE(11, 15, 0, 0), POSITION_FOUR(12, 0, 0, 0), POSITION_FIVE(11, -55, 5, -5);
 
 		private double distance;
 		private double angle;
@@ -301,6 +301,7 @@ public class Robot extends IterativeRobot {
 
 			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
+			SmartDashboard.putString("Shooting Angle String", Double.toString(visionProcessing.getShootingAngle()));
 
 //			SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
 

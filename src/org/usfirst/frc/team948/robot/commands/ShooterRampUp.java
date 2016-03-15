@@ -35,7 +35,7 @@ public class ShooterRampUp extends CommandBase {
 
 	protected void execute() {
 		if (autoPower) {
-			power = Robot.visionProcessing.getShooterPower();
+			power = 1;
 		}
 //		if (shooterWheel.isBallLoaded()) {
 			power = (1 - DS2016.rightJoystick.getZ()) / 2.0;

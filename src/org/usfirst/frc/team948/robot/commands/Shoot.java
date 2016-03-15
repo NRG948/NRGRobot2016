@@ -2,6 +2,7 @@ package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.RobotMap;
 import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
+import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +36,7 @@ public class Shoot extends CommandBase {
  		if(!triggered && shooterArm.isArmAtDesiredAngle()){
  			triggered = true;
  			beginTime = timer1.get();
- 			SmartDashboard.putString("Shooting Dat", "Left RPM: " + shooterWheel.currentLeftRPM + " Right RPM: " + shooterWheel.currentRightRPM + " Shooting Angle " + ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
+ 			SmartDashboard.putString("Shooting Dat", "Left RPM: " + shooterWheel.currentLeftRPM + " Right RPM: " + shooterWheel.currentRightRPM + " Shooting Angle " + ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) + " Difference to Center: " + (visionProcessing.centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0)));
  			shooterBar.rawBallPush(PUSH_POWER);
  		}
 	}

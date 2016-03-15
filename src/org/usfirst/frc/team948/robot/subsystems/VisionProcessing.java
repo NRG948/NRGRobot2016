@@ -40,7 +40,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double CAMERA_OFF_GROUND = 1;
 	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND + TARGET_HEIGHT_FEET ; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
-	private final double SPEED_OF_BALL = 32.8227; //Three trials of shooting straight up, total time was 7.1 seconds
+	private final double SPEED_OF_BALL = Math.sqrt(26.5*GRAVITY);
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
 	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 34 : 34;
@@ -51,14 +51,14 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double TURN_TARGET_D = 0.0123;
 	private final double PIXEL_TOLERANCE = 4;
 	
-	private double setArea = 1;
-	private double setDistance = 1;
+	private final double SET_AREA = 1750;
+	private final double SET_DISTANCE = 113.0 / 12;
 	private static final double TOTAL_HEIGHT = 240.0;
 	private static final double TOTAL_WIDTH = 320.0;
 
 //	private boolean isUpdating;
 	private boolean visionTracking;
-	private boolean distanceByArea = false;
+	private boolean distanceByArea = true;
 	private PIDController targetPID = new PIDController(TURN_TARGET_P, TURN_TARGET_I, TURN_TARGET_D, this, this);
 	private Timer timer = new Timer();
 	private final long VISION_PROCESSING_PERIOD = 100;
@@ -219,14 +219,12 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	//		targetPixel = getWidth();
 			distance = TARGET_WIDTH_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE_HORIZONTAL / 2.0) * Math.PI / 180));
 		}else{
-			distance = Math.sqrt(setArea/convexHullArea)*setDistance;
+			distance = Math.sqrt(SET_AREA/convexHullArea)*SET_DISTANCE;
 		}
 		return distance;
 	}
 	
 	public void switchToCalcDistanceFromArea(){
-		setArea = convexHullArea;
-		setDistance = calcDistance();
 		distanceByArea = true;
 	}
 	

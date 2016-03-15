@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class SpitOut extends CommandBase {
 	Timer timer = new Timer();
-	private final double TIME = 0.6;
+	private final double TIME = 1.5;
 	private final double POWER= -0.6;
 	private double startTime;
 
@@ -48,7 +48,8 @@ public class SpitOut extends CommandBase {
 
 	@Override
 	protected boolean isFinished() {
-		return (startTime != 0 && timer.get() > startTime + 0.5);
+//		return (startTime != 0 && timer.get() > startTime + 0.5);
+		return timer.get() > TIME + 0.5;
 	}
 
 	@Override

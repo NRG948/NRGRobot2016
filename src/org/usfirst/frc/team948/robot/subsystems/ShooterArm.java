@@ -96,7 +96,9 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 
 	public void moveArmToDesiredAngleVisionTracking() {
 		moveArmToDesiredAngle();
-		shooterElevatePID.setSetpoint(voltsFromDegrees(Robot.visionProcessing.getShootingAngle() + 1));
+		if(Robot.visionProcessing.getShootingAngle() < 65){
+			shooterElevatePID.setSetpoint(voltsFromDegrees(Robot.visionProcessing.getShootingAngle()));
+		}
 	}
 
 	public boolean isArmAtDesiredAngle() {
