@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterArm extends Subsystem implements PIDOutput {
 	private double pidOutput;
 
-	private static final double VOLTS_0 = (Robot.competitionRobot) ? 1.070 : 0.730;
-	private static final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.676 : 1.625;
-	private static final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 45 : 67.5;
+	private static final double VOLTS_0 = (Robot.competitionRobot) ? 0.723 : 0.730;
+	private static final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.573 : 1.625;
+	private static final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 58 : 67.5;
 	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0) / VARIABLE_ANGLE;
 	public final static double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	public final static double OFFSET_SLOP_DEGREES = 5;
+	public final static double OFFSET_SLOP_DEGREES = 0;
 	private static double p = 0;
 	private static double i = 0;
 	private static double d = 0;

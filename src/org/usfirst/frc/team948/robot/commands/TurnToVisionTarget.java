@@ -15,9 +15,9 @@ public class TurnToVisionTarget extends CommandBase {
 	}
 
 	protected void initialize() {
-		double initialHeading = drive.turnToHeadingInit(VISION_TOLERANCE, power);
+		finalHeading = drive.getDesiredHeading() + angle;
+		drive.turnToHeadingInit(finalHeading, VISION_TOLERANCE, power);
 		angle = visionProcessing.getTurningAngleProportion();
-		finalHeading = initialHeading + angle;
 		SmartDashboard.putNumber("turn final heading", finalHeading);
 	}
 

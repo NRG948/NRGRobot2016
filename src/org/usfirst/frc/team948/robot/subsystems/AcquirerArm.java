@@ -16,8 +16,8 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
 	 
-	public static final double VOLTS_0 = (Robot.competitionRobot)? 3.300 : 4.685;
-	private static final double VOLTS_90 = (Robot.competitionRobot)? 2.060 : 3.445;
+	public static final double VOLTS_0 = (Robot.competitionRobot)? 4.560 : 4.685;
+	private static final double VOLTS_90 = (Robot.competitionRobot)? 3.433 : 3.445;
 	    
 	
 	

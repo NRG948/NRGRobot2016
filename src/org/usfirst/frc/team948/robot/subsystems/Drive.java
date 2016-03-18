@@ -23,7 +23,7 @@ public class Drive extends Subsystem implements PIDOutput {
 	private static final double TURN_TO_HEADING_I = 0.0056; //NEED TO CHECK/CHANGE LATER
 	private static final double TURN_TO_HEADING_D = 0.06825; //NEED TO CHECK/CHANGE LATER
 
-	private double PIDOutput;
+	private volatile double PIDOutput;
 	private double PID_MIN_OUTPUT = 0.05;
 	private double PID_MAX_OUTPUT = 0.5;
 	private double desiredHeading;
@@ -81,6 +81,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		drivePID = new PIDController(p, i, d, (PIDSource)RobotMap.driveGyro, this);
 		drivePID.reset();
 		drivePID.setOutputRange(-Math.abs(maxOutput), Math.abs(maxOutput));
+		PIDOutput = 0;
 		drivePID.enable();
 		System.out.println("Drive P:" + p + " I:" + i + " D:" + d);
 		return RobotMap.driveGyro.getAngle();
@@ -131,8 +132,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		PIDOutput = 0;
 	}
 	
-	public double turnToHeadingInit(double tolerance, double maxOutput) {
+	public void turnToHeadingInit(double finalHeading, double tolerance, double maxOutput) {
 		cyclesOnTarget = getRequiredCyclesOnTarget();
+		drivePID.setSetpoint(finalHeading);
 		drivePIDInit(
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_P, TURN_TO_HEADING_P),
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_I, TURN_TO_HEADING_I), 
@@ -142,10 +144,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		SmartDashboard.putNumber("Desired Heading", desiredHeading);
 		prevError = 0;
 		counter = 0;
-		return desiredHeading;     
 	}
 	public void turnToHeading(double finalHeading, double power){
-		drivePID.setSetpoint(finalHeading);
+//		drivePID.setSetpoint(finalHeading);
 		double currentError = drivePID.getError();
 		SmartDashboard.putNumber("Turn PIDOutput", PIDOutput);
 		double revisedPower = MathHelper.clamp(PIDOutput, -power, power);

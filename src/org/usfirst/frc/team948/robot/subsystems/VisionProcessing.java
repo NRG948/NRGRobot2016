@@ -40,7 +40,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double CAMERA_OFF_GROUND = 1;
 	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND + TARGET_HEIGHT_FEET ; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
-	private final double SPEED_OF_BALL = Math.sqrt(26.5*GRAVITY);
+	private final double SPEED_OF_BALL = Math.sqrt(36.25*GRAVITY);
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
 	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 34 : 34;
@@ -82,8 +82,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public void cameraInit() {
 		visionTracking = true;
 //		visionTracking = false;
-		targetCam = new USBCamera("cam1"); //create camera object
-		ballCam = new USBCamera("cam0");
+		targetCam = new USBCamera("cam0"); //create camera object
+		ballCam = new USBCamera("cam1");
 		//setting Cam settings
 		targetCam.setExposureManual(-11);
 		targetCam.setWhiteBalanceHoldCurrent();
@@ -156,25 +156,13 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		visionTracking = false;
 		
 		targetCam.stopCapture();
-//		targetCam.setExposureAuto();
-//		targetCam.setWhiteBalanceAuto();
-		
-		ballCam.setExposureAuto();
-		ballCam.setWhiteBalanceAuto();
-		ballCam.updateSettings();
 		ballCam.startCapture();
-		targetCam.updateSettings();
 	}
 	
 	public void setToVisionCamera() {
 		visionTracking = true;
 		
 		ballCam.stopCapture();
-		targetCam.setExposureManual(-11);
-		targetCam.setWhiteBalanceHoldCurrent();
-		
-		ballCam.updateSettings();
-		targetCam.updateSettings();
 		targetCam.startCapture();
 	}
 	

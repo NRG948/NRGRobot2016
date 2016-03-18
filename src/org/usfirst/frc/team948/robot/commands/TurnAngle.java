@@ -21,8 +21,11 @@ public class TurnAngle extends CommandBase {
 	}
 
 	protected void initialize() {
-		double initialHeading = drive.turnToHeadingInit(tolerance, power);
-		finalHeading = initialHeading + angle;
+		finalHeading = drive.getDesiredHeading() + angle;
+		drive.turnToHeadingInit(finalHeading, tolerance, power);
+//		finalHeading = initialHeading + angle;
+//		drive.drivePID.setSetpoint(finalHeading);
+//		drive.drivePID.enable();
 		SmartDashboard.putNumber("turn final heading", finalHeading);
 	}
 

@@ -134,7 +134,7 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	private int screenUpdateCounter;
-	public static boolean competitionRobot = false;
+	public static boolean competitionRobot = true;
 
 	Command autonomousCommand;
 
@@ -226,6 +226,10 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 20));
 		
+		SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 0.6));
+		
+		SmartDashboard.putData("Turn 15 degrees", new TurnAngle(15, 0.6));
+		
 		SmartDashboard.putData("Switch To Area Calculation", new Command(){
 			@Override
 			protected void initialize() {}
@@ -311,6 +315,9 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Gyro", RobotMap.driveGyro.getAngle());
 			SmartDashboard.putNumber("Robot X", RobotMap.positionTracker.getX());
 			SmartDashboard.putNumber("Robot Y", RobotMap.positionTracker.getY());
+			
+			SmartDashboard.putBoolean("Upper Limit", RobotMap.acquireUpperLimit.get());
+			SmartDashboard.putBoolean("Lower Limit", RobotMap.acquireLowerLimit.get());
 
 			try {
 				SmartDashboard.putData("PDP", pdp);
