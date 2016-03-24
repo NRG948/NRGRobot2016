@@ -36,7 +36,9 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 			addSequential(new LowerAcquirerAndTurn(position));
 			addSequential(new DriveStraightDistance(Math.signum(position.getSecondDistance()) * defense.getPower(),
 					Math.abs(position.getSecondDistance()), 0.6));
-			addSequential(new TurnToTargetDumb(position.getSecondAngle(), TURN_TO_TARGET_POWER));
+			if (position.getSecondAngle() != Robot.NO_TURN) {
+				addSequential(new TurnToTargetDumb(position.getSecondAngle(), TURN_TO_TARGET_POWER));
+			}
 			addSequential(new ShootSequence(false));
 		}
 	}

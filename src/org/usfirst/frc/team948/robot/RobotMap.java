@@ -140,7 +140,7 @@ public class RobotMap {
 		RobotMap.leftMotorEncoder.setDistancePerPulse(5.682/2494.67);
 		RobotMap.rightMotorEncoder.setDistancePerPulse(5.682/2431.33);
 		
-		RobotMap.drawbridgeArm.ConfigFwdLimitSwitchNormallyOpen(true);
-		RobotMap.drawbridgeArm.ConfigRevLimitSwitchNormallyOpen(true);
+//		RobotMap.drawbridgeArm.ConfigFwdLimitSwitchNormallyOpen(true);
+//		RobotMap.drawbridgeArm.ConfigRevLimitSwitchNormallyOpen(true);
 	}
 }

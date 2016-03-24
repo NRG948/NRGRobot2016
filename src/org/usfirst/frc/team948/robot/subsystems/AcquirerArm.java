@@ -16,15 +16,15 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
 	private double pidOutput;
 	 
-	public static final double VOLTS_0 = (Robot.competitionRobot)? 4.560 : 4.685;
-	private static final double VOLTS_90 = (Robot.competitionRobot)? 3.433 : 3.445;
+	public final double VOLTS_0 = (true)? 3.58 : 4.685;
+	private final double VOLTS_90 = (true)? 2.347 : 3.445;
 	    
 	
 	
-	public static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90;
+	public final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90.0;
 	private final double TOLERANCE = Math.abs(2.0 * SLOPE_VOLTS_FROM_DEGREES);
-	private static double ACQUIRER_P = 1.2;
-	private static double ACQUIRER_I = 0.05;
+	private static double ACQUIRER_P = 1.5; //1.2
+	private static double ACQUIRER_I = 0.065; //0.05
 	private static double ACQUIRER_D = 0.02;
 
 	
@@ -47,8 +47,9 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 		return volts;
 	}
 	
-	private double degreesFromVolts(double volts)
+	public double degreesFromVolts(double volts)
 	{
+	//	SmartDashboard.putString("Volt 0 and Slope", VOLTS_0 + " " + SLOPE_VOLTS_FROM_DEGREES);
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
 	}
 

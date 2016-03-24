@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AcquireMode extends CommandGroup {
 
 	public AcquireMode(){
-		addParallel(new RaiseShooterArmTo(ShooterAngle.GROUND, ShooterArm.TOLERANCE*2));
+		addParallel(new RaiseShooterArmTo(ShooterAngle.GROUND, CommandBase.shooterArm.TOLERANCE*2));
 		addParallel(new RaiseAcquirerTo(Robot.Level.ACQUIRE));
 		addSequential(new ManualAcquire(false));
 		addSequential(new Interrupt(CommandBase.acquirerArm));

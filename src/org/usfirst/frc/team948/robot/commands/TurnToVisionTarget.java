@@ -1,5 +1,7 @@
 package org.usfirst.frc.team948.robot.commands;
 
+import org.usfirst.frc.team948.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnToVisionTarget extends CommandBase {
@@ -15,9 +17,10 @@ public class TurnToVisionTarget extends CommandBase {
 	}
 
 	protected void initialize() {
-		finalHeading = drive.getDesiredHeading() + angle;
-		drive.turnToHeadingInit(finalHeading, VISION_TOLERANCE, power);
 		angle = visionProcessing.getTurningAngleProportion();
+//		finalHeading = drive.getDesiredHeading() + angle;
+		finalHeading = RobotMap.driveGyro.getAngle() + angle;
+		drive.turnToHeadingInit(finalHeading, VISION_TOLERANCE, power);
 		SmartDashboard.putNumber("turn final heading", finalHeading);
 	}
 

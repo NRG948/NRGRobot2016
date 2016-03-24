@@ -18,7 +18,7 @@ public class ShootSequence extends CommandGroup {
 		if(ramp){
 			addParallel(new RampToRPM(2000));
 		}
-		addSequential(new TurnAndRaise());
+		addSequential(new TurnAndRaise(ramp));
 		if(ramp){
 			addSequential(new Interrupt());
 		}
@@ -26,12 +26,15 @@ public class ShootSequence extends CommandGroup {
 	}
 	
 	private class TurnAndRaise extends CommandGroup{
-		public TurnAndRaise(){
-		addSequential(new Delay(1));
+		public TurnAndRaise(boolean ramp){
+	//	addSequential(new Delay(1));
 		addSequential(new TurnToVisionTarget(0.6));
+		if(!ramp){
+			addSequential(new TurnToVisionTarget(0.6));
+		}
 		addParallel(new RaiseShooterArmTo());
 		addSequential(new WaitForRPM(2000, 20));
-		addSequential(new Shoot(0));
+		addSequential(new Shoot(0, true));
 		addSequential(new RaiseShooterArmTo(-10));
 		}
 	}

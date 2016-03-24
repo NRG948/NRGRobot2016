@@ -134,12 +134,12 @@ public class Drive extends Subsystem implements PIDOutput {
 	
 	public void turnToHeadingInit(double finalHeading, double tolerance, double maxOutput) {
 		cyclesOnTarget = getRequiredCyclesOnTarget();
-		drivePID.setSetpoint(finalHeading);
 		drivePIDInit(
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_P, TURN_TO_HEADING_P),
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_I, TURN_TO_HEADING_I), 
 				CommandBase.preferences.getDouble(PreferenceKeys.Turn_D, TURN_TO_HEADING_D),
 				maxOutput);
+		drivePID.setSetpoint(finalHeading);
 		drivePID.setAbsoluteTolerance(tolerance);
 		SmartDashboard.putNumber("Desired Heading", desiredHeading);
 		prevError = 0;
@@ -154,7 +154,7 @@ public class Drive extends Subsystem implements PIDOutput {
 //			revisedPower = 0.22 * Math.signum(currentError);
 //		}
 		if(prevError * currentError < 0) { //if cross over setpoint, apply brakes
-			revisedPower = 0.5 * Math.signum(prevError);
+//			revisedPower = 0.5 * Math.signum(prevError);
 			SmartDashboard.putNumber("Brake Power", revisedPower);
 			counter++;
 		}

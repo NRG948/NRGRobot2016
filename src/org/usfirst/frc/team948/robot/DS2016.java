@@ -55,10 +55,11 @@ public class DS2016 {
 	public static final Joystick rightJoystick = new Joystick(2);
 	public static final Button shootButton = new JoystickButton(rightJoystick, 1);
 	public static final Button acquireButton = new JoystickButton(rightJoystick, 2);
-	public static final Button extendDrawbridgeButton = new JoystickButton(rightJoystick, 3);
-	public static final Button retractDrawbridgeButton = new JoystickButton(rightJoystick, 4);
-	public static final Button extendTapeMeasureButton = new JoystickButton(rightJoystick, 5);
-	public static final Button climbUpButton = new JoystickButton(rightJoystick, 6);
+	public static final Button visionShotButton = new JoystickButton(rightJoystick, 3);
+//	public static final Button extendDrawbridgeButton = new JoystickButton(rightJoystick, 3);
+//	public static final Button retractDrawbridgeButton = new JoystickButton(rightJoystick, 4);
+//	public static final Button extendTapeMeasureButton = new JoystickButton(rightJoystick, 5);
+//	public static final Button climbUpButton = new JoystickButton(rightJoystick, 6);
 	public static final Button RPMButton = new JoystickButton(rightJoystick, 8);
 	public static final Button shooterRampUp = new JoystickButton(rightJoystick, 10);
 	
@@ -93,10 +94,10 @@ public class DS2016 {
 // 		shootButton.whenReleased(new ShooterRampUp());
  		//xboxAButton.whileHeld(new ManualAcquire(false));
 // 		extendDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(true));
- 		extendDrawbridgeButton.whenPressed(new ShootSequence(true));
- 		retractDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(false));
- 		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
- 		climbUpButton.whileHeld(new ManualClimb(false));
+// 		extendDrawbridgeButton.whenPressed(new ShootSequence(true));
+// 		retractDrawbridgeButton.whileHeld(new RawRaiseDrawbridge(false));
+// 		extendTapeMeasureButton.whileHeld(new ManualClimb(true));
+// 		climbUpButton.whileHeld(new ManualClimb(false));
  //		xboxRBumper.whenPressed(new MoveandRamp(true , 2700));
  //		xboxLBumper.whenPressed(new MoveandRamp(false, 0));
 // 		xboxLBumper.whenPressed(new MoveDrawbridgeToEnd());
@@ -119,6 +120,7 @@ public class DS2016 {
  		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.FULL_BACK));
  		xboxYButton.whenPressed(new Interrupt());
  		cameraButton.whenPressed(new SwitchCamera());
+ 		visionShotButton.whenPressed(new ShootSequence(true));
  	}	
 }
 

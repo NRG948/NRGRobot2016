@@ -15,6 +15,7 @@ public class TurnToTargetDumb extends CommandBase{
 		// TODO Auto-generated method stub
 		drive.drivePIDInit(0, 0, 0, 1);
 		drive.drivePID.setSetpoint(heading);
+//		drive.setDesiredHeading(heading);
 		previousError = drive.drivePID.getError();
 	}
 
@@ -31,17 +32,20 @@ public class TurnToTargetDumb extends CommandBase{
 	@Override
 	protected boolean isFinished() {
 		double error = drive.drivePID.getError();
-		if(previousError * error < 0){
+		if(Math.abs(error) < 15) return true;
+		return false;
+		/*if(previousError * error < 0){
 			return true;
 		}else{
 			previousError = error;
 			return false;
-		}
+		}*/
 	}
 
 	@Override
 	protected void end() {
 		drive.rawStop();
+		drive.turnToHeadingEnd(heading);
 	}
 
 	@Override
