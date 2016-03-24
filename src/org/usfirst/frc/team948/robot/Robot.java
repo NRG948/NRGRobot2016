@@ -25,6 +25,7 @@ import org.usfirst.frc.team948.robot.subsystems.VisionProcessing;
 import org.usfirst.frc.team948.robot.utilities.AHRSGyro;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
+import org.usfirst.frc.team948.robot.utilities.ArduinoSerialReader;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -146,6 +147,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 		DS2016.buttonInit();
 		visionProcessing.cameraInit();
+		ArduinoSerialReader.startCapture();
 		
 	}
 
@@ -182,7 +184,8 @@ public class Robot extends IterativeRobot {
 		 * autonomousCommand = new RawTankDrive(); break; }
 		 */
 		resetSensors();
-		autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.MOAT);
+		//autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.MOAT);
+		autonomousCommand = ArduinoSerialReader.autoCommand();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
