@@ -34,13 +34,17 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private double fovPixel;
 	private double pidOutput;
 	private double cyclesOnTarget;
+	public double rectBottom;
+	public double rectTop;
+	public double rectLeft;
+	public double rectRight;
 	
-	private final double TARGET_WIDTH_FEET = 19.5 / 12; //horizontal
-	private final double TARGET_HEIGHT_FEET = 14.0 / 12; //vertical
+	private final double TARGET_WIDTH_FEET = 20.0 / 12; //horizontal
+	private final double TARGET_HEIGHT_FEET = 12.0 / 12; //vertical
 	private final double CAMERA_OFF_GROUND = 1;
-	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND + TARGET_HEIGHT_FEET ; //84.0 is height from found in inches, camera is 1 foot off ground
+	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND + TARGET_HEIGHT_FEET - 1; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
-	private final double SPEED_OF_BALL = 32.8227; //Three trials of shooting straight up, total time was 7.1 seconds
+	private final double SPEED_OF_BALL = Math.sqrt(36.25*GRAVITY);
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
 	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 34 : 34;
@@ -51,14 +55,14 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double TURN_TARGET_D = 0.0123;
 	private final double PIXEL_TOLERANCE = 4;
 	
-	private double setArea = 1;
-	private double setDistance = 1;
+	private final double SET_AREA = 1113;
+	private final double SET_DISTANCE = 142.0 / 12;
 	private static final double TOTAL_HEIGHT = 240.0;
 	private static final double TOTAL_WIDTH = 320.0;
 
 //	private boolean isUpdating;
 	private boolean visionTracking;
-	private boolean distanceByArea = false;
+	private boolean distanceByArea = true;
 	private PIDController targetPID = new PIDController(TURN_TARGET_P, TURN_TARGET_I, TURN_TARGET_D, this, this);
 	private Timer timer = new Timer();
 	private final long VISION_PROCESSING_PERIOD = 100;
@@ -79,11 +83,11 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 				
 	}
 
-	public void cameraInit() {
+	public void cameraInit() throws Exception{
+		//visionTracking = false;
 		visionTracking = true;
-//		visionTracking = false;
-		targetCam = new USBCamera("cam1"); //create camera object
-		ballCam = new USBCamera("cam0");
+		targetCam = new USBCamera("cam0"); //create camera object
+		ballCam = new USBCamera("cam1");
 		//setting Cam settings
 		targetCam.setExposureManual(-11);
 		targetCam.setWhiteBalanceHoldCurrent();
@@ -97,12 +101,16 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, 0.1, 100.0,
 				0, 0);//filter out particles less than 0.1% of area.
 		targetCam.startCapture();
-//		ballCam.startCapture();
+		//ballCam.startCapture();
 		timer.schedule(new TimerTask(){
 
 			@Override
 			public void run() {
-				updateVision();
+				try{
+					updateVision();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}}, 0 , VISION_PROCESSING_PERIOD);
 		
 	
@@ -115,7 +123,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		TARGET_SAT_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Sat_Low", 83), CommandBase.preferences.getInt("Sat_High", 255)); //Sat value found for green
 		TARGET_VAL_RANGE = new NIVision.Range(CommandBase.preferences.getInt("Val_Low", 62), CommandBase.preferences.getInt("Val_High", 255));  //Val value found for green
 		if (visionTracking) {
-			long prevMillis = System.currentTimeMillis();
+			SmartDashboard.putString("test", "Bye");
 			targetCam.getImage(frame);
 			NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, TARGET_HUE_RANGE, TARGET_SAT_RANGE,
 					TARGET_VAL_RANGE); //filter particles by HSV
@@ -141,14 +149,23 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 						 NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
 				width = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT) - 
 						NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
+				rectBottom = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM);
+				rectTop = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
+				rectLeft = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
+				rectRight = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT);
 				convexHullArea = NIVision.imaqMeasureParticle(binaryFrame, centerParticleIndex, 0, NIVision.MeasurementType.MT_CONVEX_HULL_AREA);
 			}
 		//	SmartDashboard.putNumber("Time To Do Vision", System.currentTimeMillis() - prevMillis);
 		}
 		else {
+			SmartDashboard.putString("test", "Hi");
 			ballCam.getImage(frame);
 			CameraServer.getInstance().setImage(frame);
 		}
+		try{
+		//	frame.free();
+		//	binaryFrame.free();
+		}catch(Exception e){e.printStackTrace();}
 //		isUpdating = false;
 	}
 
@@ -156,25 +173,13 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		visionTracking = false;
 		
 		targetCam.stopCapture();
-//		targetCam.setExposureAuto();
-//		targetCam.setWhiteBalanceAuto();
-		
-		ballCam.setExposureAuto();
-		ballCam.setWhiteBalanceAuto();
-		ballCam.updateSettings();
 		ballCam.startCapture();
-		targetCam.updateSettings();
 	}
 	
 	public void setToVisionCamera() {
 		visionTracking = true;
 		
 		ballCam.stopCapture();
-		targetCam.setExposureManual(-11);
-		targetCam.setWhiteBalanceHoldCurrent();
-		
-		ballCam.updateSettings();
-		targetCam.updateSettings();
 		targetCam.startCapture();
 	}
 	
@@ -219,14 +224,12 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	//		targetPixel = getWidth();
 			distance = TARGET_WIDTH_FEET * fovPixel / (2 * targetPixel * Math.tan((FOV_ANGLE_HORIZONTAL / 2.0) * Math.PI / 180));
 		}else{
-			distance = Math.sqrt(setArea/convexHullArea)*setDistance;
+			distance = Math.sqrt(SET_AREA/convexHullArea)*SET_DISTANCE;
 		}
 		return distance;
 	}
 	
 	public void switchToCalcDistanceFromArea(){
-		setArea = convexHullArea;
-		setDistance = calcDistance();
 		distanceByArea = true;
 	}
 	
@@ -256,8 +259,10 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	}
 	
 	public double getTurningAngleProportion() {
-		double diff = centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0);
+		double diff = centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 156.5);
 		double angle = (diff / TOTAL_WIDTH) * FOV_ANGLE_HORIZONTAL;
+		System.out.println("Init(): TurnToVisionTarget. Angle: " + angle + " pixels to Target " + diff);
+		System.out.println("Bounding Rect TurnToVisionTarget: bottom: " + rectBottom + " top: " + rectTop + " left: " + rectLeft + " right: " + rectRight);
 		return angle;
 	}
 	

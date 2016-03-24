@@ -13,20 +13,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterArm extends Subsystem implements PIDOutput {
 	private double pidOutput;
 
-	private static final double VOLTS_0 = (Robot.competitionRobot) ? 1.070 : 0.730;
-	private static final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.676 : 1.625;
-	private static final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 45 : 67.5;
-	private static final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0) / VARIABLE_ANGLE;
-	public final static double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
-	public final static double OFFSET_SLOP_DEGREES = 5;
+	private final double VOLTS_0 = (true) ? 0.723 : 0.730;
+	private final double VOLTS_VARIABLE = (true) ? 1.573 : 1.625;
+	private final double VARIABLE_ANGLE = (true) ? 58 : 67.5;
+	private final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0) / VARIABLE_ANGLE;
+	public final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
+	public final static double OFFSET_SLOP_DEGREES = 0;
 	private static double p = 0;
 	private static double i = 0;
 	private static double d = 0;
 	private int onTargetCounter = 0;
+	private double prevPower;
 	private PIDController shooterElevatePID = new PIDController(p,i,d, RobotMap.shooterLifterEncoder, this);
 	
 	public enum ShooterAngle {
-		GROUND(-10), LINE(51), BATTER(69); //, LINE(55), TOWER(65);
+		GROUND(-10), LINE(40), BATTER(65); //, LINE(55), TOWER(65);
 		// Values need to be set
 		private double angleInDegrees;
 
@@ -57,8 +58,8 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	}
 
 	public void moveArmInit() {
-		p = CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_P, 1.0); //1.2, 0.05, 0
-		i = CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_I, 0.02);
+		p = CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_P, 1.1); //1.2, 0.05, 0
+		i = CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_I, 0.1);
 		d = CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_D, 0.5);
 		shooterElevatePID.setPID(p, i, d);
 		shooterElevatePID.reset();
@@ -96,7 +97,9 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 
 	public void moveArmToDesiredAngleVisionTracking() {
 		moveArmToDesiredAngle();
-		shooterElevatePID.setSetpoint(voltsFromDegrees(Robot.visionProcessing.getShootingAngle() + 1));
+		if(Robot.visionProcessing.getShootingAngle() < 65){
+			shooterElevatePID.setSetpoint(voltsFromDegrees(Robot.visionProcessing.getShootingAngle()));
+		}
 	}
 
 	public boolean isArmAtDesiredAngle() {
@@ -105,6 +108,7 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 		}else{
 			onTargetCounter = 0;
 		}
+		SmartDashboard.putNumber("Shooter onTargetCounter", onTargetCounter);
 		return onTargetCounter > 3;
 	}
 
@@ -115,15 +119,25 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	}
 
 	public void pidWrite(double arg0) {
-		pidOutput = arg0;
+		if(Math.abs(shooterElevatePID.getError()) < TOLERANCE){
+			onTargetCounter ++;
+		} else{
+			onTargetCounter = 0;
+		}
+		if(onTargetCounter > 3) { 
+			pidOutput = prevPower;
+		} else {
+			pidOutput = arg0;
+			prevPower = pidOutput;
+		}
 	}
 
-	public static double voltsFromDegrees(double degrees) {
+	public double voltsFromDegrees(double degrees) {
 		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;
 		return volts;
 	}
 
-	public static double degreesFromVolts(double volts) {
+	public double degreesFromVolts(double volts) {
 		return (volts - VOLTS_0) / SLOPE_VOLTS_FROM_DEGREES;
 
 	}

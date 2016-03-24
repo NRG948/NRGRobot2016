@@ -29,7 +29,7 @@ public class ConstantRampDown extends CommandBase {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double currentAngle = ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage());
+		double currentAngle = shooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage());
 		error = targetAngle - currentAngle;
 		shooterArm.rawRaiseShooter(P_CONSTANT * error);
 

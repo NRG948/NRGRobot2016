@@ -28,12 +28,13 @@ public class RaiseAcquirerTo extends CommandBase{
 	}
 	
 	protected boolean isFinished(){
-		if(acquirerArm.isArmAtDesiredAngle()){
-			counter++;
+		if(acquirerArm.isArmAtDesiredAngle() && angle == 0){
+//			counter++;
+			return true;
 		}else{
 			counter = 0;
 		}
-		if(counter > 1){
+		if(counter > 1 && angle == 0){
 			return true;
 		}
 		return false;

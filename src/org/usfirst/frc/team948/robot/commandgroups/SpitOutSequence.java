@@ -15,8 +15,8 @@ public class SpitOutSequence extends CommandGroup{
 	
 	public SpitOutSequence() {
 		addParallel(new RaiseAcquirerTo(Robot.Level.CHIVAL));
-		addSequential(new RaiseShooterArmTo(-0, ShooterArm.TOLERANCE*2));
+		addParallel(new RaiseShooterArmTo(-10, CommandBase.shooterArm.TOLERANCE*2));
 		addSequential(new SpitOut());
-		addSequential(new Interrupt(CommandBase.shooterWheel, CommandBase.acquirerArm, CommandBase.acquirerArm, CommandBase.shooterBar));
+		addSequential(new Interrupt(CommandBase.shooterWheel, CommandBase.acquirerArm, CommandBase.acquirerArm, CommandBase.shooterBar, CommandBase.shooterArm));
 	}
 }

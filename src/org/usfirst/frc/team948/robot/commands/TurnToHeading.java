@@ -27,7 +27,7 @@ public class TurnToHeading extends CommandBase{
 	
 	protected void initialize (){
 		SmartDashboard.putNumber("turn final heading", finalHeading);
-		drive.turnToHeadingInit(tolerance, power);
+		drive.turnToHeadingInit(finalHeading, tolerance, power);
 	}
 	
 	protected void execute(){

@@ -17,7 +17,7 @@ public class RaiseShooterToNextHigherAngle extends CommandBase{
 	@Override
 	protected void initialize() {
 		double voltage = RobotMap.shooterLifterEncoder.getVoltage();
-		double angle = ShooterArm.degreesFromVolts(voltage);
+		double angle = shooterArm.degreesFromVolts(voltage);
 		ShooterAngle currentAngle = shooterArm.findNearestAngle(angle);
 		desiredAngle = shooterArm.nextHigherAngle(currentAngle);
 		a++;

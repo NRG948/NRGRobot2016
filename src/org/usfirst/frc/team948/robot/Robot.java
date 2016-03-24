@@ -29,9 +29,11 @@ import org.usfirst.frc.team948.robot.utilities.ArduinoSerialReader;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -42,9 +44,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
+	public static boolean competitionRobot = true;
+	public static final double NO_TURN = 999;
 	public enum Level {
-		DEFAULT(5), ACQUIRE(30), CHIVAL(65), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+		DEFAULT(5), ACQUIRE(35), CHIVAL(68), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
 																						// NEEDS
 																						// TO
 																						// BE
@@ -68,7 +71,8 @@ public class Robot extends IterativeRobot {
 		// Positions 1 and 2 go into the right goal
 		// Positions 3, 4, and 5 go into the middle goal
 		//TWO: -46.14
-		LOWBAR_ONE(17.2, +58.69, 0, 0), POSITION_TWO(19.33, 50, -3, 0), POSITION_THREE(11, 15, 0, 0), POSITION_FOUR(12, 0, 0, 0), POSITION_FIVE(11, -55, 3.5, 0);
+		//second angle of 999 means do not execute second turn
+		LOWBAR_ONE(11, 5, 4, 58.69), POSITION_TWO(19.33, 50, -3, NO_TURN), POSITION_THREE(11, 55, 2.5, 10), POSITION_FOUR(12, 0, 0, 0), POSITION_FIVE(11, -55, 5, -5), TEST(0.5, 20, 0.5, 0);
 
 		private double distance;
 		private double angle;
@@ -99,9 +103,10 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	
+	
 	public enum Defense{
 		RAMPARTS(0.75, 90),
-		ROUGH_TERRAIN(0.75, 90),
+		ROUGH_TERRAIN(0.6, 90), //0.75, goes too far at 12
 		ROCK_WALL(0.6, 90),
 		LOW_BAR(0.64, 10),
 		MOAT(0.7, 90);
@@ -135,7 +140,9 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	private int screenUpdateCounter;
-	public static boolean competitionRobot = false;
+	public static Timer autoTimer;
+	public static double autoStartTime = 0;
+	SendableChooser autoChooser;
 
 	Command autonomousCommand;
 
@@ -146,9 +153,20 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		RobotMap.init();
 		DS2016.buttonInit();
-		visionProcessing.cameraInit();
 		ArduinoSerialReader.startCapture();
-		
+		try{
+			visionProcessing.cameraInit();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Low Bar", new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE, Defense.LOW_BAR));
+		autoChooser.addObject("Position 2", new TraverseDefenseShootRoutine(AutoPosition.POSITION_TWO, Defense.ROUGH_TERRAIN));
+		autoChooser.addObject("Position 3", new TraverseDefenseShootRoutine(AutoPosition.POSITION_THREE, Defense.ROUGH_TERRAIN));
+		autoChooser.addObject("Position 4", new TraverseDefenseShootRoutine(AutoPosition.POSITION_FOUR, Defense.ROUGH_TERRAIN));
+		autoChooser.addObject("Position 5", new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.ROUGH_TERRAIN));
+		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
+		autoTimer = new Timer();
 	}
 
 	/**
@@ -183,9 +201,11 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new RawTankDrive(); break; }
 		 */
+		autoTimer.start();
+		autoStartTime = autoTimer.get();
 		resetSensors();
-		//autonomousCommand = new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.MOAT);
 		autonomousCommand = ArduinoSerialReader.autoCommand();
+		autonomousCommand = (Command) autoChooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -228,6 +248,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Turn to heading 90 dumb", new TurnToTargetDumb(90, 0.6));
 		
 		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 20));
+		
+		SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 0.6));
+		
+		SmartDashboard.putData("Turn 15 degrees", new TurnAngle(15, 0.6));
 		
 		SmartDashboard.putData("Switch To Area Calculation", new Command(){
 			@Override
@@ -296,23 +320,28 @@ public class Robot extends IterativeRobot {
 		if (true) {
 			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
-			SmartDashboard.putNumber("Arm Angle", RobotMap.armAngleEncoder.getVoltage());
-			SmartDashboard.putNumber("Shooter Angle Value", ShooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
+			SmartDashboard.putNumber("Arm Encoder Value", RobotMap.armAngleEncoder.getVoltage());
+			SmartDashboard.putNumber("Arm Angle", acquirerArm.degreesFromVolts(RobotMap.armAngleEncoder.getVoltage()));
+			SmartDashboard.putNumber("Shooter Angle Value", shooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
 			SmartDashboard.putNumber("Shooter Encoder Value", RobotMap.shooterLifterEncoder.getVoltage());
 			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
 			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
 
 			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
 			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
+			SmartDashboard.putString("Shooting Angle String", Double.toString(visionProcessing.getShootingAngle()));
 
 //			SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
 
 			SmartDashboard.putNumber("Turning Angle Arcsin", visionProcessing.getTurningAngle());
-			SmartDashboard.putNumber("Turning Angle Proportion", visionProcessing.getTurningAngleProportion());
+			//SmartDashboard.putNumber("Turning Angle Proportion", visionProcessing.getTurningAngleProportion());
 			
 			SmartDashboard.putNumber("Gyro", RobotMap.driveGyro.getAngle());
 			SmartDashboard.putNumber("Robot X", RobotMap.positionTracker.getX());
 			SmartDashboard.putNumber("Robot Y", RobotMap.positionTracker.getY());
+			
+			SmartDashboard.putBoolean("Upper Limit", RobotMap.acquireUpperLimit.get());
+			SmartDashboard.putBoolean("Lower Limit", RobotMap.acquireLowerLimit.get());
 
 			try {
 				SmartDashboard.putData("PDP", pdp);

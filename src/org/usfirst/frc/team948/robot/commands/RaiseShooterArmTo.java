@@ -7,7 +7,7 @@ import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 public class RaiseShooterArmTo extends CommandBase {
 	private double angle;
 	private boolean angleFromVisionProcessing;
-	private double tolerance = ShooterArm.TOLERANCE;
+	private double tolerance = CommandBase.shooterArm.TOLERANCE;
 	
 	public RaiseShooterArmTo(ShooterArm.ShooterAngle angle, double tolerance) {
 		requires(shooterArm);

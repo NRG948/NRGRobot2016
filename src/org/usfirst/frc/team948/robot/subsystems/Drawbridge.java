@@ -29,11 +29,13 @@ public class Drawbridge extends Subsystem {
 	}
 	
 	public boolean hasReachedUpperLimit() {
-		return RobotMap.drawbridgeArm.isFwdLimitSwitchClosed();
+//		return RobotMap.drawbridgeArm.isFwdLimitSwitchClosed();
+		return true;
 	}
 	
 	public boolean hasReachedLowerLimit() {
-		return RobotMap.drawbridgeArm.isRevLimitSwitchClosed();
+//		return RobotMap.drawbridgeArm.isRevLimitSwitchClosed();
+		return true;
 	}
 
 }
