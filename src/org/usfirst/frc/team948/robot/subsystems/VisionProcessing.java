@@ -67,6 +67,9 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private Timer timer = new Timer();
 	private final long VISION_PROCESSING_PERIOD = 100;
 	
+	private double lastAngle;
+//	This is the last correctly computed angle
+	
 	Image frame; 
 	Image binaryFrame;
 	NIVision.Range TARGET_HUE_RANGE; //Hue value found for green
@@ -237,14 +240,29 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		distanceByArea = false;
 	}
 	
+//	The parabolic equation of the trajectory is y = -g x^2 / (2cos^2(angle)v^2) + tan(angle) x
+//	angle refers to the shooting angle
+//	Find angle by solving the equation for y = height of the tower and x = horizontal distance to the tower
 	public double getShootingAngle(){
-		double d = calcDistance();
+		double d = calcDistance(); //d is the diagonal distance from the camera to the target
 		d = Math.sqrt(d * d - TARGET_FEET_OFF_CAMERA_HEIGHT * TARGET_FEET_OFF_CAMERA_HEIGHT) + CAMERA_TO_SHOOTER;
-		double sqrtTerm = d*d - GRAVITY*GRAVITY*Math.pow(d, 4)/Math.pow(SPEED_OF_BALL, 4)- 2*TARGET_FEET_OFF_CAMERA_HEIGHT*GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
+		if(Double.isNaN(d)){
+//			Incorrect calculation of the distance
+//			Use previous correct distance
+			return lastAngle;
+		}
+			//d is now changed to horizontal distance from the camera to the tower
+		double sqrtTerm = d*d - GRAVITY*GRAVITY*Math.pow(d, 4)/Math.pow(SPEED_OF_BALL, 4)- 
+				2*TARGET_FEET_OFF_CAMERA_HEIGHT*GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
+//		If the sqrtTerm is negative, then it will return "Not a Number(NaN)"
+		if(sqrtTerm < 0){
+			return lastAngle;
+		}
 		sqrtTerm = Math.sqrt(sqrtTerm);
 		double numerator = d-sqrtTerm;
 		double denom = GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
-		return Math.toDegrees(Math.atan(numerator/denom));
+		lastAngle = Math.toDegrees(Math.atan(numerator/denom));
+		return lastAngle;
 		//return Math.atan(TARGET_FEET_OFF_CAMERA_HEIGHT/d)*180/Math.PI;
 	}
 	
