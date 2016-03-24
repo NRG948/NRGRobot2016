@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterArm extends Subsystem implements PIDOutput {
-	private double pidOutput;
+	private volatile double pidOutput;
 
-	private final double VOLTS_0 = (true) ? 0.723 : 0.730;
-	private final double VOLTS_VARIABLE = (true) ? 1.573 : 1.625;
-	private final double VARIABLE_ANGLE = (true) ? 58 : 67.5;
+	private final double VOLTS_0 = (Robot.competitionRobot) ? 0.723 : 0.765;
+	private final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.573 : 1.364;
+	private final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 58 : 45;
 	private final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0) / VARIABLE_ANGLE;
 	public final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 	public final static double OFFSET_SLOP_DEGREES = 0;
@@ -75,7 +75,7 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 		shooterElevatePID.setAbsoluteTolerance(tolerance);
 	}
 	public void setDesiredArmAngle(double angle) {
-		shooterElevatePID.setSetpoint(voltsFromDegrees(angle));
+		shooterElevatePID.setSetpoint(voltsFromDegrees(safeAngle(angle)));
 	}
 
 	public void moveArmToDesiredAngle() {
@@ -97,9 +97,9 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 
 	public void moveArmToDesiredAngleVisionTracking() {
 		moveArmToDesiredAngle();
-		if(Robot.visionProcessing.getShootingAngle() < 65){
-			shooterElevatePID.setSetpoint(voltsFromDegrees(Robot.visionProcessing.getShootingAngle()));
-		}
+		double shootingAngle = Robot.visionProcessing.getShootingAngle();
+		shooterElevatePID.setSetpoint(voltsFromDegrees(safeAngle(shootingAngle)));
+		SmartDashboard.putNumber("Shooter PID Setpoint", shooterElevatePID.getSetpoint());
 	}
 
 	public boolean isArmAtDesiredAngle() {
@@ -132,6 +132,10 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 		}
 	}
 
+	public double getSetpoint() {
+		return shooterElevatePID.getSetpoint();
+	}
+	
 	public double voltsFromDegrees(double degrees) {
 		double volts = degrees * SLOPE_VOLTS_FROM_DEGREES + VOLTS_0;
 		return volts;
@@ -180,4 +184,11 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 		return angles[nearest];
 	}
 
+	public double safeAngle(double shootingAngle) {
+		if(shootingAngle < 70.0 && !Double.isNaN(shootingAngle) && shootingAngle > -10.0 && !Double.isInfinite(shootingAngle)){
+			return shootingAngle;
+		}
+		return 0.0;
+	}
+	
 }

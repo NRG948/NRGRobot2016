@@ -40,7 +40,7 @@ public class Shoot extends CommandBase {
 
  	@Override
 	protected void execute() {
- 		if((!wait || (!triggered && shooterArm.isArmAtDesiredAngle())) || (!triggered&&Robot.autoTimer.get() > Robot.autoStartTime+14)){
+ 		if(((!wait || (!triggered && shooterArm.isArmAtDesiredAngle())) || (!triggered&&Robot.autoTimer.get() > Robot.autoStartTime+14)) && shooterArm.getSetpoint() != shooterArm.voltsFromDegrees(0.0)){
  			System.out.println(triggered+" " + shooterArm.isArmAtDesiredAngle());
  			triggered = true;
  			beginTime = timer1.get();

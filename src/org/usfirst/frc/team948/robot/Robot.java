@@ -44,7 +44,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static boolean competitionRobot = true;
+	public static boolean competitionRobot = false;
 	public static final double NO_TURN = 999;
 	public enum Level {
 		DEFAULT(5), ACQUIRE(35), CHIVAL(68), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
@@ -153,7 +153,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		RobotMap.init();
 		DS2016.buttonInit();
-		ArduinoSerialReader.startCapture();
+//		ArduinoSerialReader.startCapture();
 		try{
 			visionProcessing.cameraInit();
 		}catch(Exception e){
@@ -204,7 +204,7 @@ public class Robot extends IterativeRobot {
 		autoTimer.start();
 		autoStartTime = autoTimer.get();
 		resetSensors();
-		autonomousCommand = ArduinoSerialReader.autoCommand();
+//		autonomousCommand = ArduinoSerialReader.autoCommand();
 		autonomousCommand = (Command) autoChooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)

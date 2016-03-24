@@ -7,13 +7,18 @@ import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 public class RaiseShooterArmTo extends CommandBase {
 	private double angle;
 	private boolean angleFromVisionProcessing;
+	private boolean startWithBall;
+	private boolean ballLeft;
 	private double tolerance = CommandBase.shooterArm.TOLERANCE;
+	private long startTime;
 	
 	public RaiseShooterArmTo(ShooterArm.ShooterAngle angle, double tolerance) {
 		requires(shooterArm);
 		this.angle = angle.getAngleInDegrees();
 		this.tolerance = tolerance;
 		angleFromVisionProcessing = false;
+		startWithBall = shooterWheel.isBallLoaded();
+		ballLeft = false;
 	}
 	
 	public RaiseShooterArmTo(ShooterArm.ShooterAngle angle) {
@@ -47,6 +52,10 @@ public class RaiseShooterArmTo extends CommandBase {
 			angle += ShooterArm.OFFSET_SLOP_DEGREES;
 		}*/
 		shooterArm.setTolerance(tolerance);
+		if(startWithBall && !shooterWheel.isBallLoaded()) {
+			startTime = System.currentTimeMillis();
+			ballLeft = true;
+		}
 	}
 
 	@Override
@@ -67,6 +76,9 @@ public class RaiseShooterArmTo extends CommandBase {
 			counter = 0;
 		}
 		return counter > 4;*/
+		if (ballLeft) {
+			return System.currentTimeMillis() > startTime + 300;
+		}
 		return false;
 	}
 
