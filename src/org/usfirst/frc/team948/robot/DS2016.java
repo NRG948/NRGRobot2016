@@ -75,6 +75,19 @@ public class DS2016 {
 	public static final Button xboxLTrigger = new XboxTriggerButton(2);
 	public static final Button XboxRTrigger = new XboxTriggerButton(3);
 	public static final Joystick arduinoJoystick = new Joystick(0);
+	public static final Button fastButton = new JoystickButton(arduinoJoystick, 0);
+	public static final Button medButton = new JoystickButton(arduinoJoystick, 1);
+	public static final Button slowButton = new JoystickButton(arduinoJoystick, 2);
+	public static final Button stayButton = new JoystickButton(arduinoJoystick ,3);
+	public static final Button autoShootButton = new JoystickButton(arduinoJoystick , 4);
+	public static final Button pos1Button = new JoystickButton(arduinoJoystick , 5);
+	public static final Button pos2Button = new JoystickButton(arduinoJoystick , 6);
+	public static final Button pos3Button = new JoystickButton(arduinoJoystick, 7);
+	public static final Button pos4Button = new JoystickButton(arduinoJoystick, 8);
+	public static final Button pos5Button = new JoystickButton(arduinoJoystick, 9);
+	public static final Button pos6Button = new JoystickButton(arduinoJoystick, 10);
+	
+	
 	
 	// We need to change the button numbers later
 	public static double getLeftJSY() {		
