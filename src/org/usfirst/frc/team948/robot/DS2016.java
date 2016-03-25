@@ -74,6 +74,7 @@ public class DS2016 {
 	public static final Button xboxStartButton = new JoystickButton(xBoxController, 8);
 	public static final Button xboxLTrigger = new XboxTriggerButton(2);
 	public static final Button XboxRTrigger = new XboxTriggerButton(3);
+	public static final Joystick arduinoJoystick = new Joystick(0);
 	
 	// We need to change the button numbers later
 	public static double getLeftJSY() {		
