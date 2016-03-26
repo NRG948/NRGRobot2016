@@ -14,6 +14,6 @@ public class TwoBallAutonomous extends CommandGroup{
 		addParallel(new RampToRPM(2000));
 		addSequential(new DriveStraightDistance(0.8, FIRST_DRIVE_DISTANCE));
 		addSequential(new TurnAngle(TURN_TO_FIRST_TARGET_ANGLE, 0.8));
-		addSequential(new ShootSequence(true));
+		addSequential(new ShootSequence(true, true));
 	}
 }

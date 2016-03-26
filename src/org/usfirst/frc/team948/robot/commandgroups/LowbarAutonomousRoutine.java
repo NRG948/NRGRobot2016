@@ -22,7 +22,7 @@ public class LowbarAutonomousRoutine extends CommandGroup {
 		public DriveTurnAndShoot(){
 			addSequential(new DriveStraightDistance(AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_POWER, AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE));
 			addSequential(new TurnAngle(TURN_TO_TARGET_ANGLE, TURN_TO_TARGET_POWER));
-			addSequential(new ShootSequence(false));
+			addSequential(new ShootSequence(false, true));
 		}
 	}
 }

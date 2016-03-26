@@ -11,7 +11,7 @@ public class ResetSensors extends CommandBase {
 	
 	}
 	protected void execute(){
-		RobotMap.ahrs.resetDisplacement();
+//		RobotMap.ahrs.resetDisplacement();
 		RobotMap.driveGyro.reset();
 		RobotMap.leftMotorEncoder.reset();
 		RobotMap.leftShooterWheelEncoder.reset();
@@ -20,8 +20,8 @@ public class ResetSensors extends CommandBase {
 	    
 	}
 	protected boolean isFinished(){
-//		return Math.abs(RobotMap.driveGyro.getAngle()) < 0.5;
-		return true;
+		return Math.abs(RobotMap.driveGyro.getAngle()) < 0.5;
+//		return true;
 	}
 	protected void end(){
 		

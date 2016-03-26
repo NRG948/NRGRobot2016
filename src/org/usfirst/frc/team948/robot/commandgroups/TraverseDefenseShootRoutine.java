@@ -2,6 +2,7 @@ package org.usfirst.frc.team948.robot.commandgroups;
 
 import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.Robot.AutoPosition;
+import org.usfirst.frc.team948.robot.commands.Delay;
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
@@ -20,26 +21,31 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 	private static final double AUTO_LINE_TO_OPPONENT_ALIGNMENT_LINE_DISTANCE = 11; //17.2
 	private static final double TURN_TO_TARGET_POWER = 0.64;
 
-	public TraverseDefenseShootRoutine(Robot.AutoPosition position, Robot.Defense defense) {
+	public TraverseDefenseShootRoutine(double power, Robot.AutoPosition position, Robot.Defense defense, boolean shoot) {
 //		addSequential(new ResetSensors());
-		addParallel(new RampToRPM(2000));
-		addSequential(new RaiseAcquirerDriveAndShoot(position, defense));
-		addSequential(new Interrupt());
+//		addSequential(new Delay(0.5));
+//		addParallel(new RampToRPM(2000));
+		if(power != Robot.NO_AUTO) {
+			addSequential(new RaiseAcquirerDriveAndShoot(power, position, defense, shoot));
+			addSequential(new Interrupt());
+		}
 	}
 	private class RaiseAcquirerDriveAndShoot extends CommandGroup{
-		public RaiseAcquirerDriveAndShoot(Robot.AutoPosition position, Robot.Defense defense){
+		public RaiseAcquirerDriveAndShoot(double power, Robot.AutoPosition position, Robot.Defense defense, boolean shoot){
 			addParallel(new RaiseAcquirerTo(defense.getAcquirerAngle()));
-			addSequential(new DriveStraightDistance(defense.getPower(),
+			addSequential(new DriveStraightDistance(power,
 					position.getDistance(), 0.6));
 //			addParallel(new RaiseAcquirerTo(0));
 //			addSequential(new TurnToHeading(position.getAngle(), TURN_TO_TARGET_POWER));
-			addSequential(new LowerAcquirerAndTurn(position));
-			addSequential(new DriveStraightDistance(Math.signum(position.getSecondDistance()) * defense.getPower(),
-					Math.abs(position.getSecondDistance()), 0.6));
-			if (position.getSecondAngle() != Robot.NO_TURN) {
-				addSequential(new TurnToTargetDumb(position.getSecondAngle(), TURN_TO_TARGET_POWER));
+			if(shoot) {
+				addSequential(new LowerAcquirerAndTurn(position));
+				addSequential(new DriveStraightDistance(Math.signum(position.getSecondDistance()) * power,
+						Math.abs(position.getSecondDistance()), 0.6));
+				if (position.getSecondAngle() != Robot.NO_TURN) {
+					addSequential(new TurnToTargetDumb(position.getSecondAngle(), TURN_TO_TARGET_POWER));
+				}
+				addSequential(new ShootSequence(true, true));
 			}
-			addSequential(new ShootSequence(false));
 		}
 	}
 	

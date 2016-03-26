@@ -11,14 +11,14 @@ import org.usfirst.frc.team948.robot.commands.WaitForRPM;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ShootSequence extends CommandGroup {
-	public ShootSequence(boolean ramp)
+	public ShootSequence(boolean ramp, boolean doubleTurn)
 	{
 //		addSequential(new SwitchCamera());
 //		addSequential(new Delay(1));
 		if(ramp){
-			addParallel(new RampToRPM(2000));
+//			addParallel(new RampToRPM(2000));
 		}
-		addSequential(new TurnAndRaise(ramp));
+		addSequential(new TurnAndRaise(doubleTurn));
 		if(ramp){
 			addSequential(new Interrupt());
 		}
@@ -26,12 +26,13 @@ public class ShootSequence extends CommandGroup {
 	}
 	
 	private class TurnAndRaise extends CommandGroup{
-		public TurnAndRaise(boolean ramp){
+		public TurnAndRaise(boolean doubleTurn){
 	//	addSequential(new Delay(1));
 		addSequential(new TurnToVisionTarget(0.6));
-		if(!ramp){
+		if(doubleTurn){
 			addSequential(new TurnToVisionTarget(0.6));
 		}
+		addParallel(new RampToRPM(2000));
 		addParallel(new RaiseShooterArmTo());
 		addSequential(new WaitForRPM(2000, 20));
 		addSequential(new Shoot(0, true));

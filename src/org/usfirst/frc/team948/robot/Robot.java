@@ -25,7 +25,6 @@ import org.usfirst.frc.team948.robot.subsystems.VisionProcessing;
 import org.usfirst.frc.team948.robot.utilities.AHRSGyro;
 import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
-import org.usfirst.frc.team948.robot.utilities.ArduinoSerialReader;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -46,6 +45,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	public static boolean competitionRobot = false;
 	public static final double NO_TURN = 999;
+	public static final double NO_AUTO = -10.0;
+
 	public enum Level {
 		DEFAULT(5), ACQUIRE(35), CHIVAL(68), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
 																						// NEEDS
@@ -72,7 +73,7 @@ public class Robot extends IterativeRobot {
 		// Positions 3, 4, and 5 go into the middle goal
 		//TWO: -46.14
 		//second angle of 999 means do not execute second turn
-		LOWBAR_ONE(11, 5, 4, 58.69), POSITION_TWO(19.33, 50, -3, NO_TURN), POSITION_THREE(11, 55, 2.5, 10), POSITION_FOUR(12, 0, 0, 0), POSITION_FIVE(11, -55, 5, -5), TEST(0.5, 20, 0.5, 0);
+		LOWBAR_ONE(13, 20, 3, 50), POSITION_TWO(19.33, 50, -3, NO_TURN), POSITION_THREE(11, 55, 2.5, 10), POSITION_FOUR(12, 0, 0, 0), POSITION_FIVE(11, -70, 5.5, -10), TEST(0.5, 20, 0.5, 0);
 
 		private double distance;
 		private double angle;
@@ -105,23 +106,24 @@ public class Robot extends IterativeRobot {
 	
 	
 	public enum Defense{
-		RAMPARTS(0.75, 90),
-		ROUGH_TERRAIN(0.6, 90), //0.75, goes too far at 12
-		ROCK_WALL(0.6, 90),
-		LOW_BAR(0.64, 10),
-		MOAT(0.7, 90);
+		TERRAIN(90),
+//		RAMPARTS(0.75, 90),
+//		ROUGH_TERRAIN(0.6, 90), //0.75, goes too far at 12
+//		ROCK_WALL(0.6, 90),
+		LOW_BAR(/*0.64, */ 10);
+//		MOAT(0.7, 90);
 		
-		private double power;
+//		private double power;
 		private double acquirerAngle;
 		
-		private Defense(double power, double acquirerAngle){
-			this.power = power;
+		private Defense(/*double power, */double acquirerAngle){
+//			this.power = power;
 			this.acquirerAngle = acquirerAngle;
 		}
 		
-		public double getPower() {
-			return power;
-		}
+//		public double getPower() {
+//			return power;
+//		}
 		
 		public double getAcquirerAngle(){
 			return acquirerAngle;
@@ -140,6 +142,10 @@ public class Robot extends IterativeRobot {
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	private int screenUpdateCounter;
+	private double autoPower;
+	private boolean autoShoot;
+	private AutoPosition autoPosition;
+	private Defense autoDefense;
 	public static Timer autoTimer;
 	public static double autoStartTime = 0;
 	SendableChooser autoChooser;
@@ -159,13 +165,13 @@ public class Robot extends IterativeRobot {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Low Bar", new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE, Defense.LOW_BAR));
-		autoChooser.addObject("Position 2", new TraverseDefenseShootRoutine(AutoPosition.POSITION_TWO, Defense.ROUGH_TERRAIN));
-		autoChooser.addObject("Position 3", new TraverseDefenseShootRoutine(AutoPosition.POSITION_THREE, Defense.ROUGH_TERRAIN));
-		autoChooser.addObject("Position 4", new TraverseDefenseShootRoutine(AutoPosition.POSITION_FOUR, Defense.ROUGH_TERRAIN));
-		autoChooser.addObject("Position 5", new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.ROUGH_TERRAIN));
-		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
+//		autoChooser = new SendableChooser();
+//		autoChooser.addDefault("Low Bar", new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE, Defense.LOW_BAR));
+//		autoChooser.addObject("Position 2", new TraverseDefenseShootRoutine(AutoPosition.POSITION_TWO, Defense.ROUGH_TERRAIN));
+//		autoChooser.addObject("Position 3", new TraverseDefenseShootRoutine(AutoPosition.POSITION_THREE, Defense.ROUGH_TERRAIN));
+//		autoChooser.addObject("Position 4", new TraverseDefenseShootRoutine(AutoPosition.POSITION_FOUR, Defense.ROUGH_TERRAIN));
+//		autoChooser.addObject("Position 5", new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.ROUGH_TERRAIN));
+//		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
 		autoTimer = new Timer();
 	}
 
@@ -203,9 +209,39 @@ public class Robot extends IterativeRobot {
 		 */
 		autoTimer.start();
 		autoStartTime = autoTimer.get();
+		drive.setDesiredHeading(0);
 		resetSensors();
+		//choose position
+		if (DS2016.pos1Button.get()) {
+			autoPosition = AutoPosition.LOWBAR_ONE;
+			autoDefense = Defense.LOW_BAR;
+		} else if (DS2016.pos2Button.get()) {
+			autoPosition = AutoPosition.POSITION_TWO;
+			autoDefense = Defense.TERRAIN;
+		} else if (DS2016.pos3Button.get()) {
+			autoPosition = AutoPosition.POSITION_THREE;
+			autoDefense = Defense.TERRAIN;
+		} else if (DS2016.pos4Button.get()) {
+			autoPosition = AutoPosition.POSITION_FOUR;
+			autoDefense = Defense.TERRAIN;
+		} else if (DS2016.pos5Button.get()) {
+			autoPosition = AutoPosition.POSITION_FIVE;
+			autoDefense = Defense.TERRAIN;
+		}
+		
+		if (DS2016.fastButton.get()) {
+			autoPower = 0.75;
+		} else if (DS2016.medButton.get()) {
+			autoPower = 0.65;
+		} else if (DS2016.slowButton.get()) {
+			autoPower = 0.55;
+		} else if (DS2016.stayButton.get()) {
+			autoPower = NO_AUTO;
+		}
+		
+		autoShoot = !DS2016.autoShootButton.get();
 //		autonomousCommand = ArduinoSerialReader.autoCommand();
-		autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand = new TraverseDefenseShootRoutine(autoPower, autoPosition, autoDefense, autoShoot);
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -243,7 +279,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Turn to target", new TurnToVisionTargetContinuous());
 
-		SmartDashboard.putData("Shoot sequence", new ShootSequence(true));
+		SmartDashboard.putData("Shoot sequence", new ShootSequence(true, false));
 
 		SmartDashboard.putData("Turn to heading 90 dumb", new TurnToTargetDumb(90, 0.6));
 		
