@@ -36,23 +36,31 @@ public class Shoot extends CommandBase {
 		triggered = false;
 		timer1.reset();
 		timer1.start();
+		System.out.println("Shoot Init");
 	}
 
  	@Override
 	protected void execute() {
- 		if(((!wait || (!triggered && shooterArm.isArmAtDesiredAngle())) || (!triggered&&Robot.autoTimer.get() > Robot.autoStartTime+14)) && shooterArm.getSetpoint() != shooterArm.voltsFromDegrees(0.0)){
- 			System.out.println(triggered+" " + shooterArm.isArmAtDesiredAngle());
- 			triggered = true;
- 			beginTime = timer1.get();
- 			SmartDashboard.putString("Shooting Dat", "Left RPM: " + shooterWheel.currentLeftRPM + " Right RPM: " + shooterWheel.currentRightRPM + " Shooting Angle " + shooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) + " Difference to Center: " + (visionProcessing.centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0)));
- 			System.out.println("Bounding Rect Shoot: bottom: " + visionProcessing.rectBottom + " top: " + visionProcessing.rectTop + " left: " + visionProcessing.rectLeft + " right: " + visionProcessing.rectRight);
- 			shooterBar.rawBallPush(PUSH_POWER);
+ 		if(!wait || (!triggered && (shooterArm.isArmAtDesiredAngle() || Robot.autoTimer.get() > Robot.autoStartTime+14))){
+ 			if (shooterArm.getSetpoint() != shooterArm.voltsFromDegrees(0.0)) {
+	 			System.out.println(triggered+" " + shooterArm.isArmAtDesiredAngle());
+	 			triggered = true;
+	 			beginTime = timer1.get();
+	 			SmartDashboard.putString("Shooting Dat", "Left RPM: " + shooterWheel.currentLeftRPM + " Right RPM: " + shooterWheel.currentRightRPM + " Shooting Angle " + shooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) + " Difference to Center: " + (visionProcessing.centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0)));
+	 			System.out.println("Bounding Rect Shoot: bottom: " + visionProcessing.rectBottom + " top: " + visionProcessing.rectTop + " left: " + visionProcessing.rectLeft + " right: " + visionProcessing.rectRight);
+	 			shooterBar.rawBallPush(PUSH_POWER);
+	 			System.out.println("Shoot Triggered Time: " + beginTime);
+ 			}
  		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return (timer1.get() > BALL_PUSH_TIME + time + (wait? beginTime: 0));
+		boolean finished = timer1.get() > BALL_PUSH_TIME + time + (wait? beginTime: 0);
+		if (finished) {
+			System.out.println("Shoot Finished");
+		}
+		return finished;
 //		Finishes command if the current time is greater than the Ball Push Time
 	}
 
@@ -61,6 +69,7 @@ public class Shoot extends CommandBase {
 		timer1.stop();
 		shooterWheel.rawShoot(0);
 		shooterBar.rawBallPush(0);
+		System.out.println("Shoot End");
 	}
 
 	@Override

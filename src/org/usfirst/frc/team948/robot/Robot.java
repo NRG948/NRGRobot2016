@@ -1,8 +1,10 @@
 
 package org.usfirst.frc.team948.robot;
 
+import org.usfirst.frc.team948.robot.commandgroups.ChivalAssist;
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
 import org.usfirst.frc.team948.robot.commandgroups.TraverseDefenseShootRoutine;
+import org.usfirst.frc.team948.robot.commandgroups.TwoBallAutonomous;
 import org.usfirst.frc.team948.robot.commands.CommandBase;
 import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
@@ -43,16 +45,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static boolean competitionRobot = false;
+	public static boolean competitionRobot = true;
 	public static final double NO_TURN = 999;
 	public static final double NO_AUTO = -10.0;
 
 	public enum Level {
-		DEFAULT(5), ACQUIRE(35), CHIVAL(68), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
-																						// NEEDS
-																						// TO
-																						// BE
-																						// CHECKED
+		DEFAULT(5), ACQUIRE(32), CHIVAL(68), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+																					// NEEDS
+																					// TO
+																					// BE
+																					// CHECKED
 
 		private double value;
 
@@ -71,15 +73,16 @@ public class Robot extends IterativeRobot {
 		// Angles at which to turn when performing autonomous routine
 		// Positions 1 and 2 go into the right goal
 		// Positions 3, 4, and 5 go into the middle goal
-		//TWO: -46.14
-		//second angle of 999 means do not execute second turn
-		LOWBAR_ONE(13, 20, 3, 50), POSITION_TWO(19.33, 50, -3, NO_TURN), POSITION_THREE(11, 55, 2.5, 10), POSITION_FOUR(12, 0, 0, 0), POSITION_FIVE(11, -70, 5.5, -10), TEST(0.5, 20, 0.5, 0);
+		// TWO: -46.14
+		// second angle of 999 means do not execute second turn
+		LOWBAR_ONE(15.5, 60.0, 0.0, NO_TURN), POSITION_TWO(19.0, 50.0, -3.0, NO_TURN), POSITION_THREE(11.0, 60.0, 3.0,
+				-10.0), POSITION_FOUR(14.0, 0, 0, 0), POSITION_FIVE(11.0, -70.0, 4.0, -10.0), TEST(0.5, 20, 0.5, 0);
 
 		private double distance;
 		private double angle;
 		private double secondDistance;
 		private double secondAngle;
-		
+
 		private AutoPosition(double distance, double angle, double secondDistance, double secondAngle) {
 			this.distance = distance;
 			this.angle = angle;
@@ -90,42 +93,41 @@ public class Robot extends IterativeRobot {
 		public double getDistance() {
 			return distance;
 		}
-		
+
 		public double getAngle() {
 			return angle;
 		}
-		
+
 		public double getSecondDistance() {
 			return secondDistance;
 		}
-		
+
 		public double getSecondAngle() {
 			return secondAngle;
 		}
 	}
-	
-	
-	public enum Defense{
+
+	public enum Defense {
 		TERRAIN(90),
-//		RAMPARTS(0.75, 90),
-//		ROUGH_TERRAIN(0.6, 90), //0.75, goes too far at 12
-//		ROCK_WALL(0.6, 90),
-		LOW_BAR(/*0.64, */ 10);
-//		MOAT(0.7, 90);
-		
-//		private double power;
+		// RAMPARTS(0.75, 90),
+		// ROUGH_TERRAIN(0.6, 90), //0.75, goes too far at 12
+		// ROCK_WALL(0.6, 90),
+		LOW_BAR(/* 0.64, */ 10);
+		// MOAT(0.7, 90);
+
+		// private double power;
 		private double acquirerAngle;
-		
-		private Defense(/*double power, */double acquirerAngle){
-//			this.power = power;
+
+		private Defense(/* double power, */double acquirerAngle) {
+			// this.power = power;
 			this.acquirerAngle = acquirerAngle;
 		}
-		
-//		public double getPower() {
-//			return power;
-//		}
-		
-		public double getAcquirerAngle(){
+
+		// public double getPower() {
+		// return power;
+		// }
+
+		public double getAcquirerAngle() {
 			return acquirerAngle;
 		}
 	}
@@ -159,19 +161,29 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		RobotMap.init();
 		DS2016.buttonInit();
-//		ArduinoSerialReader.startCapture();
-		try{
+		// ArduinoSerialReader.startCapture();
+		try {
 			visionProcessing.cameraInit();
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		autoChooser = new SendableChooser();
-//		autoChooser.addDefault("Low Bar", new TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE, Defense.LOW_BAR));
-//		autoChooser.addObject("Position 2", new TraverseDefenseShootRoutine(AutoPosition.POSITION_TWO, Defense.ROUGH_TERRAIN));
-//		autoChooser.addObject("Position 3", new TraverseDefenseShootRoutine(AutoPosition.POSITION_THREE, Defense.ROUGH_TERRAIN));
-//		autoChooser.addObject("Position 4", new TraverseDefenseShootRoutine(AutoPosition.POSITION_FOUR, Defense.ROUGH_TERRAIN));
-//		autoChooser.addObject("Position 5", new TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE, Defense.ROUGH_TERRAIN));
-//		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
+		// autoChooser = new SendableChooser();
+		// autoChooser.addDefault("Low Bar", new
+		// TraverseDefenseShootRoutine(AutoPosition.LOWBAR_ONE,
+		// Defense.LOW_BAR));
+		// autoChooser.addObject("Position 2", new
+		// TraverseDefenseShootRoutine(AutoPosition.POSITION_TWO,
+		// Defense.ROUGH_TERRAIN));
+		// autoChooser.addObject("Position 3", new
+		// TraverseDefenseShootRoutine(AutoPosition.POSITION_THREE,
+		// Defense.ROUGH_TERRAIN));
+		// autoChooser.addObject("Position 4", new
+		// TraverseDefenseShootRoutine(AutoPosition.POSITION_FOUR,
+		// Defense.ROUGH_TERRAIN));
+		// autoChooser.addObject("Position 5", new
+		// TraverseDefenseShootRoutine(AutoPosition.POSITION_FIVE,
+		// Defense.ROUGH_TERRAIN));
+		// SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
 		autoTimer = new Timer();
 	}
 
@@ -209,38 +221,60 @@ public class Robot extends IterativeRobot {
 		 */
 		autoTimer.start();
 		autoStartTime = autoTimer.get();
-		drive.setDesiredHeading(0);
 		resetSensors();
-		//choose position
+		drive.setDesiredHeading(0);
+		// choose position
 		if (DS2016.pos1Button.get()) {
+			System.out.println("Pos 1");
 			autoPosition = AutoPosition.LOWBAR_ONE;
 			autoDefense = Defense.LOW_BAR;
 		} else if (DS2016.pos2Button.get()) {
+			System.out.println("Pos 2");
 			autoPosition = AutoPosition.POSITION_TWO;
 			autoDefense = Defense.TERRAIN;
 		} else if (DS2016.pos3Button.get()) {
+			System.out.println("Pos 3");
 			autoPosition = AutoPosition.POSITION_THREE;
 			autoDefense = Defense.TERRAIN;
 		} else if (DS2016.pos4Button.get()) {
+			System.out.println("Pos 4");
 			autoPosition = AutoPosition.POSITION_FOUR;
 			autoDefense = Defense.TERRAIN;
 		} else if (DS2016.pos5Button.get()) {
+			System.out.println("Pos 5");
 			autoPosition = AutoPosition.POSITION_FIVE;
 			autoDefense = Defense.TERRAIN;
+		} else if (DS2016.pos6Button.get()) {
+			System.out.println("Pos 6");
+			drive.setDesiredHeading(160);
+			RobotMap.driveGyro.setAngleOffset(160);
+			autonomousCommand = new TwoBallAutonomous();
 		}
-		
+
 		if (DS2016.fastButton.get()) {
+			System.out.println("Fast");
 			autoPower = 0.75;
 		} else if (DS2016.medButton.get()) {
+			System.out.println("Med");
 			autoPower = 0.65;
 		} else if (DS2016.slowButton.get()) {
-			autoPower = 0.55;
+			System.out.println("Slow");
+			autoPower = 0.50;
 		} else if (DS2016.stayButton.get()) {
 			autoPower = NO_AUTO;
 		}
-		
+
 		autoShoot = !DS2016.autoShootButton.get();
-//		autonomousCommand = ArduinoSerialReader.autoCommand();
+		// autonomousCommand = ArduinoSerialReader.autoCommand();
+		if (autoDefense == null) {
+			autoDefense = Defense.TERRAIN;
+			autoPower = 0.75;
+			autoShoot = false;
+			autoPosition = AutoPosition.POSITION_FOUR;
+		}
+		// drive.setDesiredHeading(160);
+		// RobotMap.driveGyro.setAngleOffset(160);
+		// autonomousCommand = new TwoBallAutonomous();
 		autonomousCommand = new TraverseDefenseShootRoutine(autoPower, autoPosition, autoDefense, autoShoot);
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
@@ -265,7 +299,7 @@ public class Robot extends IterativeRobot {
 		// CommandBase.drive.initDefaultCommand();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
+
 		SmartDashboard.putData("Raise Shooter Arm to X degrees",
 				new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE, 45)));
 
@@ -274,57 +308,72 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Turn Angle to Target", new TurnToVisionTarget(0.6));
 
-		
-		SmartDashboard.putData("Move 3 feet forward", new DriveStraightDistance(0.6, 3));
+		SmartDashboard.putData("Chival Assist", new ChivalAssist());
+
+		SmartDashboard.putData("Move 5 feet forward", new DriveStraightDistance(0.8, 5, 1.0 / 12));
 
 		SmartDashboard.putData("Turn to target", new TurnToVisionTargetContinuous());
 
 		SmartDashboard.putData("Shoot sequence", new ShootSequence(true, false));
 
 		SmartDashboard.putData("Turn to heading 90 dumb", new TurnToTargetDumb(90, 0.6));
-		
+
 		SmartDashboard.putData("Wait for RPM", new WaitForRPM(2000, 20));
-		
+
 		SmartDashboard.putData("Turn 90 degrees", new TurnAngle(90, 0.6));
-		
+
 		SmartDashboard.putData("Turn 15 degrees", new TurnAngle(15, 0.6));
-		
-		SmartDashboard.putData("Switch To Area Calculation", new Command(){
+
+		SmartDashboard.putData("Switch To Area Calculation", new Command() {
 			@Override
-			protected void initialize() {}
+			protected void initialize() {
+			}
+
 			@Override
 			protected void execute() {
 				CommandBase.visionProcessing.switchToCalcDistanceFromArea();
 			}
+
 			@Override
 			protected boolean isFinished() {
 				return true;
 			}
+
 			@Override
-			protected void end() {}
+			protected void end() {
+			}
+
 			@Override
-			protected void interrupted() {}
-		
+			protected void interrupted() {
+			}
+
 		});
-		SmartDashboard.putData("Switch to Height Calculation", new Command(){
+		SmartDashboard.putData("Switch to Height Calculation", new Command() {
 			@Override
-			protected void initialize() {}
+			protected void initialize() {
+			}
+
 			@Override
 			protected void execute() {
 				CommandBase.visionProcessing.switchToCalcDistanceFromHeight();
 			}
+
 			@Override
 			protected boolean isFinished() {
 				return true;
 			}
+
 			@Override
-			protected void end() {}
+			protected void end() {
+			}
+
 			@Override
-			protected void interrupted() {}
+			protected void interrupted() {
+			}
 		});
 		// SmartDashboard.putData("Turn set angle to target", new
 		// TurnAngle(visionProcessing.getTurningAngle(), 0.7));
-		
+
 	}
 
 	/**
@@ -348,9 +397,10 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void periodicAll() {
-		//SmartDashboard.putNumber("Periodic all in nanos", shooterWheel.currentTimeNanos());
-		//NavXTester.parameterDisplay();
-		
+		// SmartDashboard.putNumber("Periodic all in nanos",
+		// shooterWheel.currentTimeNanos());
+		// NavXTester.parameterDisplay();
+
 		// PositionTracker.updatePosition();
 		// PositionTracker3D.computePosition();
 		if (true) {
@@ -358,41 +408,62 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
 			SmartDashboard.putNumber("Arm Encoder Value", RobotMap.armAngleEncoder.getVoltage());
 			SmartDashboard.putNumber("Arm Angle", acquirerArm.degreesFromVolts(RobotMap.armAngleEncoder.getVoltage()));
-			SmartDashboard.putNumber("Shooter Angle Value", shooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
+			SmartDashboard.putNumber("Shooter Angle Value",
+					shooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()));
 			SmartDashboard.putNumber("Shooter Encoder Value", RobotMap.shooterLifterEncoder.getVoltage());
 			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
 			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
 
-			SmartDashboard.putNumber("Distance", visionProcessing.calcDistance());
+			// SmartDashboard.putNumber("Distance",
+			// visionProcessing.calcDistance());
 			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
-			SmartDashboard.putString("Shooting Angle String", Double.toString(visionProcessing.getShootingAngle()));
+			// SmartDashboard.putString("Shooting Angle String",
+			// Double.toString(visionProcessing.getShootingAngle()));
 
-//			SmartDashboard.putNumber("Turning Angle", visionProcessing.getTurningAngle());
+			// SmartDashboard.putNumber("Turning Angle",
+			// visionProcessing.getTurningAngle());
 
-			SmartDashboard.putNumber("Turning Angle Arcsin", visionProcessing.getTurningAngle());
-			//SmartDashboard.putNumber("Turning Angle Proportion", visionProcessing.getTurningAngleProportion());
-			
+			// SmartDashboard.putNumber("Turning Angle Arcsin",
+			// visionProcessing.getTurningAngle());
+			// SmartDashboard.putNumber("Turning Angle Proportion",
+			// visionProcessing.getTurningAngleProportion());
+
 			SmartDashboard.putNumber("Gyro", RobotMap.driveGyro.getAngle());
-			SmartDashboard.putNumber("Robot X", RobotMap.positionTracker.getX());
-			SmartDashboard.putNumber("Robot Y", RobotMap.positionTracker.getY());
-			
+			// SmartDashboard.putNumber("Robot X",
+			// RobotMap.positionTracker.getX());
+			// SmartDashboard.putNumber("Robot Y",
+			// RobotMap.positionTracker.getY());
+
 			SmartDashboard.putBoolean("Upper Limit", RobotMap.acquireUpperLimit.get());
 			SmartDashboard.putBoolean("Lower Limit", RobotMap.acquireLowerLimit.get());
+			SmartDashboard.putBoolean("Robot Flat", Math.abs(RobotMap.ahrs.getRoll()) < 2.7);
+			// SmartDashboard.putNumber("Robot Roll", RobotMap.ahrs.getRoll());
+
+			SmartDashboard.putNumber("Offset CenterX",
+					visionProcessing.centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 156.5));
+			/*
+			 * SmartDashboard.putData(CommandBase.acquirerArm);
+			 * SmartDashboard.putData(CommandBase.acquirerWheel);
+			 * SmartDashboard.putData(CommandBase.drive);
+			 * SmartDashboard.putData(CommandBase.shooterArm);
+			 * SmartDashboard.putData(CommandBase.shooterBar);
+			 * SmartDashboard.putData(CommandBase.shooterWheel);
+			 */
 
 			try {
 				SmartDashboard.putData("PDP", pdp);
 			} catch (Exception e) {
-				//Silently ignore the exception
+				// Silently ignore the exception
 			}
 			// for (int i = 0; i <= 15; i++) {
-			// 	   SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
+			// SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
 			// }
 			// SmartDashboard.putNumber("PDP Total Voltage", pdp.getVoltage());
 			// SmartDashboard.putData("ShooterRampUp", new ShooterRampUp(true));
 		}
 		screenUpdateCounter++;
 	}
-	
+
 	public void resetSensors() {
 		RobotMap.ahrs.resetDisplacement();
 		RobotMap.driveGyro.reset();

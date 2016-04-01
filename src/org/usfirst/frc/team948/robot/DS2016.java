@@ -1,6 +1,8 @@
 package org.usfirst.frc.team948.robot;
 
 import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
+import org.usfirst.frc.team948.robot.commandgroups.BatterShot;
+import org.usfirst.frc.team948.robot.commandgroups.ChivalAssist;
 import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
 import org.usfirst.frc.team948.robot.commandgroups.SpitOutSequence;
@@ -11,6 +13,7 @@ import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
 import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
+import org.usfirst.frc.team948.robot.commands.QuickRampToRPM;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherAngle;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
@@ -43,8 +46,7 @@ public class DS2016 {
     // commands the same as any other Button.
 	public static final Joystick leftJoystick = new Joystick(1);
 	public static final Button driveStraightButton = new JoystickButton(leftJoystick, 1);
-	public static final Button lowerShooterArmButton = new JoystickButton(leftJoystick, 2);
-
+	public static final Button chivalAssistButton = new JoystickButton(leftJoystick, 2);
 	public static final Button raiseShooterArmButton = new JoystickButton(leftJoystick, 3);
 	public static final Button raiseAcquirerButton = new JoystickButton(leftJoystick, 4);
 	public static final Button lowerAcquirerButton = new JoystickButton(leftJoystick, 5);
@@ -92,16 +94,25 @@ public class DS2016 {
 	
 	// We need to change the button numbers later
 	public static double getLeftJSY() {		
-		return leftJoystick.getY();
+		return -leftJoystick.getY();
 	}
 	public static double getRightJSY() {
-		return rightJoystick.getY();
+		return -rightJoystick.getY();
+	}
+	
+	public static double getLeftXboxY() {
+		return -xBoxController.getRawAxis(1);
+	}
+	
+	public static double getRightXboxY() {
+		return -xBoxController.getRawAxis(5);
 	}
     
  	public static void buttonInit() {
   		driveStraightButton.whenPressed(new ManualDriveStraight());
  		driveStraightButton.whenReleased(new ManualDrive());
  		resetSensorsButton.whenPressed(new ResetSensors());
+ 		chivalAssistButton.whenPressed(new ChivalAssist());
 // 		raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer(0.33));//MAY NEED TO CHANGE LATER
 // 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
  		shootButton.whenPressed(new Shoot(0));
@@ -118,15 +129,16 @@ public class DS2016 {
 // 		xboxLBumper.whenPressed(new MoveDrawbridgeToEnd());
  		xboxSelectButton.whileHeld(new ManualRaiseAcquirer(-0.25));
  		xboxStartButton.whileHeld(new ManualRaiseAcquirer(0.35));
- 		xboxRBumper.whenPressed(new MoveandRamp(true, 2000));
+ 		xboxRBumper.whenPressed(new BatterShot());
  		xboxLBumper.whenPressed(new LowerShooterToNextLowerAngle());
- 		xboxRBumper.whenReleased(new Interrupt(Robot.shooterArm));
- 		xboxLBumper.whenReleased(new Interrupt(Robot.shooterArm));
+// 		xboxRBumper.whenReleased(new Interrupt(Robot.shooterArm));
+// 		xboxLBumper.whenReleased(new Interrupt(Robot.shooterArm));
  		shooterRampUp.whileHeld(new ShooterRampUp(1));
 // 		xboxYButton.whileHeld(new ManualRaiseAcquirer(0.6));
 // 		xboxBButton.whileHeld(new ManualRaiseAcquirer(-0.6));
- 		acquireTrackButton.whenPressed(new ManualTrackAcquirer());
+// 		acquireTrackButton.whenPressed(new ManualTrackAcquirer());
  		RPMButton.whileHeld(new RampToRPM(2000));
+// 		RPMButton.whileHeld(new QuickRampToRPM(2000));
  		shootButton.whenReleased(new Interrupt());
  		xboxLTrigger.whenPressed(new AcquireMode());
  		XboxRTrigger.whenPressed(new SpitOutSequence());

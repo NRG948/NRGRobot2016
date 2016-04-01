@@ -40,11 +40,11 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public double rectRight;
 	
 	private final double TARGET_WIDTH_FEET = (Robot.competitionRobot) ? 20.0 / 12 : 19.5 / 12; //horizontal
-	private final double TARGET_HEIGHT_FEET = (Robot.competitionRobot) ? 12.0 / 12 - 1: 12.0 / 12 + 1.5; //vertical
+	private final double TARGET_HEIGHT_FEET = (Robot.competitionRobot) ? 12.0 / 12 - 0.5: 12.0 / 12; //vertical
 	private final double CAMERA_OFF_GROUND = 1;
-	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND + TARGET_HEIGHT_FEET; //84.0 is height from found in inches, camera is 1 foot off ground
+	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND + TARGET_HEIGHT_FEET-0.75; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
-	private final double SPEED_OF_BALL = (Robot.competitionRobot) ? Math.sqrt(36.25*GRAVITY) : Math.sqrt(26.5 * GRAVITY);
+	private final double SPEED_OF_BALL = (Robot.competitionRobot) ? Math.sqrt(33.58*GRAVITY) : Math.sqrt(21.0 * GRAVITY);
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
 	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 34 : 34;
@@ -87,7 +87,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	}
 
 	public void cameraInit() throws Exception{
-		//visionTracking = false;
+//		visionTracking = false;
 		visionTracking = true;
 		targetCam = new USBCamera("cam0"); //create camera object
 		ballCam = new USBCamera("cam1");
@@ -97,14 +97,14 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		targetCam.setSize(320, 240);
 		targetCam.updateSettings();
 		ballCam.setExposureAuto();
-		ballCam.setWhiteBalanceAuto();
+		ballCam.	setWhiteBalanceAuto();
 		ballCam.updateSettings();
 		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 		binaryFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, 0.1, 100.0,
 				0, 0);//filter out particles less than 0.1% of area.
 		targetCam.startCapture();
-		//ballCam.startCapture();
+//		ballCam.startCapture();
 		timer.schedule(new TimerTask(){
 
 			@Override
@@ -328,7 +328,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 //		else {
 //			Robot.drive.rawTankDrive(power, -power);
 //		}
-		Robot.drive.rawTankDrive(power, -power);
+		Robot.drive.rawTankDrive(-power, power);
 	}
 	
 	public boolean turnToTargetFinished() {

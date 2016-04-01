@@ -38,9 +38,10 @@ public class TraverseDefenseShootRoutine extends CommandGroup {
 //			addParallel(new RaiseAcquirerTo(0));
 //			addSequential(new TurnToHeading(position.getAngle(), TURN_TO_TARGET_POWER));
 			if(shoot) {
-				addSequential(new LowerAcquirerAndTurn(position));
-				addSequential(new DriveStraightDistance(Math.signum(position.getSecondDistance()) * power,
-						Math.abs(position.getSecondDistance()), 0.6));
+				//addSequential(new LowerAcquirerAndTurn(position));
+				addParallel(new RaiseAcquirerTo(0));
+				addSequential(new TurnToTargetDumb(position.getAngle(), TURN_TO_TARGET_POWER));
+				addSequential(new DriveStraightDistance(power, position.getSecondDistance(), 0.6));
 				if (position.getSecondAngle() != Robot.NO_TURN) {
 					addSequential(new TurnToTargetDumb(position.getSecondAngle(), TURN_TO_TARGET_POWER));
 				}

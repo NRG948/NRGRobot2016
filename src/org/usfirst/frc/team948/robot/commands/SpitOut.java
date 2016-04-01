@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class SpitOut extends CommandBase {
 	Timer timer = new Timer();
-	private final double TIME = 1.5;
+	private final double TIME = 1.0;
 	private final double POWER= -0.6;
 	private double startTime;
 
@@ -31,9 +31,9 @@ public class SpitOut extends CommandBase {
 		if (timer.get() >= TIME) {
 			shooterBar.rawBallPush(-POWER);
 		}
-		if (!shooterWheel.isBallLoaded() && startTime == 0) {
-			startTime = timer.get();
-		}
+//		if (!shooterWheel.isBallLoaded() && startTime == 0) {
+//			startTime = timer.get();
+//		}
 			
 	}
 
@@ -49,7 +49,7 @@ public class SpitOut extends CommandBase {
 	@Override
 	protected boolean isFinished() {
 //		return (startTime != 0 && timer.get() > startTime + 0.5);
-		return timer.get() > TIME + 0.5;
+		return timer.get() > TIME + 0.75;
 	}
 
 	@Override

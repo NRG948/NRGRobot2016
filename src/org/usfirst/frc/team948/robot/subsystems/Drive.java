@@ -51,10 +51,10 @@ public class Drive extends Subsystem implements PIDOutput {
 
 	public void rawTankDrive(double leftPower, double rightPower) {
 
-		RobotMap.motorFrontLeft.set((-1) * leftPower);
-		RobotMap.motorFrontRight.set(rightPower);
-		RobotMap.motorBackLeft.set((-1) * leftPower);
-		RobotMap.motorBackRight.set(rightPower);
+		RobotMap.motorFrontLeft.set(leftPower);
+		RobotMap.motorFrontRight.set(-1 * rightPower);
+		RobotMap.motorBackLeft.set(leftPower);
+		RobotMap.motorBackRight.set(-1 * rightPower);
 
 	}
 
@@ -118,9 +118,9 @@ public class Drive extends Subsystem implements PIDOutput {
 		double rightPower = power;
 
 		if (currentPIDOutput > 0) {
-			leftPower -= currentPIDOutput;
+			rightPower -= currentPIDOutput;
 		} else {
-			rightPower += currentPIDOutput;
+			leftPower += currentPIDOutput;
 		}
 		SmartDashboard.putNumber("Left Drive Straight output", leftPower);
 		SmartDashboard.putNumber("Right Drive Straight output", rightPower);
@@ -160,7 +160,7 @@ public class Drive extends Subsystem implements PIDOutput {
 		}
 		prevError = currentError;
 		SmartDashboard.putNumber("Turn Heading Cross Setpoint", counter);
-		rawTankDrive(-revisedPower, revisedPower);
+		rawTankDrive(revisedPower, -revisedPower);
 	}
 	
 	public void turnToHeadingEnd(double newHeading){
