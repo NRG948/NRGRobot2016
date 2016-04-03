@@ -131,7 +131,7 @@ public class RampToRPM extends CommandBase {
 	@Override
 	protected boolean isFinished() {
 		//end RampToRPM at end of ShootSequence when shooter arm setpoint = -10 degrees
-		return timer.get() > startTime;
+		return timer.get() > startTime + 0.5;
 	}
 
 	@Override

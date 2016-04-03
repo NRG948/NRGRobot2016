@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 	public static final double NO_AUTO = -10.0;
 
 	public enum Level {
-		DEFAULT(5), ACQUIRE(32), CHIVAL(68), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+		DEFAULT(5), ACQUIRE(35), CHIVAL(68), SALLY_PORT_HIGH(110), FULL_BACK(180); // VALUE
 																					// NEEDS
 																					// TO
 																					// BE
@@ -75,8 +75,8 @@ public class Robot extends IterativeRobot {
 		// Positions 3, 4, and 5 go into the middle goal
 		// TWO: -46.14
 		// second angle of 999 means do not execute second turn
-		LOWBAR_ONE(15.5, 60.0, 0.0, NO_TURN), POSITION_TWO(19.0, 50.0, -3.0, NO_TURN), POSITION_THREE(11.0, 60.0, 3.0,
-				-10.0), POSITION_FOUR(14.0, 0, 0, 0), POSITION_FIVE(11.0, -70.0, 4.0, -10.0), TEST(0.5, 20, 0.5, 0);
+		LOWBAR_ONE(15.5, 60.0, 0.0, NO_TURN), POSITION_TWO(19.0, 50.0, -3.0, NO_TURN), POSITION_THREE(13.0, 60.0, 3.0,
+				-10.0), POSITION_FOUR(14.0, 0, 0, 0), POSITION_FIVE(11.0, -70.0, 4.0, -10.0), TEST(0.5, 20, 0.5, 0), NO_SHOOT(15.0, 0, 0, 0);
 
 		private double distance;
 		private double angle;
@@ -219,10 +219,13 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new RawTankDrive(); break; }
 		 */
+		System.out.println("Entering: autoInit()");
+		autoTimer.reset();
 		autoTimer.start();
 		autoStartTime = autoTimer.get();
 		resetSensors();
 		drive.setDesiredHeading(0);
+		autoDefense = null;
 		// choose position
 		if (DS2016.pos1Button.get()) {
 			System.out.println("Pos 1");
@@ -265,6 +268,10 @@ public class Robot extends IterativeRobot {
 		}
 
 		autoShoot = !DS2016.autoShootButton.get();
+		if(!autoShoot) {
+			autoPosition = AutoPosition.NO_SHOOT;
+			autoPower = 0.75;
+		}
 		// autonomousCommand = ArduinoSerialReader.autoCommand();
 		if (autoDefense == null) {
 			autoDefense = Defense.TERRAIN;
@@ -272,6 +279,7 @@ public class Robot extends IterativeRobot {
 			autoShoot = false;
 			autoPosition = AutoPosition.POSITION_FOUR;
 		}
+	
 		// drive.setDesiredHeading(160);
 		// RobotMap.driveGyro.setAngleOffset(160);
 		// autonomousCommand = new TwoBallAutonomous();
@@ -297,9 +305,11 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 
 		// CommandBase.drive.initDefaultCommand();
+		System.out.println("Entering: teleopInit()");
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
+		autoTimer.reset();
+		autoTimer.stop();
 		SmartDashboard.putData("Raise Shooter Arm to X degrees",
 				new RaiseShooterArmTo(CommandBase.preferences.getDouble(PreferenceKeys.SHOOTER_ANGLE, 45)));
 
@@ -404,6 +414,12 @@ public class Robot extends IterativeRobot {
 		// PositionTracker.updatePosition();
 		// PositionTracker3D.computePosition();
 		if (true) {
+			for(int i = 6; i <= 11; i++){
+				if(DS2016.arduinoJoystick.getRawButton(i)){
+					SmartDashboard.putString("Auto Position", "Position " + (i-5));
+					break;
+				}
+			}
 			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
 			SmartDashboard.putNumber("Arm Encoder Value", RobotMap.armAngleEncoder.getVoltage());
@@ -414,8 +430,8 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Left Shooter Encoder", RobotMap.leftShooterWheelEncoder.get());
 			SmartDashboard.putNumber("Right Shooter Encoder", RobotMap.rightShooterWheelEncoder.get());
 
-			// SmartDashboard.putNumber("Distance",
-			// visionProcessing.calcDistance());
+			 SmartDashboard.putNumber("Distance",
+			 visionProcessing.calcDistance());
 			SmartDashboard.putNumber("Shooting Angle", visionProcessing.getShootingAngle());
 			// SmartDashboard.putString("Shooting Angle String",
 			// Double.toString(visionProcessing.getShootingAngle()));
@@ -449,12 +465,6 @@ public class Robot extends IterativeRobot {
 			 * SmartDashboard.putData(CommandBase.shooterBar);
 			 * SmartDashboard.putData(CommandBase.shooterWheel);
 			 */
-
-			try {
-				SmartDashboard.putData("PDP", pdp);
-			} catch (Exception e) {
-				// Silently ignore the exception
-			}
 			// for (int i = 0; i <= 15; i++) {
 			// SmartDashboard.putNumber("PDP current " + i, pdp.getCurrent(i));
 			// }

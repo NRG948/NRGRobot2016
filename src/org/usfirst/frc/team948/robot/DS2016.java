@@ -111,7 +111,7 @@ public class DS2016 {
  	public static void buttonInit() {
   		driveStraightButton.whenPressed(new ManualDriveStraight());
  		driveStraightButton.whenReleased(new ManualDrive());
- 		resetSensorsButton.whenPressed(new ResetSensors());
+ 		resetSensorsButton.whileHeld(new ManualRaiseAcquirer(0.35));
  		chivalAssistButton.whenPressed(new ChivalAssist());
 // 		raiseAcquirerButton.whileHeld(new ManualRaiseAcquirer(0.33));//MAY NEED TO CHANGE LATER
 // 		lowerAcquirerButton.whileHeld(new ManualRaiseAcquirer(-0.33));//MAY NEED TO CHANGE LATER
@@ -146,7 +146,7 @@ public class DS2016 {
  		xboxBButton.whenPressed(new RaiseAcquirerTo(Robot.Level.CHIVAL));
  		xboxXButton.whenPressed(new RaiseAcquirerTo(Robot.Level.FULL_BACK));
  		xboxYButton.whenPressed(new Interrupt());
- 		cameraButton.whenPressed(new SwitchCamera());
+ 		cameraButton.whileHeld(new ManualRaiseAcquirer(-0.25));
  		visionShotButton.whenPressed(new ShootSequence(true, false));
  	}	
 }
