@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterArm extends Subsystem implements PIDOutput {
 	private volatile double pidOutput;
 
-	private final double VOLTS_0 = (Robot.competitionRobot) ? 0.771 : 0.692;
-	private final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.699 : 1.263;
-	private final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 68 : 45;
+	private final double VOLTS_0 = (Robot.competitionRobot) ? 0.765 : 0.692;
+	private final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.719 : 1.263;
+	private final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 69 : 45;
 	private final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0) / VARIABLE_ANGLE;
 	public final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
 	public final static double OFFSET_SLOP_DEGREES = 0;
@@ -126,7 +126,12 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	}
 
 	public void pidWrite(double arg0) {
-		if(onTargetCounter > 10) { 
+		/*if(Math.abs(shooterElevatePID.getError()) < TOLERANCE){
+			onTargetCounter ++;
+		} else{
+			onTargetCounter = 0;
+		}*/
+		if(onTargetCounter > 3) { 
 			pidOutput = prevPower;
 		} else {
 			pidOutput = arg0;
