@@ -8,7 +8,6 @@ import org.usfirst.frc.team948.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
 import org.usfirst.frc.team948.robot.commands.RaiseShooterArmTo;
 import org.usfirst.frc.team948.robot.commands.TurnAngle;
-import org.usfirst.frc.team948.robot.commands.TurnToHeading;
 import org.usfirst.frc.team948.robot.commands.TurnToTargetDumb;
 import org.usfirst.frc.team948.robot.commands.TurnToVisionTarget;
 import org.usfirst.frc.team948.robot.commands.TurnToVisionTargetContinuous;
@@ -22,10 +21,7 @@ import org.usfirst.frc.team948.robot.subsystems.ShooterArm;
 import org.usfirst.frc.team948.robot.subsystems.ShooterBar;
 import org.usfirst.frc.team948.robot.subsystems.ShooterWheel;
 import org.usfirst.frc.team948.robot.subsystems.VisionProcessing;
-import org.usfirst.frc.team948.robot.utilities.AHRSGyro;
-import org.usfirst.frc.team948.robot.utilities.NavXTester;
 import org.usfirst.frc.team948.robot.utilities.PreferenceKeys;
-import org.usfirst.frc.team948.robot.utilities.ArduinoSerialReader;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
