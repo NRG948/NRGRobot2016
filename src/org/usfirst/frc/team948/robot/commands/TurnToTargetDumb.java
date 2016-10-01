@@ -23,9 +23,9 @@ public class TurnToTargetDumb extends CommandBase{
 	protected void execute() {
 		// TODO Auto-generated method stub
 		if(drive.drivePID.getError() < 0){
-			drive.rawTankDrive(-power, power);
-		}else{
 			drive.rawTankDrive(power, -power);
+		}else{
+			drive.rawTankDrive(-power, power);
 		}
 	}
 

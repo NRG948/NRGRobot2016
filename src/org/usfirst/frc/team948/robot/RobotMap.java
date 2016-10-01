@@ -137,8 +137,8 @@ public class RobotMap {
 //		RobotMap.leftShooterWheelEncoder.setSamplesToAverage(5);
 //		RobotMap.rightShooterWheelEncoder.setSamplesToAverage(5);
 		
-		RobotMap.leftMotorEncoder.setDistancePerPulse(10.0/4225.0);
-		RobotMap.rightMotorEncoder.setDistancePerPulse(10.0/4199.0);
+		RobotMap.leftMotorEncoder.setDistancePerPulse(5.682/2494.67);
+		RobotMap.rightMotorEncoder.setDistancePerPulse(5.682/2431.33);
 		
 //		RobotMap.drawbridgeArm.ConfigFwdLimitSwitchNormallyOpen(true);
 //		RobotMap.drawbridgeArm.ConfigRevLimitSwitchNormallyOpen(true);

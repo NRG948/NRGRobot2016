@@ -32,19 +32,11 @@ public class ShootSequence extends CommandGroup {
 		if(doubleTurn){
 			addSequential(new TurnToVisionTarget(0.6));
 		}
-		addParallel(new RampToRPM(2000, 0.1));
-//		addParallel(new RampToRPM(3000, 0.1));
+		addParallel(new RampToRPM(2000));
 		addParallel(new RaiseShooterArmTo());
 		addSequential(new WaitForRPM(2000, 20));
-//		addSequential(new WaitForRPM(3000, 20));
 		addSequential(new Shoot(0, true));
-		addSequential(new RaiseShooterArmTo(-10), 0.75);
+		addSequential(new RaiseShooterArmTo(-10));
 		}
 	}
-	@Override
-	protected void initialize(){
-		super.initialize();
-		System.out.println("Entering: initalize() Shoot Sequence");
-	}
-	
 }

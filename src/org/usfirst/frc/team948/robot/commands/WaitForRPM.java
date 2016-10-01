@@ -29,15 +29,11 @@ public class WaitForRPM extends CommandBase {
 	// or equal to tolerance, return true
 	@Override
 	protected boolean isFinished() {
-		double diffLeft = Math.abs(shooterWheel.getAverageLeftRPM(10) - targetRPM);
-		double diffRight = Math.abs(shooterWheel.getAverageRightRPM(10) - targetRPM);
+		double diffLeft = Math.abs(shooterWheel.getAverageLeftRPM(50) - targetRPM);
+		double diffRight = Math.abs(shooterWheel.getAverageRightRPM(50) - targetRPM);
 		SmartDashboard.putNumber("Difference to Target RPM",  Math.max(diffLeft, diffRight));
-		boolean onTargetRPM = Math.max(diffLeft, diffRight) <= tolerance && Math.max(Math.abs(shooterWheel.currentLeftRPM- targetRPM),
-				Math.abs(shooterWheel.currentRightRPM-targetRPM)) <= 2*tolerance;
-		SmartDashboard.putBoolean("On Target RPM", onTargetRPM);
-		return onTargetRPM;
-//		return Math.max(diffLeft, diffRight) <= tolerance && Math.max(Math.abs(shooterWheel.currentLeftRPM- targetRPM),
-//																	Math.abs(shooterWheel.currentRightRPM-targetRPM)) <= 2*tolerance;
+		return Math.max(diffLeft, diffRight) <= tolerance && Math.max(Math.abs(shooterWheel.currentLeftRPM- targetRPM),
+																	Math.abs(shooterWheel.currentRightRPM-targetRPM)) <= 2*tolerance;
 	}
 
 	@Override

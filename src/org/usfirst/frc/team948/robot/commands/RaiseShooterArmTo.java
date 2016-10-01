@@ -77,9 +77,8 @@ public class RaiseShooterArmTo extends CommandBase {
 		}
 		return counter > 4;*/
 		if (ballLeft) {
-//			return System.currentTimeMillis() > startTime + 300;
+			return System.currentTimeMillis() > startTime + 300;
 		}
-		shooterArm.isArmAtDesiredAngle();
 		return false;
 	}
 

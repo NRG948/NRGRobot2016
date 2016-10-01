@@ -34,8 +34,6 @@ public class ShooterRampUp extends CommandBase {
 	}
 
 	protected void execute() {
-		shooterWheel.updateRPM();
-		shooterWheel.addRPMValueToArrays();
 		if (autoPower) {
 			power = 1;
 		}

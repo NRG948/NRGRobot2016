@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class SpitOutSequence extends CommandGroup{
 	
 	public SpitOutSequence() {
-		addParallel(new RaiseAcquirerTo(Robot.Level.FULL_BACK));
-		addParallel(new RaiseShooterArmTo(-12.5, CommandBase.shooterArm.TOLERANCE*2));
+		addParallel(new RaiseAcquirerTo(Robot.Level.CHIVAL));
+		addParallel(new RaiseShooterArmTo(-10, CommandBase.shooterArm.TOLERANCE*2));
 		addSequential(new SpitOut());
 		addSequential(new Interrupt(CommandBase.shooterWheel, CommandBase.acquirerArm, CommandBase.acquirerArm, CommandBase.shooterBar, CommandBase.shooterArm));
 	}

@@ -17,7 +17,6 @@ public class TurnToVisionTarget extends CommandBase {
 	}
 
 	protected void initialize() {
-		System.out.println("Entering: Initalize() on TurnToVisionTarget"); 
 		angle = visionProcessing.getTurningAngleProportion();
 //		finalHeading = drive.getDesiredHeading() + angle;
 		finalHeading = RobotMap.driveGyro.getAngle() + angle;

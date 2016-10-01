@@ -40,9 +40,6 @@ public class ManualAcquire extends CommandBase {
 		RobotMap.rightShooterWheel.set(0.0);
 		RobotMap.leftShooterWheel.set(0.0);
 		RobotMap.shooterBallPusher.set(0.0);
-		if(!manual) {
-			RobotMap.shooterLifterMotor.set(0.0);
-		}
 	}
 
 	// Called when another command which requires one or more of the same

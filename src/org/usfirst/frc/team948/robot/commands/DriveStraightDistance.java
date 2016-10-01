@@ -15,7 +15,7 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 	private double tolerance;
 	
 	private double p, i, d;
-	volatile double distancePIDOutput;
+	double distancePIDOutput;
 	public EncoderPidSource encoderPIDSource = new EncoderPidSource();
 	private PIDController distancePID = new PIDController(p, i, d, encoderPIDSource, (PIDOutput) this);
 	private int cyclesOnTarget;
@@ -55,16 +55,12 @@ public class DriveStraightDistance extends CommandBase implements PIDOutput{
 	@Override
 	protected void execute() {
 		SmartDashboard.putNumber("Distance PID OUTPUT", distancePIDOutput);
+		SmartDashboard.putNumber("Distance PID ERROR", distancePID.getError());
 		double factor = MathHelper.clamp(distancePIDOutput, -1, 1);
-		double revisedPower = power * factor;
-		double error = distancePID.getError();
-		SmartDashboard.putNumber("Distance PID ERROR", error);
-		if (Math.abs(error) < tolerance) {
-			revisedPower = 0.0;
-		} else if (Math.abs(error) < 1.0) {
-			revisedPower = 0.3 * Math.signum(error);
+		double revisedPower = power * -factor;
+		if (Math.abs(revisedPower) < 0.3) {
+			revisedPower = 0.3 * Math.signum(-distancePID.getError());
 		}
-		SmartDashboard.putNumber("Revised Power DriveStraightDistance", revisedPower);
 		drive.driveOnHeading(revisedPower, heading);
 	}
 
