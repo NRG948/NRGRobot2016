@@ -18,7 +18,7 @@ public class BatterShot extends CommandGroup{
 	
 	private class DelayAndShoot extends CommandGroup{
 		public DelayAndShoot() {
-			addParallel(new RampToRPM(1400));
+			addParallel(new RampToRPM(1500));
 			addSequential(new Delay(3.0));
 			addSequential(new Shoot(0, false));
 		}
