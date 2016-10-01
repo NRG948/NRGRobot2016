@@ -40,7 +40,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	public double rectRight;
 	
 	private final double TARGET_WIDTH_FEET = (Robot.competitionRobot) ? 20.0 / 12 : 19.5 / 12; //horizontal
-	private final double TARGET_HEIGHT_FEET = (Robot.competitionRobot) ? 12.0 / 12 - 1: 12.0 / 12 + 1.5; //vertical
+	private final double TARGET_HEIGHT_FEET = (Robot.competitionRobot) ? 12.0 / 12 - 1: 12.0 / 12 + 0.5; //vertical
 	private final double CAMERA_OFF_GROUND = 1;
 	private final double TARGET_FEET_OFF_CAMERA_HEIGHT = 84.0/12 - CAMERA_OFF_GROUND + TARGET_HEIGHT_FEET; //84.0 is height from found in inches, camera is 1 foot off ground
 	private final double GRAVITY = 32;
@@ -55,8 +55,8 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double TURN_TARGET_D = 0.0123;
 	private final double PIXEL_TOLERANCE = 4;
 	
-	private final double SET_AREA = 1177.0;
-	private final double SET_DISTANCE = 136.0 / 12;
+	private final double SET_AREA = 1255;
+	private final double SET_DISTANCE = 145.0 / 12;
 	private static final double TOTAL_HEIGHT = 240.0;
 	private static final double TOTAL_WIDTH = 320.0;
 

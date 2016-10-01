@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterArm extends Subsystem implements PIDOutput {
 	private volatile double pidOutput;
 
-	private final double VOLTS_0 = (Robot.competitionRobot) ? 0.723 : 0.692;
-	private final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.573 : 1.263;
+	private final double VOLTS_0 = (Robot.competitionRobot) ? 0.723 : 0.765;
+	private final double VOLTS_VARIABLE = (Robot.competitionRobot) ? 1.573 : 1.364;
 	private final double VARIABLE_ANGLE = (Robot.competitionRobot) ? 58 : 45;
 	private final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_VARIABLE - VOLTS_0) / VARIABLE_ANGLE;
 	public final double TOLERANCE = 1.0 * SLOPE_VOLTS_FROM_DEGREES;
@@ -76,9 +76,6 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	}
 	public void setDesiredArmAngle(double angle) {
 		shooterElevatePID.setSetpoint(voltsFromDegrees(safeAngle(angle)));
-//		if (isSafeAngle(angle)) {
-//			shooterElevatePID.setSetpoint(voltsFromDegrees(angle));
-//		}
 	}
 
 	public void moveArmToDesiredAngle() {
@@ -102,9 +99,6 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 		moveArmToDesiredAngle();
 		double shootingAngle = Robot.visionProcessing.getShootingAngle();
 		shooterElevatePID.setSetpoint(voltsFromDegrees(safeAngle(shootingAngle)));
-//		if (isSafeAngle(shootingAngle)) {
-//			shooterElevatePID.setSetpoint(voltsFromDegrees(shootingAngle));
-//		}
 		SmartDashboard.putNumber("Shooter PID Setpoint", shooterElevatePID.getSetpoint());
 	}
 
@@ -191,17 +185,10 @@ public class ShooterArm extends Subsystem implements PIDOutput {
 	}
 
 	public double safeAngle(double shootingAngle) {
-		if(shootingAngle < 70.0 && !Double.isNaN(shootingAngle) && shootingAngle > -20.0 && !Double.isInfinite(shootingAngle)){
+		if(shootingAngle < 70.0 && !Double.isNaN(shootingAngle) && shootingAngle > -10.0 && !Double.isInfinite(shootingAngle)){
 			return shootingAngle;
 		}
 		return 0.0;
 	}
-
-//	public boolean isSafeAngle(double shootingAngle) {
-//		if(shootingAngle < 70.0 && !Double.isNaN(shootingAngle) && shootingAngle > -10.0 && !Double.isInfinite(shootingAngle)){
-//			return true;
-//		}
-//		return false;
-//	}
 	
 }
