@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 	public static final double NO_AUTO = -10.0;
 
 	public enum Level {
-		DEFAULT(5), ACQUIRE(32), CHIVAL(68), SALLY_PORT_HIGH(110), FULL_BACK(140); // VALUE
+		DEFAULT(15), ACQUIRE(25), CHIVAL(85), SALLY_PORT_HIGH(110), FULL_BACK(155); // VALUE
 																					// NEEDS
 																					// TO
 																					// BE

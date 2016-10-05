@@ -319,7 +319,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 
 	public void turnToTarget() {
 		double power = pidOutput;
-//		SmartDashboard.putNumber("TurnToTarget error", targetPID.getError());
+		SmartDashboard.putNumber("TurnToTarget error", targetPID.getError());
 //		SmartDashboard.putNumber("TurnToTarget pidOutput", pidOutput);
 //		SmartDashboard.putNumber("Center X", Robot.visionProcessing.centerX);
 //		if (power > 0) {
@@ -332,7 +332,7 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	}
 	
 	public boolean turnToTargetFinished() {
-//		SmartDashboard.putNumber("Turn to Target finish Error", targetPID.getAvgError());
+		SmartDashboard.putNumber("Turn to Target finish Error", targetPID.getAvgError());
 		if (Math.abs(targetPID.getError()) < PIXEL_TOLERANCE) { //getAvgError() doesn't work
 			cyclesOnTarget++;
 		}

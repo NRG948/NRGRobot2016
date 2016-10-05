@@ -1,23 +1,18 @@
 package org.usfirst.frc.team948.robot;
 
+import org.usfirst.frc.team948.robot.Robot;
 import org.usfirst.frc.team948.robot.commandgroups.AcquireMode;
 import org.usfirst.frc.team948.robot.commandgroups.BatterShot;
 import org.usfirst.frc.team948.robot.commandgroups.ChivalAssist;
-import org.usfirst.frc.team948.robot.commandgroups.MoveandRamp;
 import org.usfirst.frc.team948.robot.commandgroups.ShootSequence;
 import org.usfirst.frc.team948.robot.commandgroups.SpitOutSequence;
 import org.usfirst.frc.team948.robot.commands.Interrupt;
 import org.usfirst.frc.team948.robot.commands.LowerShooterToNextLowerAngle;
-import org.usfirst.frc.team948.robot.commands.ManualClimb;
 import org.usfirst.frc.team948.robot.commands.ManualDrive;
 import org.usfirst.frc.team948.robot.commands.ManualDriveStraight;
 import org.usfirst.frc.team948.robot.commands.ManualRaiseAcquirer;
-import org.usfirst.frc.team948.robot.commands.ManualTrackAcquirer;
-import org.usfirst.frc.team948.robot.commands.QuickRampToRPM;
 import org.usfirst.frc.team948.robot.commands.RaiseAcquirerTo;
-import org.usfirst.frc.team948.robot.commands.RaiseShooterToNextHigherAngle;
 import org.usfirst.frc.team948.robot.commands.RampToRPM;
-import org.usfirst.frc.team948.robot.commands.RawRaiseDrawbridge;
 import org.usfirst.frc.team948.robot.commands.ResetSensors;
 import org.usfirst.frc.team948.robot.commands.Shoot;
 import org.usfirst.frc.team948.robot.commands.ShooterRampUp;
