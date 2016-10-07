@@ -451,7 +451,7 @@ public class Robot extends IterativeRobot {
 			 */
 
 			try {
-				SmartDashboard.putData("PDP", pdp);
+			//	SmartDashboard.putData("PDP", pdp);
 			} catch (Exception e) {
 				// Silently ignore the exception
 			}
