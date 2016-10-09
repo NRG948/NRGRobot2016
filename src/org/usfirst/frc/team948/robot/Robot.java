@@ -50,22 +50,27 @@ public class Robot extends IterativeRobot {
 	public static final double NO_AUTO = -10.0;
 
 	public enum Level {
-		DEFAULT(15), ACQUIRE(25), CHIVAL(85), SALLY_PORT_HIGH(110), FULL_BACK(155); // VALUE
-																					// NEEDS
-																					// TO
-																					// BE
-																					// CHECKED
+		DEFAULT(15, PreferenceKeys.ACQUIRER_ARM_DEFAULT),
+		ACQUIRE(25, PreferenceKeys.ACQUIRER_ARM_ACQUIRE),
+		CHIVAL(85, PreferenceKeys.ACQUIRER_ARM_CHIVAL),
+		SALLY_PORT_HIGH(110, PreferenceKeys.ACQUIRER_ARM_SALLY_PORT_HIGH),
+		FULL_BACK(155, PreferenceKeys.ACQUIRER_ARM_FULL_BACK);
 
 		private double value;
+		private String name;
 
-		private Level(double value) {
+		private Level(double value, String name) {
 			this.value = value;
+			this.name = name;
 		}
 
 		public double getValue() {
 			return value;
 		}
 
+		public String getName() {
+			return name;
+		}
 	}
 
 	public enum AutoPosition {
