@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AcquirerArm extends Subsystem implements PIDOutput{
-	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);;
+	private PIDController acquirerAnglePID = new PIDController(ACQUIRER_P, ACQUIRER_I, ACQUIRER_D, RobotMap.armAngleEncoder, this);
 	private double pidOutput;
 	 
 	public final double VOLTS_0 = (Robot.competitionRobot)? 3.815 : 4.635;
@@ -24,8 +24,8 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	public final double SLOPE_VOLTS_FROM_DEGREES = (VOLTS_90 - VOLTS_0) / 90.0;
 	private final double TOLERANCE = Math.abs(2.0 * SLOPE_VOLTS_FROM_DEGREES);
 	private static double ACQUIRER_P = 1.5; //1.2
-	private static double ACQUIRER_I = 0.065; //0.05
-	private static double ACQUIRER_D = 0.02;
+	private static double ACQUIRER_I = 0.065 ; //0.05
+	private static double ACQUIRER_D = .02;
 
 	
 	public AcquirerArm(){
@@ -66,7 +66,7 @@ public class AcquirerArm extends Subsystem implements PIDOutput{
 	}
 	
 	public void raiseArmToAngleInit() {
-		ACQUIRER_P = CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_P, 1.2);
+		ACQUIRER_P = CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_P, 1.0);
 		ACQUIRER_I = CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_I, 0.02);
 		ACQUIRER_D = CommandBase.preferences.getDouble(PreferenceKeys.ACQUIRER_D, 0.02);
 		acquirerAnglePID.setPID(ACQUIRER_P, 0, ACQUIRER_D);
