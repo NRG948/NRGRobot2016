@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 	public enum Level {
 		DEFAULT(15, PreferenceKeys.ACQUIRER_ARM_DEFAULT),
 		ACQUIRE(25, PreferenceKeys.ACQUIRER_ARM_ACQUIRE),
-		CHIVAL(71, PreferenceKeys.ACQUIRER_ARM_CHIVAL),
+		CHIVAL(85, PreferenceKeys.ACQUIRER_ARM_CHIVAL),
 		SALLY_PORT_HIGH(110, PreferenceKeys.ACQUIRER_ARM_SALLY_PORT_HIGH),
 		FULL_BACK(155, PreferenceKeys.ACQUIRER_ARM_FULL_BACK);
 
