@@ -26,9 +26,4 @@ public class PreferenceKeys {
 	public static final String CENTER_IMAGE = "CenterImage";
 	public static final String SHOOTER_LEFT_TARGET_RPM = "ShooterLeftTargetRPM";
 	public static final String SHOOTER_RIGHT_TARGET_RPM = "ShooterRightTargetRPM";
-	public static final String ACQUIRER_ARM_DEFAULT = "AcquirerArmDefaultLevelAngle";
-	public static final String ACQUIRER_ARM_ACQUIRE = "AcquirerArmAcquireLevelAngle";
-	public static final String ACQUIRER_ARM_CHIVAL = "AcquirerArmChivalLevelAngle";
-	public static final String ACQUIRER_ARM_SALLY_PORT_HIGH = "AcquirerArmSallyPortHighLevelAngle";
-	public static final String ACQUIRER_ARM_FULL_BACK = "AcquirerArmFullBackLevelAngle";
 }

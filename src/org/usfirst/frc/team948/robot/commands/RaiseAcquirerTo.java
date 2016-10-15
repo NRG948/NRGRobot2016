@@ -2,49 +2,49 @@ package org.usfirst.frc.team948.robot.commands;
 
 import org.usfirst.frc.team948.robot.Robot;
 
-public class RaiseAcquirerTo extends CommandBase {
+public class RaiseAcquirerTo extends CommandBase{
 
 	public double angle;
 	private int counter = 0;
 
-	public RaiseAcquirerTo(double angle) {
+	public RaiseAcquirerTo(double angle){
 		requires(acquirerArm);
 		this.angle = angle;
 	}
-
-	public RaiseAcquirerTo(Robot.Level level) {
+	
+	public RaiseAcquirerTo(Robot.Level level){
 		requires(acquirerArm);
-		this.angle = CommandBase.preferences.getDouble(level.getName(), level.getValue());
+		this.angle = level.getValue();
 	}
-
-	protected void initialize() {
+	
+	protected void initialize (){
 		counter = 0;
 		acquirerArm.raiseArmToAngleInit();
 		acquirerArm.setDesiredArmAngle(angle);
 	}
-
-	protected void execute() {
+	
+	protected void execute(){
 		acquirerArm.raiseArmToAngle();
 	}
-
-	protected boolean isFinished() {
-		if (acquirerArm.isArmAtDesiredAngle() && angle == 0) {
-			// counter++;
+	
+	protected boolean isFinished(){
+		if(acquirerArm.isArmAtDesiredAngle() && angle == 0){
+//			counter++;
 			return true;
-		} else {
+		}else{
 			counter = 0;
 		}
-		if (counter > 1 && angle == 0) {
+		if(counter > 1 && angle == 0){
 			return true;
 		}
 		return false;
 	}
-
-	protected void end() {
+	
+	protected void end(){
 		acquirerArm.stopArm();
 	}
-
-	protected void interrupted() {
+	
+	protected void interrupted(){
 		end();
 	}
 }
