@@ -43,13 +43,14 @@ public class RampToRPM extends CommandBase {
 
 	public RampToRPM() {
 		requires(shooterWheel);
-		this.leftTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_LEFT_TARGET_RPM, 2000);
-		this.rightTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_RIGHT_TARGET_RPM, 2000);
 		delayTime = 0;
 	}
 
 	@Override
 	protected void initialize() {
+		this.leftTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_LEFT_TARGET_RPM, 2000);
+		this.rightTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_RIGHT_TARGET_RPM, 2000);
+		
 		prevBallStatus = shooterWheel.isBallLoaded();
 		startTime = Integer.MAX_VALUE;
 		passedThresholdLeft = false;

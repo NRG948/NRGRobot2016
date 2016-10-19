@@ -383,7 +383,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("left encoder", RobotMap.leftMotorEncoder.get());
 		SmartDashboard.putNumber("right encoder", RobotMap.rightMotorEncoder.get());
-		SmartDashboard.putBoolean("Has Ball", shooterWheel.isBallLoaded());
 		RobotMap.positionTracker.update();
 		periodicAll();
 	}
@@ -404,6 +403,7 @@ public class Robot extends IterativeRobot {
 		// PositionTracker.updatePosition();
 		// PositionTracker3D.computePosition();
 		if (true) {
+			SmartDashboard.putBoolean("Has Ball", shooterWheel.isBallLoaded());
 			SmartDashboard.putNumber("Left RPM", shooterWheel.currentLeftRPM);
 			SmartDashboard.putNumber("Right RPM", shooterWheel.currentRightRPM);
 			SmartDashboard.putNumber("Arm Encoder Value", RobotMap.armAngleEncoder.getVoltage());
