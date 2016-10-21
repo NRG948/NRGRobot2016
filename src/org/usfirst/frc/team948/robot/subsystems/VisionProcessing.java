@@ -47,8 +47,9 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 	private final double SPEED_OF_BALL = (Robot.competitionRobot) ? Math.sqrt(33.58*GRAVITY) : Math.sqrt(21.0 * GRAVITY);
 	private final double FOV_ANGLE_HORIZONTAL = 49.64; //horizontal
 	private final double FOV_ANGLE_VERTICAL = 32.01; //vertical
-	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 34 : 34;
+	private final double CAMERA_ANGLE = (Robot.competitionRobot) ? 29 : 34; // the original angle of atilla is 34
 	private final double CAMERA_TO_SHOOTER = 9.5 / 12.0;
+	private final double HACK_ANGLE = Robot.competitionRobot ? 3.0 : 0;
 	
 	private final double TURN_TARGET_P = 0.0039;
 	private final double TURN_TARGET_I =  0.00031;
@@ -249,20 +250,20 @@ public class VisionProcessing extends Subsystem implements PIDSource, PIDOutput 
 		if(Double.isNaN(d)){
 //			Incorrect calculation of the distance
 //			Use previous correct distance
-			return lastAngle;
+			return lastAngle + HACK_ANGLE; // addition of 3 degrees is a hack; 
 		}
 			//d is now changed to horizontal distance from the camera to the tower
 		double sqrtTerm = d*d - GRAVITY*GRAVITY*Math.pow(d, 4)/Math.pow(SPEED_OF_BALL, 4)- 
 				2*TARGET_FEET_OFF_CAMERA_HEIGHT*GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
 //		If the sqrtTerm is negative, then it will return "Not a Number(NaN)"
 		if(sqrtTerm < 0){
-			return lastAngle;
+			return lastAngle + HACK_ANGLE;
 		}
 		sqrtTerm = Math.sqrt(sqrtTerm);
 		double numerator = d-sqrtTerm;
 		double denom = GRAVITY*d*d/Math.pow(SPEED_OF_BALL, 2);
 		lastAngle = Math.toDegrees(Math.atan(numerator/denom));
-		return lastAngle;
+		return lastAngle + HACK_ANGLE;
 		//return Math.atan(TARGET_FEET_OFF_CAMERA_HEIGHT/d)*180/Math.PI;
 	}
 	

@@ -48,8 +48,8 @@ public class RampToRPM extends CommandBase {
 
 	@Override
 	protected void initialize() {
-		this.leftTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_LEFT_TARGET_RPM, 2000);
-		this.rightTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_RIGHT_TARGET_RPM, 2000);
+//		this.leftTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_LEFT_TARGET_RPM, 2250); // previously 2000 rpm
+//		this.rightTargetRPM = preferences.getDouble(PreferenceKeys.SHOOTER_RIGHT_TARGET_RPM, 2250); // previously 2000 rpm
 		
 		prevBallStatus = shooterWheel.isBallLoaded();
 		startTime = Integer.MAX_VALUE;

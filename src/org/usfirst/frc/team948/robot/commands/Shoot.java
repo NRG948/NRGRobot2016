@@ -43,7 +43,7 @@ public class Shoot extends CommandBase {
 	protected void execute() {
  		if(!wait || (!triggered && (shooterArm.isArmAtDesiredAngle() || Robot.autoTimer.get() > Robot.autoStartTime+14))){
  			if (shooterArm.getSetpoint() != shooterArm.voltsFromDegrees(0.0)) {
-	 			System.out.println(triggered+" " + shooterArm.isArmAtDesiredAngle());
+	 			System.out.println(triggered + " " + shooterArm.isArmAtDesiredAngle());
 	 			triggered = true;
 	 			beginTime = timer1.get();
 	 			SmartDashboard.putString("Shooting Dat", "Left RPM: " + shooterWheel.currentLeftRPM + " Right RPM: " + shooterWheel.currentRightRPM + " Shooting Angle " + shooterArm.degreesFromVolts(RobotMap.shooterLifterEncoder.getVoltage()) + " Difference to Center: " + (visionProcessing.centerX - CommandBase.preferences.getDouble(PreferenceKeys.CENTER_IMAGE, 160.0)));
